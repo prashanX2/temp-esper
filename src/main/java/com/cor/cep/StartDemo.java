@@ -1,6 +1,5 @@
 package com.cor.cep;
 
-import com.cor.cep.event.TemperatureEvent;
 import com.cor.cep.util.IPCServer_H001;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import com.cor.cep.util.RandomTemperatureEventGenerator;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

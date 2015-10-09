@@ -9,11 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.cor.cep.event.TemperatureEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
-import com.espertech.esper.client.Configuration;
-import com.espertech.esper.client.EPServiceProvider;
-import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 
 /**
@@ -105,7 +101,7 @@ public class LuminousEventHandler implements InitializingBean {
      */
     public void handle(LuminousEvent event) {
 
-       // LOG.debug(event.toString());
+       LOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
 
     }

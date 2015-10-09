@@ -31,6 +31,7 @@ public class TempCriticalEventSubscriber implements StatementSubscriber {
      * {@inheritDoc}
      */
     public String getStatement() {
+
         
         // Example using 'Match Recognise' syntax.
         String crtiticalEventExpression = "select * from TemperatureEvent "

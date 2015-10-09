@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.cor.cep.event.TemperatureEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
-import com.espertech.esper.client.Configuration;
-import com.espertech.esper.client.EPServiceProvider;
-import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 
 /**
@@ -103,7 +100,7 @@ public class TemperatureEventHandler implements InitializingBean {
      */
     public void handle(TemperatureEvent event) {
 
-        //tempLOG.debug(event.toString());
+        tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
 
     }

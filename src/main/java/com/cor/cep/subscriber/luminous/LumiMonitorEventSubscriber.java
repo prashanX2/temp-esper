@@ -1,6 +1,5 @@
 package com.cor.cep.subscriber.luminous;
 
-import com.cor.cep.event.LuminousEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ public class LumiMonitorEventSubscriber implements StatementSubscriber {
         //return "select avg(luminous) as avg_val from LuminousEvent.win:time_batch(5 sec)";
 
         return "select a.luminous, avg(a.luminous + b.temperature) as avg_temp "+
-        "from pattern [ a=LuminousEvent ->"+
+        "from pattern [every a=LuminousEvent ->"+
                 "b=TemperatureEvent where timer:within(5 sec)].win:time_batch(5 sec)"+
         "having avg(a.luminous + b.temperature) > 350";
     }

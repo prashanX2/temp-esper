@@ -23,14 +23,15 @@ public class AvgLumiEvent {
     public AvgLumiEvent(int avgluminous, Date timeOfReading) {
         this.avgluminous = avgluminous;
         this.timeOfReading = timeOfReading;
+
     }
 
     /**
      * Get the luminous.
      * @return luminous in Celsius
      */
-    public int getavgluminous() {
-        return avgluminous;
+    public int getavgluminous()  {
+         return avgluminous;
     }
 
     /**
