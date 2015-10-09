@@ -5,13 +5,14 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.cor.cep.handler.LuminousEventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cor.cep.event.TemperatureEvent;
-
+import com.cor.cep.event.LuminousEvent;
 import com.cor.cep.handler.TemperatureEventHandler;
 
 /**
@@ -26,8 +27,10 @@ public class RandomTemperatureEventGenerator {
 
     /** The TemperatureEventHandler - wraps the Esper engine and processes the Events  */
     @Autowired
-    private TemperatureEventHandler temperatureEventHandler;
+    private  TemperatureEventHandler temperatureEventHandler;
 
+    @Autowired
+    private LuminousEventHandler luminousEventHandler;
     /**
      * Creates simple random Temperature events and lets the implementation class handle them.
      */
@@ -46,11 +49,15 @@ public class RandomTemperatureEventGenerator {
 
 
 
-                    TemperatureEvent ve = new TemperatureEvent(IPCServer_H001.get(), new Date());
-                    temperatureEventHandler.handle(ve);
+                   //
+                    TemperatureEvent temp = new TemperatureEvent(IPCServer_H001.getazi(), new Date());
+                    LuminousEvent ve = new LuminousEvent(IPCServer_H001.getlumi(), new Date());
+                   //
+                   temperatureEventHandler.handle(temp);
+                    luminousEventHandler.handle(ve);
                     count++;
                     try {
-                        Thread.sleep(1);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         LOG.error("Thread Interrupted", e);
                     }

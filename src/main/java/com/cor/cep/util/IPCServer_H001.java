@@ -10,17 +10,20 @@ public final class IPCServer_H001 {
     static float gravity_x = 0;
     //float gravity_y = 0;
     //float gravity_z = 0;
-    static float azimuth = 0;
+    static int azimuth = 0;
 
     public static void decodeStream(String[] decode)
     {
         //System.out.println(decode[1]+" "+decode[2]);
 
         luminous = (int)Float.parseFloat(decode[3]);
+        azimuth = Math.abs((int)Float.parseFloat(decode[2]));
         //System.out.println(luminous);
     }
 
-    public static int get(){return luminous;}
+    public static int getlumi(){return luminous;}
+
+    public static int getazi(){return azimuth;}
 
 }
 
