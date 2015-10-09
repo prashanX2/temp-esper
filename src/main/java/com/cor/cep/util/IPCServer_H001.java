@@ -32,35 +32,54 @@ public final class IPCServer_H001 {
     {
         //System.out.println(decode[1]+" "+decode[2]);
 
+        accelx = Float.parseFloat(decode[1]);
+        accely = Float.parseFloat(decode[2]);
+        accelz = Float.parseFloat(decode[3]);
+
+        gravityx = Float.parseFloat(decode[4]);
+        gravityy = Float.parseFloat(decode[5]);
+        gravityz = Float.parseFloat(decode[6]);
+
+        rotationx = Float.parseFloat(decode[7]);
+        rotationy = Float.parseFloat(decode[8]);
+        rotationz = Float.parseFloat(decode[9]);
+
+        //azimuth = Math.abs((int) Float.parseFloat(decode[10]));
+        pitch = ((int)Float.parseFloat(decode[11]));
+        roll = ((int)Float.parseFloat(decode[12]));
+
 
 
         luminous = (int)Float.parseFloat(decode[13]);
         azimuth = Math.abs((int)Float.parseFloat(decode[10]));
+
+
+
         //System.out.println(luminous);
     }
 
 
 
-    public static float accelx(){return accelx;}
+    public static float getaccelx(){return accelx;}
 
-    public static float accely(){return accely;}
+    public static float getaccely(){return accely;}
 
-    public static float accelz(){return accelz;}
-
-
-
-    public static float gravityx(){return gravityx;}
-
-    public static float gravityy(){return gravityy;}
-
-    public static float gravityz(){return gravityz;}
+    public static float getaccelz(){return accelz;}
 
 
-    public static float rotationx(){return rotationx;}
 
-    public static float rotationy(){return rotationy;}
+    public static float getgravityx(){return gravityx;}
 
-    public static float rotationz(){return rotationz;}
+    public static float getgravityy(){return gravityy;}
+
+    public static float getgravityz(){return gravityz;}
+
+
+    public static float getrotationx(){return rotationx;}
+
+    public static float getrotationy(){return rotationy;}
+
+    public static float getrotationz(){return rotationz;}
 
 
 
