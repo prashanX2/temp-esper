@@ -53,15 +53,28 @@ public class StartDemo {
                     String sentence = new String(receivePacket.getData());
                     String decode[] = sentence.split(" ");
 
-                    System.out.println(sentence);
+                    //System.out.println(sentence);
 
-                    sentence=null;
+                    //sentence=null;
 
                     if (decode[0].equals("H001")) {
                         IPCServer_H001.decodeStream(decode);
 
 
                     }
+
+                    if(decode[0].equals("STH1"))
+                    {
+
+
+                    }
+
+                    if(decode[0].equals("SD01"))
+                    {
+
+
+                    }
+
 
                     Arrays.fill(receiveData,(byte)0);
 

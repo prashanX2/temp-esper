@@ -74,6 +74,7 @@ public class RandomTemperatureEventGenerator {
                     Date timestamp = new Date();
 
                    //
+                    
                     TemperatureEvent temp = new TemperatureEvent(IPCServer_H001.getazi(), timestamp);
                     LuminousEvent ve = new LuminousEvent(IPCServer_H001.getlumi(), timestamp);
 

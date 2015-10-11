@@ -24,8 +24,7 @@ public final class IPCServer_H001 {
 
     static int luminous = 0;
 
-    //float gravity_y = 0;
-    //float gravity_z = 0;
+
 
 
     public static void decodeStream(String[] decode)
