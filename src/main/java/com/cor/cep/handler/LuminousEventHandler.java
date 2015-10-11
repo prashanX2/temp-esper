@@ -101,7 +101,7 @@ public class LuminousEventHandler implements InitializingBean {
      */
     public void handle(LuminousEvent event) {
 
-       LOG.debug(event.toString());
+       //LOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
 
     }

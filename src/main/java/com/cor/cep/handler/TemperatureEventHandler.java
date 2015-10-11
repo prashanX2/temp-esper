@@ -18,7 +18,7 @@ import com.espertech.esper.client.EPStatement;
  */
 @Component
 @Scope(value = "singleton")
-public class TemperatureEventHandler implements InitializingBean {
+public  class TemperatureEventHandler implements InitializingBean {
 
     /**
      * Logger
@@ -100,6 +100,7 @@ public class TemperatureEventHandler implements InitializingBean {
      */
     public void handle(TemperatureEvent event) {
 
+        System.out.println("after temp handle");
         tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
 

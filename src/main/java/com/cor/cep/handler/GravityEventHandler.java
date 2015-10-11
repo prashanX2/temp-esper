@@ -106,7 +106,7 @@ public class GravityEventHandler implements InitializingBean {
 
     public void handle(GravityEvent event) {
 
-        tempLOG.debug(event.toString());
+       // tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
 
     }

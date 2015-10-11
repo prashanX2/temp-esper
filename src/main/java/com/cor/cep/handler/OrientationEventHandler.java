@@ -104,7 +104,7 @@ public class OrientationEventHandler implements InitializingBean {
 
     public void handle(OrientationEvent event) {
 
-        tempLOG.debug(event.toString());
+        //tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
 
     }
