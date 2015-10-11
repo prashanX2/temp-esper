@@ -10,6 +10,7 @@ import com.cor.cep.util.RandomTemperatureEventGenerator;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -52,12 +53,17 @@ public class StartDemo {
                     String sentence = new String(receivePacket.getData());
                     String decode[] = sentence.split(" ");
 
+                    System.out.println(sentence);
+
+                    sentence=null;
+
                     if (decode[0].equals("H001")) {
                         IPCServer_H001.decodeStream(decode);
 
 
                     }
 
+                    Arrays.fill(receiveData,(byte)0);
 
                     try {
                         Thread.sleep(1);
@@ -103,7 +109,7 @@ public class StartDemo {
         LOG.debug("Starting...");
         serverStart();
 
-        long noOfTemperatureEvents = 1000000;
+        long noOfTemperatureEvents = 10;
 
         if (args.length != 1) {
             LOG.debug("No override of number of events detected - defaulting to " + noOfTemperatureEvents + " events.");
