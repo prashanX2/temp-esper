@@ -101,7 +101,7 @@ public class IPCServer {
                         String sentence = new String(receivePacket.getData());
                         String decode[] = sentence.split(" ");
 
-                      
+
 
                         if (decode[0].equals("H001")) {
                             IPCServer_H001.decodeStream(decode);
