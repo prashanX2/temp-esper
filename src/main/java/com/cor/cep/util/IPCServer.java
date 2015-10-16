@@ -125,7 +125,7 @@ public class IPCServer {
                         Arrays.fill(receiveData, (byte) 0);
 
                         try {
-                            Thread.sleep(100);
+                            Thread.sleep(1);
                         } catch (InterruptedException e) {
                             LOG.error("Thread Interrupted", e);
                         }
@@ -146,11 +146,11 @@ public class IPCServer {
             {
                 Date timestamp = new Date();
 
-                AccelerationEvent accel = new AccelerationEvent(IPCServer_H001.getaccelx(),IPCServer_H001.getaccely(),IPCServer_H001.getaccelz(),timestamp);
-                GravityEvent gravity = new GravityEvent(IPCServer_H001.getgravityx(),IPCServer_H001.getgravityy(),IPCServer_H001.getgravityz(),timestamp);
-                RotationEvent rotation = new RotationEvent(IPCServer_H001.getrotationx(),IPCServer_H001.getrotationy(),IPCServer_H001.getrotationz(),timestamp);
-                OrientationEvent orientation = new OrientationEvent(IPCServer_H001.getazi(),IPCServer_H001.getpitch(),IPCServer_H001.getroll(),timestamp);
-                LuminousEvent luminous = new LuminousEvent(IPCServer_H001.getlumi(), timestamp);
+                AccelerationEvent accel = new AccelerationEvent(IPCServer_H001.getaccelx(),IPCServer_H001.getaccely(),IPCServer_H001.getaccelz(),timestamp,EventPriorities.getAccelP());
+                GravityEvent gravity = new GravityEvent(IPCServer_H001.getgravityx(),IPCServer_H001.getgravityy(),IPCServer_H001.getgravityz(),timestamp,EventPriorities.getGravityP());
+                RotationEvent rotation = new RotationEvent(IPCServer_H001.getrotationx(),IPCServer_H001.getrotationy(),IPCServer_H001.getrotationz(),timestamp,EventPriorities.getRotationP());
+                OrientationEvent orientation = new OrientationEvent(IPCServer_H001.getazi(),IPCServer_H001.getpitch(),IPCServer_H001.getroll(),timestamp,EventPriorities.getOrientationP());
+                LuminousEvent luminous = new LuminousEvent(IPCServer_H001.getlumi(), timestamp,EventPriorities.getLuminousP());
 
 
                 accelerationEventHandler.handle(accel);
@@ -170,7 +170,7 @@ public class IPCServer {
             {
                 Date timestamp = new Date();
 
-                HumidityEvent humidity = new HumidityEvent(IPCServer_STH1.getHumidity(),timestamp);
+                HumidityEvent humidity = new HumidityEvent(IPCServer_STH1.getHumidity(),timestamp,EventPriorities.getHumidityP());
 
                 humidityEventHandler.handle(humidity);
 
@@ -182,7 +182,7 @@ public class IPCServer {
             {
                 Date timestamp = new Date();
 
-                DistanceEvent distance = new DistanceEvent(IPCServer_SD01.getDistance(),timestamp);
+                DistanceEvent distance = new DistanceEvent(IPCServer_SD01.getDistance(),timestamp,EventPriorities.getDistanceP());
 
                 distanceEventHandler.handle(distance);
 

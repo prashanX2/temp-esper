@@ -13,6 +13,9 @@ public class TemperatureEvent {
     
     /** Time temerature reading was taken. */
     private Date timeOfReading;
+
+    /**priority of the event*/
+    private int priority;
     
     /**
      * Single value constructor.
@@ -22,10 +25,12 @@ public class TemperatureEvent {
      * Temeratur constructor.
      * @param temperature Temperature in Celsius
      * @param timeOfReading Time of Reading
+     * @param priority priority of the event
      */
-    public TemperatureEvent(int temperature, Date timeOfReading) {
+    public TemperatureEvent(int temperature, Date timeOfReading, int priority) {
         this.temperature = temperature;
         this.timeOfReading = timeOfReading;
+        this.priority = priority;
     }
 
     /**
@@ -44,9 +49,12 @@ public class TemperatureEvent {
         return timeOfReading;
     }
 
+    /**get priority*/
+    public int getPriority(){return priority;}
+
     @Override
     public String toString() {
-        return "TemperatureEvent [" + temperature + "C]";
+        return "TemperatureEvent [" + temperature + "C]  TimeStamp: "+timeOfReading+" Priority: "+priority;
     }
 
 }

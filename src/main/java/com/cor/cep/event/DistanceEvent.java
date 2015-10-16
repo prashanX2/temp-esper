@@ -11,6 +11,9 @@ public class DistanceEvent {
     /** Time distance reading was taken. */
     private Date timeOfReading;
 
+
+    /**priority of the event*/
+    private int priority;
     /**
      * Single value constructor.
      * @param value distance %.
@@ -19,10 +22,12 @@ public class DistanceEvent {
      * distance constructor.
      * @param distance cm
      * @param timeOfReading Time of Reading
+     * @param priority priority of the event
      */
-    public DistanceEvent(int distance, Date timeOfReading) {
+    public DistanceEvent(int distance, Date timeOfReading, int priority) {
         this.distance = distance;
         this.timeOfReading = timeOfReading;
+        this.priority = priority;
     }
 
     /**
@@ -41,9 +46,12 @@ public class DistanceEvent {
         return timeOfReading;
     }
 
+    /**get priority*/
+    public int getPriority(){return priority;}
+
     @Override
     public String toString() {
-        return "distanceEvent [" + distance + "cm]";
+        return "distanceEvent [" + distance + "cm]  TimeStamp: "+timeOfReading+" Priority: "+priority;
     }
     
 }

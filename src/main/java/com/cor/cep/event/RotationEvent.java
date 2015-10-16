@@ -12,6 +12,9 @@ public class RotationEvent {
     /** Time reading was taken. */
     private Date timeOfReading;
 
+    /**priority of the event*/
+    private int priority;
+
     /**
      * Single value constructor.
      * @param value rotation in axix.
@@ -22,12 +25,14 @@ public class RotationEvent {
      * @param rotationy rotation in y axix
      * @param rotationz rotation in z axix
      * @param timeOfReading Time of Reading
+     * @param priority priority of the event
      */
-    public RotationEvent(float rotationx, float rotationy, float rotationz, Date timeOfReading) {
+    public RotationEvent(float rotationx, float rotationy, float rotationz, Date timeOfReading, int priority) {
         this.rotationx = rotationx;
         this.rotationy = rotationy;
         this.rotationz = rotationz;
         this.timeOfReading = timeOfReading;
+        this.priority = priority;
     }
 
     /**
@@ -64,9 +69,12 @@ public class RotationEvent {
         return timeOfReading;
     }
 
+    /**get priority*/
+    public int getPriority(){return priority;}
+
     @Override
     public String toString() {
-        return "rotationEvent [ X:" + rotationx + " Y:"+rotationy+" Z:"+rotationz+" ]";
+        return "rotationEvent [ X:" + rotationx + " Y:"+rotationy+" Z:"+rotationz+" ]  TimeStamp: "+timeOfReading+" Priority: "+priority;
     }
     
 }

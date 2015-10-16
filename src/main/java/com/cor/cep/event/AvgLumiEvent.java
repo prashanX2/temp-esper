@@ -11,6 +11,9 @@ public class AvgLumiEvent {
     /** Time luminous reading was taken. */
     private Date timeOfReading;
 
+    /**priority of the event*/
+    private int priority;
+
     /**
      * Single value constructor.
      * @param value luminous in Celsius.
@@ -19,10 +22,12 @@ public class AvgLumiEvent {
      * Luminous constructor.
      * @param avgluminous luminous in Celsius
      * @param timeOfReading Time of Reading
+     * @param priority priority of the event
      */
-    public AvgLumiEvent(int avgluminous, Date timeOfReading) {
+    public AvgLumiEvent(int avgluminous, Date timeOfReading, int priority) {
         this.avgluminous = avgluminous;
         this.timeOfReading = timeOfReading;
+        this.priority = priority;
 
     }
 
@@ -42,9 +47,12 @@ public class AvgLumiEvent {
         return timeOfReading;
     }
 
+    /**get priority*/
+    public int getPriority(){return priority;}
+
     @Override
     public String toString() {
-        return "AVG luminousEvent [" + avgluminous + "C]";
+        return "AVG luminousEvent [" + avgluminous + "C  TimeStamp: "+timeOfReading+" Priority: "+priority;
     }
 
 }

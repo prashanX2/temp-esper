@@ -12,6 +12,9 @@ public class OrientationEvent {
     /** Time reading was taken. */
     private Date timeOfReading;
 
+    /**priority of the event*/
+    private int priority;
+
     /**
      * Single value constructor.
      * @param value acceleration in axix.
@@ -22,12 +25,14 @@ public class OrientationEvent {
      * @param pitch acceleration in y axix
      * @param roll acceleration in z axix
      * @param timeOfReading Time of Reading
+     * @param priority priority of the event
      */
-    public OrientationEvent(float azimuth, float pitch, float roll, Date timeOfReading) {
+    public OrientationEvent(float azimuth, float pitch, float roll, Date timeOfReading, int priority) {
         this.azimuth = azimuth;
         this.pitch = pitch;
         this.roll = roll;
         this.timeOfReading = timeOfReading;
+        this.priority = priority;
     }
 
     /**
@@ -64,9 +69,12 @@ public class OrientationEvent {
         return timeOfReading;
     }
 
+    /**get priority*/
+    public int getPriority(){return priority;}
+
     @Override
     public String toString() {
-        return "OrientationEvent [ Azimuth:" + azimuth + " Pitch:"+pitch+" Roll:"+roll+" ]";
+        return "OrientationEvent [ Azimuth:" + azimuth + " Pitch:"+pitch+" Roll:"+roll+"   TimeStamp: "+timeOfReading+" Priority: "+priority;
     }
     
 }

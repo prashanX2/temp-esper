@@ -11,6 +11,9 @@ public class AccelerationEvent {
     /** Time reading was taken. */
     private Date timeOfReading;
 
+    /**priority of the event*/
+    private int priority;
+
     /**
      * Single value constructor.
      * @param value acceleration in axix.
@@ -21,12 +24,14 @@ public class AccelerationEvent {
      * @param accely acceleration in y axix
      * @param accelz acceleration in z axix
      * @param timeOfReading Time of Reading
+     * @param priority priority of the event
      */
-    public AccelerationEvent(float accelx, float accely, float accelz, Date timeOfReading) {
+    public AccelerationEvent(float accelx, float accely, float accelz, Date timeOfReading, int priority) {
         this.accelx = accelx;
         this.accely = accely;
         this.accelz = accelz;
         this.timeOfReading = timeOfReading;
+        this.priority = priority;
     }
 
     /**
@@ -63,9 +68,13 @@ public class AccelerationEvent {
         return timeOfReading;
     }
 
+    /**get priority*/
+    public int getPriority(){return priority;}
+
+
     @Override
     public String toString() {
-        return "AccelerationEvent [ X:" + accelx + " Y:"+accely+" Z:"+accelz+" ]";
+        return "AccelerationEvent [ X:" + accelx + " Y:"+accely+" Z:"+accelz+" ]  TimeStamp: "+timeOfReading+" Priority: "+priority;
     }
 
 

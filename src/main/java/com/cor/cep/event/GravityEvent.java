@@ -12,6 +12,9 @@ public class GravityEvent {
     /** Time reading was taken. */
     private Date timeOfReading;
 
+
+    /**priority of the event*/
+    private int priority;
     /**
      * Single value constructor.
      * @param value gravity in axix.
@@ -22,12 +25,14 @@ public class GravityEvent {
      * @param gravityy gravityeration in y axix
      * @param gravityz gravityeration in z axix
      * @param timeOfReading Time of Reading
+     * @param priority priority of the event
      */
-    public GravityEvent(float gravityx, float gravityy, float gravityz, Date timeOfReading) {
+    public GravityEvent(float gravityx, float gravityy, float gravityz, Date timeOfReading, int priority) {
         this.gravityx = gravityx;
         this.gravityy = gravityy;
         this.gravityz = gravityz;
         this.timeOfReading = timeOfReading;
+        this.priority = priority;
     }
 
     /**
@@ -64,9 +69,12 @@ public class GravityEvent {
         return timeOfReading;
     }
 
+    /**get priority*/
+    public int getPriority(){return priority;}
+
     @Override
     public String toString() {
-        return "gravityEvent [ X:" + gravityx + " Y:"+gravityy+" Z:"+gravityz+" ]";
+        return "gravityEvent [ X:" + gravityx + " Y:"+gravityy+" Z:"+gravityz+" ]  TimeStamp: "+timeOfReading+" Priority: "+priority;
     }
     
     
