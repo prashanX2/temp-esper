@@ -4,6 +4,7 @@ package com.cor.cep.handler;
 import com.cor.cep.event.AccelerationEvent;
 import com.cor.cep.event.TemperatureEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
+import com.cor.cep.util.EventPriorities;
 import com.espertech.esper.client.EPStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,8 +112,11 @@ public class AccelerationEventHandler implements InitializingBean {
 
     public void handle(AccelerationEvent event) {
 
+
         tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
+        EventPriorities.eventCountadd();
+
 
     }
 

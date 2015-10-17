@@ -1,6 +1,7 @@
 package com.cor.cep.handler;
 
 import com.cor.cep.event.LuminousEvent;
+import com.cor.cep.util.EventPriorities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -103,6 +104,7 @@ public class LuminousEventHandler implements InitializingBean {
 
        //LOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
+        EventPriorities.eventCountadd();
 
     }
 

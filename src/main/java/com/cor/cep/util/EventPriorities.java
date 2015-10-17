@@ -16,6 +16,9 @@ public final class EventPriorities {
 
 
 
+    private static int eventCount;
+
+
     public static int getAccelP(){return acceleration;}
     public static int getGravityP(){return gravity;}
     public static int getRotationP(){return rotation;}
@@ -28,6 +31,12 @@ public final class EventPriorities {
     public static int getHumidityP(){return humidity;}
 
     public static int getDistanceP(){return distance;}
+
+    public static void eventCountadd(){eventCount++;}
+
+    public static int getEventCount(){return eventCount;}
+
+    public static void nullEventCount(){eventCount = 0;}
 
 
 

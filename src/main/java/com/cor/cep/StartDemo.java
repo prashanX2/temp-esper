@@ -58,8 +58,14 @@ public class StartDemo {
 
         //serverStart();
 
+        NetworkLatency latency = new NetworkLatency();
+        latency.clientLatency();
+
         IPCServer generator = (IPCServer) factory.getBean("eventGenerator");
-        generator.startSendingTemperatureReadings(noOfTemperatureEvents);
+       generator.startSendingTemperatureReadings(noOfTemperatureEvents);
+
+        EventsThroughput eventmonitor = new EventsThroughput();
+        eventmonitor.runEventThroughput();
 
 
 
