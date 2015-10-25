@@ -3,6 +3,7 @@ package com.cor.cep.handler;
 import com.cor.cep.event.OrientationEvent;
 import com.cor.cep.event.RotationEvent;
 import com.cor.cep.util.EventPriorities;
+import com.cor.cep.util.EventsThroughput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -107,7 +108,8 @@ public class OrientationEventHandler implements InitializingBean {
 
         //tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
-        EventPriorities.eventCountadd();
+        //EventPriorities.eventCountadd();
+        EventsThroughput.orientationcount+=1;
 
     }
 

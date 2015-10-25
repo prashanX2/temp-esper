@@ -3,6 +3,7 @@ package com.cor.cep.subscriber.temperature;
 import java.util.Map;
 
 import com.cor.cep.subscriber.StatementSubscriber;
+import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import com.cor.cep.event.TemperatureEvent;
 /**
  * Wraps Esper Statement and Listener. No dependency on Esper libraries.
  */
-@Component
+
 public class TempCriticalEventSubscriber implements StatementSubscriber {
 
     /** Logger */
@@ -46,7 +47,9 @@ public class TempCriticalEventSubscriber implements StatementSubscriber {
         
         return crtiticalEventExpression;
     }
-    
+
+
+    public void update(EventBean[] newEvents, EventBean[] oldEvents){}
     /**
      * Listener method called when Esper has detected a pattern match.
      */

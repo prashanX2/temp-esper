@@ -5,6 +5,7 @@ import com.cor.cep.event.AccelerationEvent;
 import com.cor.cep.event.TemperatureEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.EventPriorities;
+import com.cor.cep.util.EventsThroughput;
 import com.espertech.esper.client.EPStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +16,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 
-@Component
-@Scope(value = "singleton")
-public class AccelerationEventHandler implements InitializingBean {
 
+public class AccelerationEventHandler {
 
+    public AccelerationEventHandler()
+    {
+        afterPropertiesSet();
+    }
     /**
      * Logger
      */
@@ -113,14 +116,15 @@ public class AccelerationEventHandler implements InitializingBean {
     public void handle(AccelerationEvent event) {
 
 
-        tempLOG.debug(event.toString());
+        //tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
-        EventPriorities.eventCountadd();
+        //EventPriorities.eventCountadd();
+        EventsThroughput.accelcount+=1;
 
 
     }
 
-    @Override
+
     public void afterPropertiesSet() {
 
         tempLOG.debug("Configuring..");

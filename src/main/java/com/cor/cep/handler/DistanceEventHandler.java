@@ -3,15 +3,34 @@ package com.cor.cep.handler;
 import com.cor.cep.event.DistanceEvent;
 import com.cor.cep.event.HumidityEvent;
 import com.cor.cep.util.EventPriorities;
+import com.cor.cep.util.EventsThroughput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
-@Scope(value = "singleton")
-public class DistanceEventHandler implements InitializingBean {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+
+
+
+import com.espertech.esper.client.EPStatement;
+
+import com.cor.cep.subscriber.StatementSubscriber;
+import com.cor.cep.subscriber.distance.DistanceWarningEventSubscriber;
+
+
+
+public class DistanceEventHandler {
+
+    public DistanceEventHandler()
+    {
+        afterPropertiesSet();
+
+    }
+
 
     /**
      * Logger
@@ -23,17 +42,17 @@ public class DistanceEventHandler implements InitializingBean {
      */
     //private EPServiceProvider epService;
     //private EPStatement tempcriticalEventStatement;
-    //private EPStatement tempwarningEventStatement;
+    private EPStatement distancewarningEventStatement;
     //private EPStatement tempmonitorEventStatement;
 
    /* @Autowired
     @Qualifier("tempCriticalEventSubscriber")
     private StatementSubscriber tempCriticalEventSubscriber;
 
-    @Autowired
-    @Qualifier("tempWarningEventSubscriber")
-    private StatementSubscriber tempWarningEventSubscriber;
+*/
 
+   DistanceWarningEventSubscriber distanceWarningEventSubscriber = new DistanceWarningEventSubscriber();
+/*
     @Autowired
     @Qualifier("tempMonitorEventSubscriber")
     private StatementSubscriber tempMonitorEventSubscriber;
@@ -52,7 +71,7 @@ public class DistanceEventHandler implements InitializingBean {
         epService = EPServiceProviderManager.getDefaultProvider(config);
          */
         // createCriticalTemperatureCheckExpression();
-        //createWarningTemperatureCheckExpression();
+        createWarningDistanceCheckExpression();
         //createTemperatureMonitorExpression();
 
     }
@@ -72,17 +91,17 @@ public class DistanceEventHandler implements InitializingBean {
         tempcriticalEventStatement.setSubscriber(tempCriticalEventSubscriber);
     }
 
-    /**
-     * EPL to check for 2 consecutive Temperature events over the threshold - if matched, will alert
+
+     * EPL to check for 2 consecutive Distance events over the threshold - if matched, will alert
      * listener.
      */
 
-    /*
-    private void createWarningTemperatureCheckExpression() {
 
-        tempLOG.debug("create Warning Temperature Check Expression");
-        tempwarningEventStatement = epService.epService.getEPAdministrator().createEPL(tempWarningEventSubscriber.getStatement());
-        tempwarningEventStatement.setSubscriber(tempWarningEventSubscriber);
+    private void createWarningDistanceCheckExpression() {
+
+        tempLOG.debug("create Warning Distance Check Expression");
+        distancewarningEventStatement = epService.epService.getEPAdministrator().createEPL(distanceWarningEventSubscriber.getStatement());
+        distancewarningEventStatement.setSubscriber(distanceWarningEventSubscriber);
     }
 
     /**
@@ -107,11 +126,12 @@ public class DistanceEventHandler implements InitializingBean {
 
         tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
-        EventPriorities.eventCountadd();
+        //EventPriorities.eventCountadd();
+        EventsThroughput.distancecount += 1;
 
     }
 
-    @Override
+
     public void afterPropertiesSet() {
 
         tempLOG.debug("Configuring..");

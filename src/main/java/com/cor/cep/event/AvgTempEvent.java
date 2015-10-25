@@ -36,7 +36,7 @@ public class AvgTempEvent {
      * Get the Temperature.
      * @return Temperature in Celsius
      */
-    public int getAvgTemperature() {
+    public int getavgtemperature() {
         return avgtemperature;
     }
 

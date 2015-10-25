@@ -4,6 +4,7 @@ package com.cor.cep.handler;
 import com.cor.cep.event.AccelerationEvent;
 import com.cor.cep.event.GravityEvent;
 import com.cor.cep.util.EventPriorities;
+import com.cor.cep.util.EventsThroughput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -11,8 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 
-@Component
-@Scope(value = "singleton")
+
 public class GravityEventHandler implements InitializingBean {
 
     /**
@@ -109,7 +109,8 @@ public class GravityEventHandler implements InitializingBean {
 
        // tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
-        EventPriorities.eventCountadd();
+        //EventPriorities.eventCountadd();
+        EventsThroughput.gravitycount+=1;
 
     }
 

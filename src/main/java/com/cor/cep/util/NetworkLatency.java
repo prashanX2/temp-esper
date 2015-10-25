@@ -16,6 +16,7 @@ public class NetworkLatency {
     public void clientLatency()
     {
 
+
         ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
 
 
@@ -52,8 +53,10 @@ public class NetworkLatency {
 
                         long d = System.nanoTime();
                         clientSocket.send(sendPacket);
+
                         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                         clientSocket.receive(receivePacket);
+
                         String modifiedSentence = new String(receivePacket.getData());
                         long f = System.nanoTime();
 
@@ -69,6 +72,8 @@ public class NetworkLatency {
 
 
                 } catch (Exception e) {
+
+                    System.out.println(e);
                 }
 
 

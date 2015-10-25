@@ -51,8 +51,8 @@ public class StartDemo {
 
         // Load spring config
 
-        ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "application-context.xml" });
-        BeanFactory factory = (BeanFactory) appContext;
+        //ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "application-context.xml" });
+       // BeanFactory factory = (BeanFactory) appContext;
 
         // Start Demo
 
@@ -64,7 +64,11 @@ public class StartDemo {
         NetworkThroughput throughput = new NetworkThroughput();
         throughput.runThroughput();
 
-        IPCServer generator = (IPCServer) factory.getBean("eventGenerator");
+        CpuThroughput cputhroughput = new CpuThroughput();
+        cputhroughput.runCpuThroughput();
+
+        //IPCServer generator = (IPCServer) factory.getBean("eventGenerator");
+        IPCServer generator = new IPCServer();
        generator.startSendingTemperatureReadings(noOfTemperatureEvents);
 
         EventsThroughput eventmonitor = new EventsThroughput();

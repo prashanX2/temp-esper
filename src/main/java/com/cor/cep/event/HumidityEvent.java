@@ -34,7 +34,7 @@ public class HumidityEvent {
      * Get the humidity.
      * @return humidity %
      */
-    public int getHumidity() {
+    public int gethumidity() {
         return humidity;
     }
 

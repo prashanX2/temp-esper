@@ -2,6 +2,7 @@ package com.cor.cep.subscriber.luminous;
 
 import com.cor.cep.event.LuminousEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
+import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -44,7 +45,7 @@ public class LumiCriticalEventSubscriber implements StatementSubscriber {
 
         return crtiticalEventExpression;
     }
-
+    public void update(EventBean[] newEvents, EventBean[] oldEvents){}
     /**
      * Listener method called when Esper has detected a pattern match.
      */

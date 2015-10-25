@@ -10,6 +10,9 @@ import java.util.concurrent.Executors;
 public class NetworkThroughput {
 
 
+    public static int upload;
+
+    public static int download;
 
 
         public String executeCommand(String command)
@@ -48,21 +51,53 @@ public class NetworkThroughput {
             public void run() {
 
                 while (true) {
-                    try {
+
+                    String output = executeCommand("ifstat 1 1");
+                    String[] out = output.split(" ");
+
+                    int[] downup = new int[2];
+                    boolean down = false;
 
 
-                        String output = executeCommand("ifstat 1 1");
-                        String[] out = output.split(" ");
+
+
+
 
                         //System.out.println(Arrays.asList(out));
 
-                        System.out.println(out[23]);
-                        System.out.println(out[29]);
+                        for(int i=0;i<out.length;i++)
+                        {
+                            try
+                            {
+                                if(down==false)
+                                {
+                                    downup[0] = (int)Float.parseFloat(out[i]);
+                                    down=true;
+                                }
+                                else
+                                {
+                                    downup[1] = (int)Float.parseFloat(out[i]);
+                                    break;
+                                }
 
-                    } catch (Exception e) {
+                            }catch(Exception hh){}
+                        }
+                        download =  downup[0];
+                        upload = downup[1];
+                        System.out.println(download+" "+upload);
 
-                        System.out.println(e);
-                    }
+
+                       // download = (int)Float.parseFloat(out[23]);
+                        //upload = (int)Float.parseFloat(out[29]);
+
+                        //System.out.println(out[23]); //22
+                        //System.out.println(out[29]);//28
+
+                        //System.out.println(download); //22
+                        //System.out.println(upload);
+
+
+
 
                     try {
                         Thread.sleep(1000);

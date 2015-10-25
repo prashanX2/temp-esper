@@ -14,6 +14,18 @@ public final class EventPriorities {
 
     private static int distance = 3;
 
+    /**secondory Event priorities*/
+
+    private static int entered = 3;
+
+    private static int avgtemp = 3;
+    private static int avglumi = 3;
+    private static int avghumi = 3;
+
+    private static int warntemp = 3;
+    private static int warnlumi = 3;
+    private static int warnhumi = 3;
+
 
 
     private static int eventCount;
@@ -28,6 +40,7 @@ public final class EventPriorities {
 
 
     public static int getTemperatureP(){return temperature;}
+
     public static int getHumidityP(){return humidity;}
 
     public static int getDistanceP(){return distance;}
@@ -37,6 +50,30 @@ public final class EventPriorities {
     public static int getEventCount(){return eventCount;}
 
     public static void nullEventCount(){eventCount = 0;}
+
+
+
+
+    /**secondary event getters*/
+
+    public static int getentered(){return entered;}
+
+
+    public static int getavglumi(){return avglumi;}
+    public static int getavgtemp(){return avgtemp;}
+    public static int getavghumi(){return avghumi;}
+
+    public static int getwarntemp(){return warntemp;}
+    public static int getwarnlumi(){return warnlumi;}
+    public static int getwarnhumi(){return warnhumi;}
+
+
+
+
+
+
+
+
 
 
 

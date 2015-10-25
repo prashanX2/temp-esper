@@ -7,12 +7,7 @@ import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.cor.cep.event.AccelerationEvent;
-import com.cor.cep.event.GravityEvent;
-import com.cor.cep.event.RotationEvent;
-import com.cor.cep.event.OrientationEvent;
-import com.cor.cep.event.HumidityEvent;
-import com.cor.cep.event.DistanceEvent;
+import com.cor.cep.event.*;
 
 
 import com.cor.cep.handler.*;
@@ -21,43 +16,43 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cor.cep.event.LuminousEvent;
-
 
 /**
  * Just a simple class to create a number of Random TemperatureEvents and pass them off to the
  * TemperatureEventHandler.
  */
-@Component
+
 public class IPCServer {
 
     /** Logger */
     private static Logger LOG = LoggerFactory.getLogger(IPCServer.class);
 
     /** The TemperatureEventHandler - wraps the Esper engine and processes the Events  */
-    @Autowired
-    private  TemperatureEventHandler temperatureEventHandler;
 
-    @Autowired
-    private LuminousEventHandler luminousEventHandler;
+    public  TemperatureEventHandler temperatureEventHandler = new TemperatureEventHandler();
 
-    @Autowired
-    private AccelerationEventHandler accelerationEventHandler;
 
-    @Autowired
-    private GravityEventHandler gravityEventHandler;
+    public LuminousEventHandler luminousEventHandler = new LuminousEventHandler();
 
-    @Autowired
-    private RotationEventHandler rotationEventHandler;
 
-    @Autowired
-    private OrientationEventHandler orientationEventHandler;
+    public AccelerationEventHandler accelerationEventHandler = new AccelerationEventHandler();
 
-    @Autowired
-    private HumidityEventHandler humidityEventHandler;
 
-    @Autowired
-    private DistanceEventHandler distanceEventHandler;
+    public GravityEventHandler gravityEventHandler = new GravityEventHandler();
+
+
+    public RotationEventHandler rotationEventHandler = new RotationEventHandler();
+
+
+    public OrientationEventHandler orientationEventHandler = new OrientationEventHandler();
+
+
+    public HumidityEventHandler humidityEventHandler = new HumidityEventHandler();
+
+
+    public DistanceEventHandler distanceEventHandler = new DistanceEventHandler();
+
+    public FinalEventHandler resultEvents = new FinalEventHandler();
 
 
 
@@ -68,7 +63,7 @@ public class IPCServer {
      */
     public void startSendingTemperatureReadings(final long noOfTemperatureEvents) {
 
-        ExecutorService xrayExecutor = Executors.newSingleThreadExecutor();
+        ExecutorService xxrayExecutor = Executors.newSingleThreadExecutor();
 
 
         try {
@@ -82,7 +77,7 @@ public class IPCServer {
 
 
 
-            xrayExecutor.submit(new Runnable() {
+            xxrayExecutor.submit(new Runnable() {
                 public void run() {
 
                     while (true) {
@@ -93,6 +88,7 @@ public class IPCServer {
 
                         try {
                             serverSocket.receive(receivePacket);
+                            //System.out.println("packet recieved");
 
                         } catch (Exception ex) {
                             System.out.println(ex.toString());
@@ -100,7 +96,7 @@ public class IPCServer {
 
                         String sentence = new String(receivePacket.getData());
                         String decode[] = sentence.split(" ");
-
+                        //System.out.println(sentence);
 
 
                         if (decode[0].equals("H001")) {
@@ -171,8 +167,10 @@ public class IPCServer {
                 Date timestamp = new Date();
 
                 HumidityEvent humidity = new HumidityEvent(IPCServer_STH1.getHumidity(),timestamp,EventPriorities.getHumidityP());
+                TemperatureEvent temperature = new TemperatureEvent(IPCServer_STH1.getTemp(),timestamp, EventPriorities.getTemperatureP());
 
                 humidityEventHandler.handle(humidity);
+                temperatureEventHandler.handle(temperature);
 
             }
 

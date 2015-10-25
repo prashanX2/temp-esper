@@ -3,7 +3,12 @@ package com.cor.cep.handler;
 
 import com.cor.cep.event.HumidityEvent;
 import com.cor.cep.event.RotationEvent;
+import com.cor.cep.subscriber.humidity.HumiCriticalEventSubscriber;
+import com.cor.cep.subscriber.humidity.HumiMonitorEventSubscriber;
+import com.cor.cep.subscriber.humidity.HumiWarningEventSubscriber;
 import com.cor.cep.util.EventPriorities;
+import com.cor.cep.util.EventsThroughput;
+import com.espertech.esper.client.EPStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -11,19 +16,51 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 
-@Component
-@Scope(value = "singleton")
-public class HumidityEventHandler implements InitializingBean {
+
+public class HumidityEventHandler {
 
 
     /**
      * Logger
      */
+    public HumidityEventHandler(){afterPropertiesSet();}
+
+
     private static Logger tempLOG = LoggerFactory.getLogger(TemperatureEventHandler.class);
 
     /**
      * Esper service
      */
+
+
+
+    private EPStatement humicriticalEventStatement;
+    private EPStatement humiwarningEventStatement;
+    private EPStatement humimonitorEventStatement;
+
+
+
+
+
+
+    private HumiCriticalEventSubscriber humiCriticalEventSubscriber = new HumiCriticalEventSubscriber();
+
+
+    private HumiWarningEventSubscriber humiWarningEventSubscriber = new HumiWarningEventSubscriber();
+
+
+    private HumiMonitorEventSubscriber humiMonitorEventSubscriber = new HumiMonitorEventSubscriber();
+
+
+
+
+
+
+
+
+
+
+
     //private EPServiceProvider epService;
     //private EPStatement tempcriticalEventStatement;
     //private EPStatement tempwarningEventStatement;
@@ -54,9 +91,9 @@ public class HumidityEventHandler implements InitializingBean {
         config.addEventTypeAutoName("com.cor.cep.event");
         epService = EPServiceProviderManager.getDefaultProvider(config);
          */
-        // createCriticalTemperatureCheckExpression();
-        //createWarningTemperatureCheckExpression();
-        //createTemperatureMonitorExpression();
+        createCriticalHumidityCheckExpression();
+        createWarningHumidityCheckExpression();
+        createHumidityMonitorExpression();
 
     }
 
@@ -67,12 +104,12 @@ public class HumidityEventHandler implements InitializingBean {
      * temperature
      */
 
-    /*
-    private void createCriticalTemperatureCheckExpression() {
 
-        tempLOG.debug("create Critical Temperature Check Expression");
-        tempcriticalEventStatement = epService.epService.getEPAdministrator().createEPL(tempCriticalEventSubscriber.getStatement());
-        tempcriticalEventStatement.setSubscriber(tempCriticalEventSubscriber);
+    private void createCriticalHumidityCheckExpression() {
+
+        tempLOG.debug("create Critical Humidity Check Expression");
+        humicriticalEventStatement = epService.epService.getEPAdministrator().createEPL(humiCriticalEventSubscriber.getStatement());
+        humicriticalEventStatement.setSubscriber(humiCriticalEventSubscriber);
     }
 
     /**
@@ -80,24 +117,24 @@ public class HumidityEventHandler implements InitializingBean {
      * listener.
      */
 
-    /*
-    private void createWarningTemperatureCheckExpression() {
 
-        tempLOG.debug("create Warning Temperature Check Expression");
-        tempwarningEventStatement = epService.epService.getEPAdministrator().createEPL(tempWarningEventSubscriber.getStatement());
-        tempwarningEventStatement.setSubscriber(tempWarningEventSubscriber);
+    private void createWarningHumidityCheckExpression() {
+
+        tempLOG.debug("create Warning Humidity Check Expression");
+        humiwarningEventStatement = epService.epService.getEPAdministrator().createEPL(humiWarningEventSubscriber.getStatement());
+        humiwarningEventStatement.setSubscriber(humiWarningEventSubscriber);
     }
 
     /**
      * EPL to monitor the average temperature every 10 seconds. Will call listener on every event.
      */
 
-    /*
-    private void createTemperatureMonitorExpression() {
 
-        tempLOG.debug("create Timed Average Monitor");
-        tempmonitorEventStatement = epService.epService.getEPAdministrator().createEPL(tempMonitorEventSubscriber.getStatement());
-        tempmonitorEventStatement.setSubscriber(tempMonitorEventSubscriber);
+    private void createHumidityMonitorExpression() {
+
+        tempLOG.debug("create Timed Average Humidity Monitor");
+        humimonitorEventStatement = epService.epService.getEPAdministrator().createEPL(humiMonitorEventSubscriber.getStatement());
+        humimonitorEventStatement.setSubscriber(humiMonitorEventSubscriber);
     }
 
     /**
@@ -110,11 +147,12 @@ public class HumidityEventHandler implements InitializingBean {
 
         tempLOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
-        EventPriorities.eventCountadd();
+        //EventPriorities.eventCountadd();
+        EventsThroughput.humiditycount+=1;
 
     }
 
-    @Override
+
     public void afterPropertiesSet() {
 
         tempLOG.debug("Configuring..");

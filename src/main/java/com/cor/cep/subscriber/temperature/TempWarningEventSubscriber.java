@@ -2,7 +2,13 @@ package com.cor.cep.subscriber.temperature;
 
 import java.util.Map;
 
+import com.cor.cep.event.WarnLumiEvent;
+import com.cor.cep.event.WarnTempEvent;
+import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
+import com.cor.cep.util.EventPriorities;
+import com.cor.cep.util.EventsThroughput;
+import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -19,7 +25,7 @@ public class TempWarningEventSubscriber implements StatementSubscriber {
     private static Logger LOG = LoggerFactory.getLogger(TempWarningEventSubscriber.class);
 
     /** If 2 consecutive temperature events are greater than this - issue a warning */
-    private static final String WARNING_EVENT_THRESHOLD = "200";
+    private static final String WARNING_EVENT_THRESHOLD = "20";
 
     
     /**
@@ -42,12 +48,20 @@ public class TempWarningEventSubscriber implements StatementSubscriber {
     /**
      * Listener method called when Esper has detected a pattern match.
      */
+    public void update(EventBean[] newEvents, EventBean[] oldEvents){}
+
     public void update(Map<String, TemperatureEvent> eventMap) {
 
         // 1st Temperature in the Warning Sequence
         TemperatureEvent temp1 = (TemperatureEvent) eventMap.get("temp1");
         // 2nd Temperature in the Warning Sequence
         TemperatureEvent temp2 = (TemperatureEvent) eventMap.get("temp2");
+
+
+        WarnTempEvent warnTempEvent = new WarnTempEvent(temp2.getTemperature(), temp2.getTimeOfReading(), EventPriorities.getwarntemp());
+        epService.epService.getEPRuntime().sendEvent(warnTempEvent);
+        EventsThroughput.warntempcount+=1;
+
 
         StringBuilder sb = new StringBuilder();
         sb.append("--------------------------------------------------");

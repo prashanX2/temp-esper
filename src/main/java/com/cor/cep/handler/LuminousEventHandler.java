@@ -1,7 +1,11 @@
 package com.cor.cep.handler;
 
 import com.cor.cep.event.LuminousEvent;
+import com.cor.cep.subscriber.luminous.LumiCriticalEventSubscriber;
+import com.cor.cep.subscriber.luminous.LumiMonitorEventSubscriber;
+import com.cor.cep.subscriber.luminous.LumiWarningEventSubscriber;
 import com.cor.cep.util.EventPriorities;
+import com.cor.cep.util.EventsThroughput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -17,10 +21,11 @@ import com.espertech.esper.client.EPStatement;
  * This class handles incoming Luminous Events. It processes them through the EPService, to which
  * it has attached the 3 queries.
  */
-@Component
-@Scope(value = "singleton")
-public class LuminousEventHandler implements InitializingBean {
 
+public class LuminousEventHandler {
+
+
+    public LuminousEventHandler(){afterPropertiesSet();}
     /**
      * Logger
      */
@@ -34,17 +39,19 @@ public class LuminousEventHandler implements InitializingBean {
     private EPStatement lumiwarningEventStatement;
     private EPStatement lumimonitorEventStatement;
 
-    @Autowired
-    @Qualifier("lumiCriticalEventSubscriber")
-    private StatementSubscriber lumiCriticalEventSubscriber;
 
-    @Autowired
-    @Qualifier("lumiWarningEventSubscriber")
-    private StatementSubscriber lumiWarningEventSubscriber;
 
-    @Autowired
-    @Qualifier("lumiMonitorEventSubscriber")
-    private StatementSubscriber lumiMonitorEventSubscriber;
+
+
+
+    private LumiCriticalEventSubscriber lumiCriticalEventSubscriber = new LumiCriticalEventSubscriber();
+
+
+    private LumiWarningEventSubscriber lumiWarningEventSubscriber = new LumiWarningEventSubscriber();
+
+
+    private LumiMonitorEventSubscriber lumiMonitorEventSubscriber = new LumiMonitorEventSubscriber();
+
 
     /**
      * Configure Esper Statement(s).
@@ -104,11 +111,12 @@ public class LuminousEventHandler implements InitializingBean {
 
        //LOG.debug(event.toString());
         epService.epService.getEPRuntime().sendEvent(event);
-        EventPriorities.eventCountadd();
+        //EventPriorities.eventCountadd();
+        EventsThroughput.lumicount+=1;
 
     }
 
-    @Override
+
     public void afterPropertiesSet() {
 
         LOG.debug("Configuring..");
