@@ -3,10 +3,7 @@ package com.cor.cep.handler;
 
 import com.cor.cep.event.DistanceEvent;
 import com.cor.cep.event.WarnLumiEvent;
-import com.cor.cep.subscriber.EndResult.DistLumiSubscriber;
-import com.cor.cep.subscriber.EndResult.DistTempSubscriber;
-import com.cor.cep.subscriber.EndResult.WarnLumiSubscriber;
-import com.cor.cep.subscriber.EndResult.WarnTempSubscriber;
+import com.cor.cep.subscriber.EndResult.*;
 import com.cor.cep.util.EventsThroughput;
 import com.espertech.esper.client.EPStatement;
 import org.slf4j.Logger;
@@ -25,6 +22,7 @@ public class FinalEventHandler {
 
     WarnLumiSubscriber warnLumiSubscriber = new WarnLumiSubscriber();
     WarnTempSubscriber warnTempSubscriber = new WarnTempSubscriber();
+    WarnHumiSubscriber warnHumiSubscriber = new WarnHumiSubscriber();
 
 
     private EPStatement distTempEventStatement;
@@ -32,6 +30,7 @@ public class FinalEventHandler {
 
     private EPStatement warnLumiEventStatement;
     private  EPStatement warnTempEventStatement;
+    private EPStatement warnHumiEventStatement;
 
     private static Logger tempLOG = LoggerFactory.getLogger(TemperatureEventHandler.class);
 
@@ -53,6 +52,7 @@ public class FinalEventHandler {
 
         createWarnLumiCheckExpression();
         createWarnTempCheckExpression();
+        createWarnHumiCheckExpression();
 
 
         //createTemperatureMonitorExpression();
@@ -99,7 +99,12 @@ public class FinalEventHandler {
     }
 
 
+    private void createWarnHumiCheckExpression() {
 
+        tempLOG.debug("create Warning alert  Luminous Check Expression");
+        warnHumiEventStatement = epService.epService.getEPAdministrator().createEPL(warnHumiSubscriber.getStatement());
+        warnHumiEventStatement.setSubscriber(warnHumiSubscriber);
+    }
 
 
 

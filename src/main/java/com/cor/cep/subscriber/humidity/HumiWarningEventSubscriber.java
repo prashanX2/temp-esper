@@ -2,6 +2,7 @@ package com.cor.cep.subscriber.humidity;
 
 import com.cor.cep.event.HumidityEvent;
 import com.cor.cep.event.LuminousEvent;
+import com.cor.cep.event.WarnHumiEvent;
 import com.cor.cep.event.WarnLumiEvent;
 import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
@@ -24,7 +25,7 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
     private static Logger LOG = LoggerFactory.getLogger(HumiWarningEventSubscriber.class);
 
     /** If 2 consecutive temperature events are greater than this - issue a warning */
-    private static final String WARNING_EVENT_THRESHOLD = "200";
+    private static final String WARNING_EVENT_THRESHOLD = "50";
 
     
     /**
@@ -61,9 +62,9 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
 
 
 
-        //WarnLumiEvent warnLumiEvent = new WarnLumiEvent(temp5.getluminous(), temp5.getTimeOfReading(),EventPriorities.getwarnlumi());
-       // epService.epService.getEPRuntime().sendEvent(warnLumiEvent);
-       // EventsThroughput.warnlumicount+=1;
+        WarnHumiEvent warnHumiEvent = new WarnHumiEvent(temp2.gethumidity(), temp2.getTimeOfReading(),EventPriorities.getwarnhumi());
+        epService.epService.getEPRuntime().sendEvent(warnHumiEvent);
+        EventsThroughput.warnhumicount+=1;
 
 
         StringBuilder sb = new StringBuilder();

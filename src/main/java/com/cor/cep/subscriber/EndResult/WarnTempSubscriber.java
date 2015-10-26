@@ -16,7 +16,7 @@ public class WarnTempSubscriber implements StatementSubscriber{
 
         // Example using 'Match Recognise' syntax.
 
-        String warningEventExpression = "select count(*) as cnt from WarnTempEvent.win:time(1 sec)";
+        String warningEventExpression = "select count(*) as cnt from WarnTempEvent.win:time(2 sec)";
 
         return warningEventExpression;
     }
