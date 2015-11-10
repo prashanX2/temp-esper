@@ -1,14 +1,53 @@
 package com.cor.cep.util;
 
 
+import com.cor.cep.event.*;
+import com.cor.cep.handler.*;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public final class FogToCloudGateway {
+
+
+    /**handlers for cloudside engine*/
+
+
+    public static TemperatureEventHandler gtemperatureEventHandler = new TemperatureEventHandler();
+
+
+    public static LuminousEventHandler gluminousEventHandler = new LuminousEventHandler();
+
+
+    public static AccelerationEventHandler gaccelerationEventHandler = new AccelerationEventHandler();
+
+
+    public static GravityEventHandler ggravityEventHandler = new GravityEventHandler();
+
+
+    public static RotationEventHandler grotationEventHandler = new RotationEventHandler();
+
+
+    public static OrientationEventHandler gorientationEventHandler = new OrientationEventHandler();
+
+
+    public static HumidityEventHandler ghumidityEventHandler = new HumidityEventHandler();
+
+
+    public static DistanceEventHandler gdistanceEventHandler = new DistanceEventHandler();
+
+    public static FinalEventHandler gresultEvents = new FinalEventHandler();
+
+
+
+
+
+
 
 
     public static boolean isCloud = false;
@@ -61,6 +100,35 @@ public final class FogToCloudGateway {
                             gatewayserverSocket.receive(receivePacket);
                             String sentence = new String(receivePacket.getData());
                             System.out.println("packet recieved "+sentence);
+
+                            String decode[] = sentence.split(" ");
+
+
+
+                            if(decode[0].equals("LUMI"))
+                            {
+
+
+                                Date timestamp = new Date();
+
+
+                                LuminousEvent luminous = new LuminousEvent(Integer.parseInt(decode[2]), timestamp,EventPriorities.getLuminousP());
+                                gluminousEventHandler.handle(luminous);
+
+
+
+                            }
+
+
+
+
+
+
+
+
+
+
+
 
                         } catch (Exception ex) {
                             System.out.println(ex.toString());
