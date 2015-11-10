@@ -42,7 +42,7 @@ public final class FogToCloudGateway {
         {
             gatewayserverSocket = new DatagramSocket(55555);
             System.out.println("gateway server started....");
-            final byte[] receiveData = new byte[1024];
+            final byte[] gatewayreceiveData = new byte[1024];
 
 
 
@@ -54,7 +54,7 @@ public final class FogToCloudGateway {
                     while (true) {
 
 
-                        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                        DatagramPacket receivePacket = new DatagramPacket(gatewayreceiveData, gatewayreceiveData.length);
 
 
                         try {
@@ -67,7 +67,7 @@ public final class FogToCloudGateway {
                         }
 
 
-                        Arrays.fill(receiveData, (byte) 0);
+                        Arrays.fill(gatewayreceiveData, (byte) 0);
 
                         try {
                             Thread.sleep(1);
