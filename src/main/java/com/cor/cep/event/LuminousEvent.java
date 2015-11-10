@@ -3,6 +3,7 @@ import java.util.Date;
 
 public class LuminousEvent {
 
+    private String ID = "LUMI";
     /** luminous in Celcius. */
     private int luminous;
 
@@ -46,6 +47,9 @@ public class LuminousEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID(*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

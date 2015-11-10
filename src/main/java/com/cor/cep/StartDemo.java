@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.Scanner;
+
 /**
  * Entry point for the Demo. Run this from your IDE, or from the command line using 'mvn exec:java'.
  */
@@ -28,13 +30,22 @@ public class StartDemo {
     public static void main(String[] args) throws Exception {
 
 
+        Scanner sc = new Scanner(System.in);
 
+        System.out.println("Is this cloud?: ");
+        String answer = sc.nextLine();
 
+        if(answer.equals("n"))
+        {
+            FogToCloudGateway.initgatewayclient();
+        }
+        else if(answer.equals("y"))
+        {
+            FogToCloudGateway.isCloud=true;
 
+            FogToCloudGateway.initgatewayserver();
 
-
-
-
+        }
 
         LOG.debug("Starting...");
 
@@ -58,6 +69,8 @@ public class StartDemo {
 
         //serverStart();
 
+
+
         NetworkLatency latency = new NetworkLatency();
         latency.clientLatency();
 
@@ -66,6 +79,10 @@ public class StartDemo {
 
         CpuThroughput cputhroughput = new CpuThroughput();
         cputhroughput.runCpuThroughput();
+
+
+
+        FogToCloudGateway.initgatewayclient();
 
         //IPCServer generator = (IPCServer) factory.getBean("eventGenerator");
         IPCServer generator = new IPCServer();
