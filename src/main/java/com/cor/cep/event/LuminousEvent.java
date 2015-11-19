@@ -48,7 +48,7 @@ public class LuminousEvent {
     /**get priority*/
     public int getPriority(){return priority;}
 
-    /**get ID(*/
+    /**get ID*/
     public String getID(){return ID;}
 
     @Override

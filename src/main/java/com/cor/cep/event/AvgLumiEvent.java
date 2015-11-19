@@ -14,6 +14,8 @@ public class AvgLumiEvent {
     /**priority of the event*/
     private int priority;
 
+    private String ID = "ALUM";
+
     /**
      * Single value constructor.
      * @param value luminous in Celsius.
@@ -49,6 +51,9 @@ public class AvgLumiEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

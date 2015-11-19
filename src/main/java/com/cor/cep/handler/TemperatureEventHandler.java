@@ -5,6 +5,7 @@ import com.cor.cep.subscriber.temperature.TempMonitorEventSubscriber;
 import com.cor.cep.subscriber.temperature.TempWarningEventSubscriber;
 import com.cor.cep.util.EventPriorities;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -108,11 +109,33 @@ public  class TemperatureEventHandler {
      */
     public void handle(TemperatureEvent event) {
 
+
+        if(FogToCloudGateway.schedule(event.getPriority()))
+        {
+            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getTemperature()+" "+event.getTimeOfReading();
+
+            FogToCloudGateway.sendtoCloud(eventtoSend);
+
+            // System.out.println("SENT TO CLOUD: " + eventtoSend);
+
+        }
+        else
+        {
+
+            //System.out.println("after temp handle");
+            tempLOG.debug(event.toString());
+            epService.epService.getEPRuntime().sendEvent(event);
+            //EventPriorities.eventCountadd();
+            EventsThroughput.tempcount+=1;
+
+        }
+
+
         //System.out.println("after temp handle");
-        tempLOG.debug(event.toString());
-        epService.epService.getEPRuntime().sendEvent(event);
+        //tempLOG.debug(event.toString());
+        //epService.epService.getEPRuntime().sendEvent(event);
         //EventPriorities.eventCountadd();
-        EventsThroughput.tempcount+=1;
+        //EventsThroughput.tempcount+=1;
 
     }
 

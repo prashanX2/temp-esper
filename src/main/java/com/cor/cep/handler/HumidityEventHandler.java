@@ -8,6 +8,7 @@ import com.cor.cep.subscriber.humidity.HumiMonitorEventSubscriber;
 import com.cor.cep.subscriber.humidity.HumiWarningEventSubscriber;
 import com.cor.cep.util.EventPriorities;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EPStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,10 +146,33 @@ public class HumidityEventHandler {
 
     public void handle(HumidityEvent event) {
 
-        tempLOG.debug(event.toString());
-        epService.epService.getEPRuntime().sendEvent(event);
+
+
+        if(FogToCloudGateway.schedule(event.getPriority()))
+        {
+            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.gethumidity()+" "+event.getTimeOfReading();
+
+            FogToCloudGateway.sendtoCloud(eventtoSend);
+
+            // System.out.println("SENT TO CLOUD: " + eventtoSend);
+
+        }
+        else
+        {
+
+            tempLOG.debug(event.toString());
+            epService.epService.getEPRuntime().sendEvent(event);
+            //EventPriorities.eventCountadd();
+            EventsThroughput.humiditycount+=1;
+
+        }
+
+
+
+       // tempLOG.debug(event.toString());
+        //epService.epService.getEPRuntime().sendEvent(event);
         //EventPriorities.eventCountadd();
-        EventsThroughput.humiditycount+=1;
+        //EventsThroughput.humiditycount+=1;
 
     }
 

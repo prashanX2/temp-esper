@@ -16,6 +16,8 @@ public class AvgTempEvent {
     /**priority of the event*/
     private int priority;
 
+    private String ID = "ATEM";
+
     /**
      * Single value constructor.
      * @param value Temperature in Celsius.
@@ -51,6 +53,10 @@ public class AvgTempEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

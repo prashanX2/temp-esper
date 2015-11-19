@@ -13,6 +13,7 @@ public class WarnHumiEvent {
     /**priority of the event*/
     private int priority;
 
+    private String ID = "WHUM";
 
     /**
      * Single value constructor.
@@ -49,6 +50,9 @@ public class WarnHumiEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

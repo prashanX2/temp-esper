@@ -7,6 +7,7 @@ import com.cor.cep.event.LuminousEvent;
 import com.cor.cep.handler.epService;
 import com.cor.cep.util.EventPriorities;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,12 +82,41 @@ public class DistanceWarningEventSubscriber implements  UpdateListener {
         EnteredEvent event = new EnteredEvent(dist1.getDistance(),dist2.getDistance(),dist1.getTimeOfReading(), EventPriorities.getentered());
         //LOG.debug("After person entered");
 
-        epService.epService.getEPRuntime().sendEvent(event);
-        System.out.println(event.toString());
-        //EventPriorities.eventCountadd();
-        EventsThroughput.entered += 1;
 
-        LOG.debug(sb.toString());
+
+
+
+
+
+
+
+        if(FogToCloudGateway.schedule(event.getPriority()))
+        {
+            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getDistance1()+" "+event.getDistance2()+" "+event.getTimeOfReading();
+
+            FogToCloudGateway.sendtoCloud(eventtoSend);
+
+            // System.out.println("SENT TO CLOUD: " + eventtoSend);
+
+        }
+        else
+        {
+            epService.epService.getEPRuntime().sendEvent(event);
+            System.out.println(event.toString());
+            //EventPriorities.eventCountadd();
+            EventsThroughput.entered += 1;
+
+            LOG.debug(sb.toString());
+
+        }
+
+
+        //epService.epService.getEPRuntime().sendEvent(event);
+        //System.out.println(event.toString());
+        //EventPriorities.eventCountadd();
+        //EventsThroughput.entered += 1;
+
+       // LOG.debug(sb.toString());
 
 
     }

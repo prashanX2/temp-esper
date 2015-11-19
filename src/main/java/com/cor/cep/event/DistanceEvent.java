@@ -14,6 +14,9 @@ public class DistanceEvent {
 
     /**priority of the event*/
     private int priority;
+
+    private String ID = "DIST";
+
     /**
      * Single value constructor.
      * @param value distance %.
@@ -48,6 +51,9 @@ public class DistanceEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

@@ -8,6 +8,7 @@ import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.EventPriorities;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,8 +60,32 @@ public class TempWarningEventSubscriber implements StatementSubscriber {
 
 
         WarnTempEvent warnTempEvent = new WarnTempEvent(temp2.getTemperature(), temp2.getTimeOfReading(), EventPriorities.getwarntemp());
-        epService.epService.getEPRuntime().sendEvent(warnTempEvent);
-        EventsThroughput.warntempcount+=1;
+
+
+        if(FogToCloudGateway.schedule(warnTempEvent.getPriority()))
+        {
+            String eventtoSend = warnTempEvent.getID()+" "+warnTempEvent.getPriority()+" "+warnTempEvent.getwarntemperature()+" "+warnTempEvent.getTimeOfReading();
+
+            FogToCloudGateway.sendtoCloud(eventtoSend);
+
+            // System.out.println("SENT TO CLOUD: " + eventtoSend);
+
+        }
+        else
+        {
+
+            //System.out.println("after temp handle");
+            LOG.debug(warnTempEvent.toString());
+
+
+            epService.epService.getEPRuntime().sendEvent(warnTempEvent);
+            EventsThroughput.warntempcount+=1;
+
+        }
+
+
+        //epService.epService.getEPRuntime().sendEvent(warnTempEvent);
+        //EventsThroughput.warntempcount+=1;
 
 
         StringBuilder sb = new StringBuilder();

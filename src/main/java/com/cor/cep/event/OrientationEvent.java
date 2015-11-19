@@ -15,6 +15,8 @@ public class OrientationEvent {
     /**priority of the event*/
     private int priority;
 
+    private String ID = "ORIE";
+
     /**
      * Single value constructor.
      * @param value acceleration in axix.
@@ -71,6 +73,10 @@ public class OrientationEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
+
 
     @Override
     public String toString() {

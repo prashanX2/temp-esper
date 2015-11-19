@@ -8,6 +8,7 @@ import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.EventPriorities;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,8 +64,42 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
 
 
         WarnHumiEvent warnHumiEvent = new WarnHumiEvent(temp2.gethumidity(), temp2.getTimeOfReading(),EventPriorities.getwarnhumi());
-        epService.epService.getEPRuntime().sendEvent(warnHumiEvent);
-        EventsThroughput.warnhumicount+=1;
+
+
+
+
+
+        if(FogToCloudGateway.schedule(warnHumiEvent.getPriority()))
+        {
+            String eventtoSend = warnHumiEvent.getID()+" "+warnHumiEvent.getPriority()+" "+warnHumiEvent.getwarnhumidity()+" "+warnHumiEvent.getTimeOfReading();
+
+            FogToCloudGateway.sendtoCloud(eventtoSend);
+
+            // System.out.println("SENT TO CLOUD: " + eventtoSend);
+
+        }
+        else
+        {
+
+            //System.out.println("after temp handle");
+            LOG.debug(warnHumiEvent.toString());
+
+            epService.epService.getEPRuntime().sendEvent(warnHumiEvent);
+            EventsThroughput.warnhumicount+=1;
+
+        }
+
+
+
+
+
+
+
+
+
+
+        //epService.epService.getEPRuntime().sendEvent(warnHumiEvent);
+        //EventsThroughput.warnhumicount+=1;
 
 
         StringBuilder sb = new StringBuilder();

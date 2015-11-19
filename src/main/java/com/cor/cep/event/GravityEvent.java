@@ -15,6 +15,9 @@ public class GravityEvent {
 
     /**priority of the event*/
     private int priority;
+
+    private String ID = "GRAV";
+
     /**
      * Single value constructor.
      * @param value gravity in axix.
@@ -71,6 +74,9 @@ public class GravityEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

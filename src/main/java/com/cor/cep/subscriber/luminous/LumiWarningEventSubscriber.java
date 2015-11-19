@@ -6,6 +6,7 @@ import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.EventPriorities;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,8 +67,33 @@ public class LumiWarningEventSubscriber implements StatementSubscriber {
 
 
         WarnLumiEvent warnLumiEvent = new WarnLumiEvent(temp5.getluminous(), temp5.getTimeOfReading(),EventPriorities.getwarnlumi());
-        epService.epService.getEPRuntime().sendEvent(warnLumiEvent);
-        EventsThroughput.warnlumicount+=1;
+
+        if(FogToCloudGateway.schedule(warnLumiEvent.getPriority()))
+        {
+            String eventtoSend = warnLumiEvent.getID()+" "+warnLumiEvent.getPriority()+" "+warnLumiEvent.getwarnluminous()+" "+warnLumiEvent.getTimeOfReading();
+
+            FogToCloudGateway.sendtoCloud(eventtoSend);
+
+            // System.out.println("SENT TO CLOUD: " + eventtoSend);
+
+        }
+        else
+        {
+
+            //System.out.println("after temp handle");
+            LOG.debug(warnLumiEvent.toString());
+
+
+            epService.epService.getEPRuntime().sendEvent(warnLumiEvent);
+            EventsThroughput.warnlumicount+=1;
+
+        }
+
+
+
+
+        //epService.epService.getEPRuntime().sendEvent(warnLumiEvent);
+        //EventsThroughput.warnlumicount+=1;
 
 
         StringBuilder sb = new StringBuilder();

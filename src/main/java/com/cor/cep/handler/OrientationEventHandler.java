@@ -4,6 +4,7 @@ import com.cor.cep.event.OrientationEvent;
 import com.cor.cep.event.RotationEvent;
 import com.cor.cep.util.EventPriorities;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -106,10 +107,30 @@ public class OrientationEventHandler implements InitializingBean {
 
     public void handle(OrientationEvent event) {
 
+        if(FogToCloudGateway.schedule(event.getPriority()))
+        {
+            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getazimuth()+" "+event.getpitch()+" "+event.getroll()+" "+event.getTimeOfReading();
+
+            FogToCloudGateway.sendtoCloud(eventtoSend);
+
+            // System.out.println("SENT TO CLOUD: " + eventtoSend);
+
+        }
+        else
+        {
+           tempLOG.debug(event.toString());
+            epService.epService.getEPRuntime().sendEvent(event);
+            //EventPriorities.eventCountadd();
+            EventsThroughput.orientationcount+=1;
+
+        }
+
+
+
         //tempLOG.debug(event.toString());
-        epService.epService.getEPRuntime().sendEvent(event);
+        //epService.epService.getEPRuntime().sendEvent(event);
         //EventPriorities.eventCountadd();
-        EventsThroughput.orientationcount+=1;
+        //EventsThroughput.orientationcount+=1;
 
     }
 

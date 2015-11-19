@@ -14,6 +14,8 @@ public class HumidityEvent {
     /**priority of the event*/
     private int priority;
 
+    private String ID = "HUMI";
+
     /**
      * Single value constructor.
      * @param value humidity %.
@@ -48,6 +50,9 @@ public class HumidityEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

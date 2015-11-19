@@ -15,6 +15,8 @@ public class RotationEvent {
     /**priority of the event*/
     private int priority;
 
+    private String ID = "ROTA";
+
     /**
      * Single value constructor.
      * @param value rotation in axix.
@@ -71,6 +73,9 @@ public class RotationEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

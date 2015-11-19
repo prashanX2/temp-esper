@@ -17,6 +17,8 @@ public class EnteredEvent {
     private int priority;
 
 
+    private String ID = "ENTE";
+
 
     public EnteredEvent(int distance1,int distance2, Date timeOfReading, int priority) {
         this.distance1 = distance1;
@@ -48,6 +50,9 @@ public class EnteredEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

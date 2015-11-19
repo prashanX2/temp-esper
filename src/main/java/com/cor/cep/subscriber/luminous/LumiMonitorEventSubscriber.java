@@ -5,6 +5,7 @@ import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.EventPriorities;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,8 +50,40 @@ public class LumiMonitorEventSubscriber implements StatementSubscriber {
         Date timestamp = new Date();
 
         AvgLumiEvent avgLumiEvent = new AvgLumiEvent(avg.intValue(), timestamp, EventPriorities.getavglumi());
-        epService.epService.getEPRuntime().sendEvent(avgLumiEvent);
-        EventsThroughput.AVGlumicount+=1;
+
+
+        if(FogToCloudGateway.schedule(avgLumiEvent.getPriority()))
+        {
+            String eventtoSend = avgLumiEvent.getID()+" "+avgLumiEvent.getPriority()+" "+avgLumiEvent.getavgluminous()+" "+avgLumiEvent.getTimeOfReading();
+
+            FogToCloudGateway.sendtoCloud(eventtoSend);
+
+            // System.out.println("SENT TO CLOUD: " + eventtoSend);
+
+        }
+        else
+        {
+
+            //System.out.println("after temp handle");
+            LOG.debug(avgLumiEvent.toString());
+
+
+            epService.epService.getEPRuntime().sendEvent(avgLumiEvent);
+            EventsThroughput.AVGlumicount+=1;
+
+        }
+
+
+
+
+
+
+
+
+
+
+        //epService.epService.getEPRuntime().sendEvent(avgLumiEvent);
+       // EventsThroughput.AVGlumicount+=1;
 
         StringBuilder sb = new StringBuilder();
         sb.append("---------------------------------");

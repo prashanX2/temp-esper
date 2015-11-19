@@ -3,16 +3,16 @@ package com.cor.cep.util;
 public final class EventPriorities {
 
     private static int acceleration = 6;
-    private static int gravity = 6;
+    private static int gravity = 4;
     private static int rotation = 6;
     private static int orientation = 6;
-    private static int luminous = 3;
+    private static int luminous = 6;
 
 
-    private static int temperature = 6;
-    private static int humidity = 6;
+    private static int temperature = 4;
+    private static int humidity = 4;
 
-    private static int distance = 6;
+    private static int distance = 4;
 
     /**secondory Event priorities*/
 

@@ -14,6 +14,8 @@ public class AccelerationEvent {
     /**priority of the event*/
     private int priority;
 
+    private String ID = "ACCE";
+
     /**
      * Single value constructor.
      * @param value acceleration in axix.
@@ -70,6 +72,9 @@ public class AccelerationEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID(*/
+    public String getID(){return ID;}
 
 
     @Override

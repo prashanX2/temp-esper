@@ -16,6 +16,8 @@ public class WarnTempEvent {
     /**priority of the event*/
     private int priority;
 
+    private String ID = "WTEM";
+
     /**
      * Single value constructor.
      * @param value Temperature in Celsius.
@@ -51,6 +53,9 @@ public class WarnTempEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

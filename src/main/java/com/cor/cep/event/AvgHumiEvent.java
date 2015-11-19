@@ -14,6 +14,9 @@ public class AvgHumiEvent {
     /**priority of the event*/
     private int priority;
 
+
+    private String ID = "AHUM";
+
     /**
      * Single value constructor.
      * @param value humidity in Celsius.
@@ -49,6 +52,9 @@ public class AvgHumiEvent {
 
     /**get priority*/
     public int getPriority(){return priority;}
+
+    /**get ID*/
+    public String getID(){return ID;}
 
     @Override
     public String toString() {

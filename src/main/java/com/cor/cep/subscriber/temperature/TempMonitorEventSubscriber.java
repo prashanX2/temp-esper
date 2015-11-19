@@ -8,6 +8,7 @@ import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.EventPriorities;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import org.slf4j.Logger;
@@ -65,8 +66,32 @@ public class TempMonitorEventSubscriber implements UpdateListener {
         Date timestamp = new Date();
 
         AvgTempEvent avgTempEvent = new AvgTempEvent(avg.intValue(), timestamp, EventPriorities.getavgtemp());
-        epService.epService.getEPRuntime().sendEvent(avgTempEvent);
-        EventsThroughput.AVGtempcount+=1;
+
+        if(FogToCloudGateway.schedule(avgTempEvent.getPriority()))
+        {
+            String eventtoSend = avgTempEvent.getID()+" "+avgTempEvent.getPriority()+" "+avgTempEvent.getavgtemperature()+" "+avgTempEvent.getTimeOfReading();
+
+            FogToCloudGateway.sendtoCloud(eventtoSend);
+
+            // System.out.println("SENT TO CLOUD: " + eventtoSend);
+
+        }
+        else
+        {
+
+            //System.out.println("after temp handle");
+            LOG.debug(avgTempEvent.toString());
+
+
+            epService.epService.getEPRuntime().sendEvent(avgTempEvent);
+            EventsThroughput.AVGtempcount+=1;
+
+        }
+
+
+
+        //epService.epService.getEPRuntime().sendEvent(avgTempEvent);
+        //EventsThroughput.AVGtempcount+=1;
 
 
         StringBuilder sb = new StringBuilder();
