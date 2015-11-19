@@ -22,9 +22,9 @@ public final class EventPriorities {
     private static int avglumi = 3;
     private static int avghumi = 3;
 
-    private static int warntemp = 3;
-    private static int warnlumi = 3;
-    private static int warnhumi = 3;
+    private static int warntemp = 6;
+    private static int warnlumi = 6;
+    private static int warnhumi = 6;
 
 
 
