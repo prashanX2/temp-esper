@@ -116,7 +116,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                AccelerationEvent accel = new AccelerationEvent(Integer.parseInt(decode[2]),Integer.parseInt(decode[3]),Integer.parseInt(decode[4]),timestamp,EventPriorities.getAccelP());
+                                AccelerationEvent accel = new AccelerationEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getAccelP());
                                 gaccelerationEventHandler.handle(accel);
 
                             }
@@ -129,7 +129,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                GravityEvent gravity = new GravityEvent(Integer.parseInt(decode[2]),Integer.parseInt(decode[3]),Integer.parseInt(decode[4]),timestamp,EventPriorities.getGravityP());
+                                GravityEvent gravity = new GravityEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getGravityP());
 
                                 ggravityEventHandler.handle(gravity);
 
@@ -142,7 +142,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                RotationEvent rotation = new RotationEvent(Integer.parseInt(decode[2]),Integer.parseInt(decode[3]),Integer.parseInt(decode[4]),timestamp,EventPriorities.getRotationP());
+                                RotationEvent rotation = new RotationEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getRotationP());
 
                                 grotationEventHandler.handle(rotation);
 

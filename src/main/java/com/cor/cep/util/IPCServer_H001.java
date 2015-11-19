@@ -50,7 +50,7 @@ public final class IPCServer_H001 {
 
 
         luminous = (int)Float.parseFloat(decode[13]);
-        azimuth = Math.abs((int)Float.parseFloat(decode[10]));
+        azimuth = (int)Float.parseFloat(decode[10]);
 
 
 
