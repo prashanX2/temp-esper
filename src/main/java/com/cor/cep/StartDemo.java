@@ -38,6 +38,8 @@ public class StartDemo {
         if(answer.equals("n"))
         {
             FogToCloudGateway.initgatewayclient();
+
+
         }
         else if(answer.equals("y"))
         {
@@ -46,6 +48,12 @@ public class StartDemo {
             FogToCloudGateway.initgatewayserver();
 
         }
+
+        System.out.println("Number of CPU cores: ");
+
+        String answercores = sc.nextLine();
+
+        CpuThroughput.cpuCores = Integer.parseInt(answercores);
 
         LOG.debug("Starting...");
 

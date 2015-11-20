@@ -84,7 +84,7 @@ public class NetworkThroughput {
                         }
                         download =  downup[0];
                         upload = downup[1];
-                        System.out.println(download+" "+upload);
+                        System.out.println("download throughput: "+download+" || upload throughput: "+upload);
 
 
                        // download = (int)Float.parseFloat(out[23]);

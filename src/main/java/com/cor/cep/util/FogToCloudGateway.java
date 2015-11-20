@@ -60,6 +60,10 @@ public final class FogToCloudGateway {
     public static DatagramSocket gatewayserverSocket;
 
 
+    public static int eventPacektSize = 1; // in KB
+    public static int maxBandwidth = 1024; // in KB
+
+
 
     private static Logger gLOG = LoggerFactory.getLogger(FogToCloudGateway.class);
 
@@ -414,13 +418,115 @@ public final class FogToCloudGateway {
     public static boolean scheduletoCloud(int priority)
     {
 
+        /**high priority and primary events*/
         if(priority>5)
         {
+            /**if max number of events that the engine can handle is reached send to cloud*/
+            if(EventsThroughput.eventpersec > EventsThroughput.maxEventsPerSec)
+            {
+
+                return true;
+            }
+
+            /**if cpu load is extreme and latency is acceptable send to cloud*/
+            else if(CpuThroughput.cpuLoad >100 && NetworkLatency.latency <500)
+            {
+                return true;
+            }
+
+            /**if cpu load is extreme and latency is very high dont send to cloud*/
+            else if(CpuThroughput.cpuLoad >100 && NetworkLatency.latency >1000)
+            {
+                return false;
+            }
+
+            else
+            {
+                return false;
+
+            }
+
+
+
+        }
+
+        /**normal priority events */
+        else if(priority == 3)
+        {
+
+            /**if max number of events that the engine can handle is reached send to cloud*/
+            if(EventsThroughput.eventpersec > EventsThroughput.maxEventsPerSec)
+            {
+
+                return true;
+            }
+
+            /**if cpu load is medium and latency is acceptable send to cloud*/
+            else if(CpuThroughput.cpuLoad > 50 && NetworkLatency.latency < 1000)
+            {
+                return true;
+            }
+
+            /**if the band width utilization is high and cpu load is medium dont send to cloud*/
+            else if(CpuThroughput.cpuLoad < 50 && (maxBandwidth - NetworkThroughput.download) < 50)
+            {
+                return false;
+            }
+
+            else
+            {
+                return false;
+            }
+
+
+        }
+
+        /**low priority events */
+        else if(priority < 3)
+        {
+            /**if max number of events that the engine can handle is reached send to cloud*/
+            if(EventsThroughput.eventpersec > EventsThroughput.maxEventsPerSec)
+            {
+
+                return true;
+            }
+
+            /**if cpu load is medium and latency is acceptable send to cloud*/
+            else if(CpuThroughput.cpuLoad > 30 && NetworkLatency.latency < 3000)
+            {
+                return true;
+            }
+
+            /**if the band width utilization is high and cpu load is medium dont send to cloud*/
+            else if(CpuThroughput.cpuLoad < 30 && (maxBandwidth - NetworkThroughput.download) < 200)
+            {
+                return false;
+            }
+
+            else
+            {
+                return false;
+            }
+
+        }
+
+        else
+        {
             return false;
+
         }
 
 
-    return  true;
+
+
+
+
+
+
+
+
+
+
 
     }
 

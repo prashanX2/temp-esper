@@ -11,6 +11,7 @@ public class CpuThroughput {
 
     public static float cpuLoad;
 
+    public static int cpuCores = 0;
 
 
 
@@ -71,7 +72,8 @@ public class CpuThroughput {
                     //System.out.println(out.length);
 
                     cpuLoad = Float.parseFloat(last);
-                    System.out.println("CPU USAGE LOAD AVERAGE 1 MINUTE "+(cpuLoad/4)*100);
+                    cpuLoad = (cpuLoad/cpuCores)*100;
+                    System.out.println("CPU USAGE LOAD AVERAGE 1 MINUTE "+cpuLoad);
 
 
 

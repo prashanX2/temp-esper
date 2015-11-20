@@ -6,6 +6,9 @@ import java.util.concurrent.Executors;
 
 public class EventsThroughput {
 
+
+    public static int maxEventsPerSec = 10000;
+
     public static int eventpersec =0;
 
     /**primitive events */
