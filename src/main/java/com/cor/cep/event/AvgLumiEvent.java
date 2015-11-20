@@ -57,7 +57,7 @@ public class AvgLumiEvent {
 
     @Override
     public String toString() {
-        return "AVG luminousEvent [" + avgluminous + "C  TimeStamp: "+timeOfReading+" Priority: "+priority;
+        return "AVG luminousEvent [" + avgluminous + " Lux  TimeStamp: "+timeOfReading+" Priority: "+priority;
     }
 
 }
