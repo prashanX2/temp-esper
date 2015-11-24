@@ -54,9 +54,9 @@ public class TempWarningEventSubscriber implements StatementSubscriber {
     public void update(Map<String, TemperatureEvent> eventMap) {
 
         // 1st Temperature in the Warning Sequence
-        TemperatureEvent temp1 = (TemperatureEvent) eventMap.get("temp1");
+        TemperatureEvent temp1 = eventMap.get("temp1");
         // 2nd Temperature in the Warning Sequence
-        TemperatureEvent temp2 = (TemperatureEvent) eventMap.get("temp2");
+        TemperatureEvent temp2 = eventMap.get("temp2");
 
 
         WarnTempEvent warnTempEvent = new WarnTempEvent(temp2.getTemperature(), temp2.getTimeOfReading(), EventPriorities.getwarntemp());

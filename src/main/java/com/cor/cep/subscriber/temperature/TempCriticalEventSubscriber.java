@@ -56,13 +56,13 @@ public class TempCriticalEventSubscriber implements StatementSubscriber {
     public void update(Map<String, TemperatureEvent> eventMap) {
 
         // 1st Temperature in the Critical Sequence
-        TemperatureEvent temp1 = (TemperatureEvent) eventMap.get("temp1");
+        TemperatureEvent temp1 = eventMap.get("temp1");
         // 2nd Temperature in the Critical Sequence
-        TemperatureEvent temp2 = (TemperatureEvent) eventMap.get("temp2");
+        TemperatureEvent temp2 = eventMap.get("temp2");
         // 3rd Temperature in the Critical Sequence
-        TemperatureEvent temp3 = (TemperatureEvent) eventMap.get("temp3");
+        TemperatureEvent temp3 = eventMap.get("temp3");
         // 4th Temperature in the Critical Sequence
-        TemperatureEvent temp4 = (TemperatureEvent) eventMap.get("temp4");
+        TemperatureEvent temp4 = eventMap.get("temp4");
 
         StringBuilder sb = new StringBuilder();
         sb.append("***************************************");

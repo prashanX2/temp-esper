@@ -61,7 +61,7 @@ public class TempMonitorEventSubscriber implements UpdateListener {
     public void update(Map<String, Double> eventMap) {
 
         // average temp over 10 secs
-        Double avg = (Double) eventMap.get("avg_val");
+        Double avg = eventMap.get("avg_val");
 
         Date timestamp = new Date();
 
