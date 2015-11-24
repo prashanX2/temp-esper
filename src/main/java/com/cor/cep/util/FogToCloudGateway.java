@@ -74,10 +74,10 @@ public final class FogToCloudGateway {
     {
         try
         {
+//104.43.197.157
+            //gatewayserverIPAddress = InetAddress.getByName("localhost");
+            //gatewayclientSocket = new Socket(gatewayserverIPAddress, 55555);
 
-            gatewayserverIPAddress = InetAddress.getByName("104.43.197.157");
-            gatewayclientSocket = new Socket(gatewayserverIPAddress, 55555);
-            outToServer = new DataOutputStream(gatewayclientSocket.getOutputStream());
 
         }catch(Exception e){System.out.println("client gateway socket  "+e.toString());}
 
@@ -571,8 +571,18 @@ public final class FogToCloudGateway {
 
         try
         {
+            //outToServer = new DataOutputStream(gatewayclientSocket.getOutputStream());
+            //outToServer.writeBytes(toSend);
+
+            Socket clientSocket = new Socket("104.43.197.157", 55555);
+
+            DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+            //BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            //String sentence = toSend;
             outToServer.writeBytes(toSend);
-            System.out.println("sent to cloud: " + toSend);
+            //modifiedSentence = inFromServer.readLine();
+            //System.out.println("FROM SERVER: " + modifiedSentence);
+            clientSocket.close();
         }catch(Exception e){System.out.println(e.toString());}
 
 
