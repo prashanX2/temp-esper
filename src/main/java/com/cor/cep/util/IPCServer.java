@@ -29,30 +29,30 @@ public class IPCServer {
 
     /** The TemperatureEventHandler - wraps the Esper engine and processes the Events  */
 
-    public  TemperatureEventHandler temperatureEventHandler = new TemperatureEventHandler();
+    public  static TemperatureEventHandler temperatureEventHandler = new TemperatureEventHandler();
 
 
-    public LuminousEventHandler luminousEventHandler = new LuminousEventHandler();
+    public static LuminousEventHandler luminousEventHandler = new LuminousEventHandler();
 
 
-    public AccelerationEventHandler accelerationEventHandler = new AccelerationEventHandler();
+    public static AccelerationEventHandler accelerationEventHandler = new AccelerationEventHandler();
 
 
-    public GravityEventHandler gravityEventHandler = new GravityEventHandler();
+    public static GravityEventHandler gravityEventHandler = new GravityEventHandler();
 
 
-    public RotationEventHandler rotationEventHandler = new RotationEventHandler();
+    public static RotationEventHandler rotationEventHandler = new RotationEventHandler();
 
 
-    public OrientationEventHandler orientationEventHandler = new OrientationEventHandler();
+    public static OrientationEventHandler orientationEventHandler = new OrientationEventHandler();
 
 
-    public HumidityEventHandler humidityEventHandler = new HumidityEventHandler();
+    public static HumidityEventHandler humidityEventHandler = new HumidityEventHandler();
 
 
-    public DistanceEventHandler distanceEventHandler = new DistanceEventHandler();
+    public static DistanceEventHandler distanceEventHandler = new DistanceEventHandler();
 
-    public FinalEventHandler resultEvents = new FinalEventHandler();
+    public static FinalEventHandler resultEvents = new FinalEventHandler();
 
 
 

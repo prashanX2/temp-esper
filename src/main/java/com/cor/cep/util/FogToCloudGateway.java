@@ -6,9 +6,10 @@ import com.cor.cep.handler.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.*;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
@@ -20,30 +21,30 @@ public final class FogToCloudGateway {
     /**handlers for cloudside engine*/
 
 
-    public static TemperatureEventHandler gtemperatureEventHandler = new TemperatureEventHandler();
+    public static TemperatureEventHandler gtemperatureEventHandler = IPCServer.temperatureEventHandler;
 
 
-    public static LuminousEventHandler gluminousEventHandler = new LuminousEventHandler();
+    public static LuminousEventHandler gluminousEventHandler = IPCServer.luminousEventHandler;
 
 
-    public static AccelerationEventHandler gaccelerationEventHandler = new AccelerationEventHandler();
+    public static AccelerationEventHandler gaccelerationEventHandler = IPCServer.accelerationEventHandler;
 
 
-    public static GravityEventHandler ggravityEventHandler = new GravityEventHandler();
+    public static GravityEventHandler ggravityEventHandler = IPCServer.gravityEventHandler;
 
 
-    public static RotationEventHandler grotationEventHandler = new RotationEventHandler();
+    public static RotationEventHandler grotationEventHandler = IPCServer.rotationEventHandler;
 
 
-    public static OrientationEventHandler gorientationEventHandler = new OrientationEventHandler();
+    public static OrientationEventHandler gorientationEventHandler = IPCServer.orientationEventHandler;
 
 
-    public static HumidityEventHandler ghumidityEventHandler = new HumidityEventHandler();
+    public static HumidityEventHandler ghumidityEventHandler = IPCServer.humidityEventHandler;
 
 
-    public static DistanceEventHandler gdistanceEventHandler = new DistanceEventHandler();
+    public static DistanceEventHandler gdistanceEventHandler = IPCServer.distanceEventHandler;
 
-    public static FinalEventHandler gresultEvents = new FinalEventHandler();
+    public static FinalEventHandler gresultEvents = IPCServer.resultEvents;
 
 
 
@@ -53,12 +54,13 @@ public final class FogToCloudGateway {
 
 
     public static boolean isCloud = false;
-    public static DatagramSocket gatewayclientSocket;
+    public static Socket gatewayclientSocket;
     public static InetAddress gatewayserverIPAddress;
+    public static DataOutputStream outToServer;
 
 
-    public static DatagramSocket gatewayserverSocket;
-
+    //public static DatagramSocket gatewayserverSocket;
+    public static  ServerSocket gatewayserverSocket;
 
     public static int eventPacektSize = 1; // in KB
     public static int maxBandwidth = 1024; // in KB
@@ -72,10 +74,12 @@ public final class FogToCloudGateway {
     {
         try
         {
-            gatewayclientSocket= new DatagramSocket();
-            gatewayserverIPAddress = InetAddress.getByName("104.43.197.157");
 
-        }catch(Exception e){System.out.println(e.toString());}
+            gatewayserverIPAddress = InetAddress.getByName("104.43.197.157");
+            gatewayclientSocket = new Socket(gatewayserverIPAddress, 55555);
+            outToServer = new DataOutputStream(gatewayclientSocket.getOutputStream());
+
+        }catch(Exception e){System.out.println("client gateway socket  "+e.toString());}
 
 
     }
@@ -85,9 +89,11 @@ public final class FogToCloudGateway {
     {
         try
         {
-            gatewayserverSocket = new DatagramSocket(55555);
+            gatewayserverSocket = new ServerSocket(55555);
+
+
             System.out.println("gateway server started....");
-            final byte[] gatewayreceiveData = new byte[1024];
+            //final byte[] gatewayreceiveData = new byte[1024];
 
 
 
@@ -99,15 +105,20 @@ public final class FogToCloudGateway {
                     while (true) {
 
 
-                        DatagramPacket receivePacket = new DatagramPacket(gatewayreceiveData, gatewayreceiveData.length);
+
+
+                        //DatagramPacket receivePacket = new DatagramPacket(gatewayreceiveData, gatewayreceiveData.length);
 
 
                         try {
-                            gatewayserverSocket.receive(receivePacket);
-                            String sentence = new String(receivePacket.getData());
-                            System.out.println("packet recieved "+sentence);
 
-                            String decode[] = sentence.split(" ");
+                            Socket connectionSocket = gatewayserverSocket.accept();
+                            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+                            DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+                            String clientSentence = inFromClient.readLine();
+                            System.out.println("packet Received: " + clientSentence);
+
+                            String decode[] = clientSentence.split(" ");
 
 
 
@@ -350,7 +361,7 @@ public final class FogToCloudGateway {
                         }
 
 
-                        Arrays.fill(gatewayreceiveData, (byte) 0);
+                       // Arrays.fill(gatewayreceiveData, (byte) 0);
 
                         try {
                             Thread.sleep(1);
@@ -419,7 +430,7 @@ public final class FogToCloudGateway {
     {
 
         /**high priority and primary events*/
-        if(priority>5)
+        if(priority>4)
         {
             /**if max number of events that the engine can handle is reached send to cloud*/
             if(EventsThroughput.eventpersec > EventsThroughput.maxEventsPerSec)
@@ -492,7 +503,7 @@ public final class FogToCloudGateway {
             }
 
             /**if cpu load is medium and latency is acceptable send to cloud*/
-            else if(CpuThroughput.cpuLoad > 30 && NetworkLatency.latency < 3000)
+            else if(CpuThroughput.cpuLoad > 7 && NetworkLatency.latency < 3000)
             {
                 return true;
             }
@@ -550,15 +561,15 @@ public final class FogToCloudGateway {
 
     public static void sendtoCloud(String toSend)
     {
-        byte[] sendData = new byte[1024];
+        //byte[] sendData = new byte[1024];
 
-        sendData = toSend.getBytes();
+        //sendData = toSend.getBytes();
 
-        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, gatewayserverIPAddress, 55555);
+        //DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, gatewayserverIPAddress, 55555);
 
         try
         {
-            gatewayclientSocket.send(sendPacket);
+            outToServer.writeBytes(toSend);
             System.out.println("sent to cloud: " + toSend);
         }catch(Exception e){System.out.println(e.toString());}
 

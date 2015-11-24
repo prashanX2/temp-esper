@@ -118,7 +118,7 @@ public class OrientationEventHandler implements InitializingBean {
         }
         else
         {
-           tempLOG.debug(event.toString());
+           //tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
             EventsThroughput.orientationcount+=1;

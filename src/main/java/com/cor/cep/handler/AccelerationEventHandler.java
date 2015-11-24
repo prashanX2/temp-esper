@@ -128,7 +128,7 @@ public class AccelerationEventHandler {
         }
         else
         {
-            tempLOG.debug(event.toString());
+            //tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
             EventsThroughput.accelcount+=1;

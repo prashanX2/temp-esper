@@ -119,7 +119,7 @@ public class RotationEventHandler implements InitializingBean {
         }
         else
         {
-            tempLOG.debug(event.toString());
+            //tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
             EventsThroughput.rotationcount+=1;

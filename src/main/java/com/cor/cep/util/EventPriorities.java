@@ -3,7 +3,7 @@ package com.cor.cep.util;
 public final class EventPriorities {
 
     private static int acceleration = 6;
-    private static int gravity = 4;
+    private static int gravity = 6;
     private static int rotation = 6;
     private static int orientation = 6;
     private static int luminous = 6;
@@ -18,13 +18,13 @@ public final class EventPriorities {
 
     private static int entered = 3;
 
-    private static int avgtemp = 3;
-    private static int avglumi = 3;
-    private static int avghumi = 3;
+    private static int avgtemp = 2;
+    private static int avglumi = 2;
+    private static int avghumi =2;
 
-    private static int warntemp = 6;
-    private static int warnlumi = 6;
-    private static int warnhumi = 6;
+    private static int warntemp = 5;
+    private static int warnlumi = 5;
+    private static int warnhumi = 5;
 
 
 
