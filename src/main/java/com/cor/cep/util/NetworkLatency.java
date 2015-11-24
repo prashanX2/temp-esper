@@ -28,71 +28,70 @@ public class NetworkLatency {
             public void run() {
 
 
-                try {
+
 
 
                     while (true) {
 
-                        InetAddress IPAddress = InetAddress.getByName("104.43.197.157");
-                        //DatagramSocket clientSocket = new DatagramSocket();
-                        Socket clientSocket = new Socket(IPAddress, 44444);
-                        long c = System.nanoTime();
-                        byte[] sendData = new byte[1024];
-                        byte[] receiveData = new byte[1024];
+                        try {
 
-                        String sentence = "ADD";
-                        //System.out.println(sentence);
-                        //sendData = sentence.getBytes();
-                        Arrays.fill(sendData, (byte) 10);
+                            InetAddress IPAddress = InetAddress.getByName("104.43.197.157");
+                            //DatagramSocket clientSocket = new DatagramSocket();
+                            Socket clientSocket = new Socket(IPAddress, 44444);
+                            long c = System.nanoTime();
+                            byte[] sendData = new byte[1024];
+                            byte[] receiveData = new byte[1024];
 
-                        //104.43.197.157
+                            String sentence = "ADD";
+                            //System.out.println(sentence);
+                            //sendData = sentence.getBytes();
+                            Arrays.fill(sendData, (byte) 10);
 
-                        DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-                        BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                            //104.43.197.157
 
-                        //sentence = inFromUser.readLine();
-                        outToServer.writeInt(sendData.length);
-                        outToServer.write(sendData);
-                        long d = System.nanoTime();
+                            DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+                            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-
-                       String modifiedSentence = inFromServer.readLine();
-                        long f = System.nanoTime();
-                        //System.out.println("FROM SERVER: " + modifiedSentence);
-
-                        clientSocket.close();
+                            //sentence = inFromUser.readLine();
+                            outToServer.writeInt(sendData.length);
+                            outToServer.write(sendData);
+                            long d = System.nanoTime();
 
 
+                            String modifiedSentence = inFromServer.readLine();
+                            long f = System.nanoTime();
+                            //System.out.println("FROM SERVER: " + modifiedSentence);
+
+                            clientSocket.close();
 
 
-                       // DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 44444);
+                            // DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 44444);
 
-                        //System.out.println(sendData.length);
-
-
-                        //clientSocket.send(sendPacket);
-
-                        //DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-                        //clientSocket.receive(receivePacket);
-
-                        //String modifiedSentence = new String(receivePacket.getData());
+                            //System.out.println(sendData.length);
 
 
-                        latency = (f - d) / 1000000;
+                            //clientSocket.send(sendPacket);
 
-                        System.out.println("Latency to :" + IPAddress + ": " + latency);
-                        Thread.sleep(2000);
+                            //DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                            //clientSocket.receive(receivePacket);
 
-                        //clientSocket.close();
+                            //String modifiedSentence = new String(receivePacket.getData());
 
 
+                            latency = (f - d) / 1000000;
+
+                            System.out.println("Latency to :" + IPAddress + ": " + latency);
+                            Thread.sleep(2000);
+
+                            //clientSocket.close();
+
+                        }catch(Exception er){
+                            //System.out.println(" in latency sock " +er.toString());
+                        }
                     }
 
 
-                } catch (Exception e) {
 
-                    System.out.println(" in latency sock " +e.toString());
-                }
 
 
             }

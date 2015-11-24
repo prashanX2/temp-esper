@@ -114,7 +114,7 @@ public final class FogToCloudGateway {
 
                             Socket connectionSocket = gatewayserverSocket.accept();
                             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-                            DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+                            //DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
                             String clientSentence = inFromClient.readLine();
                             System.out.println("packet Received: " + clientSentence);
 
@@ -505,7 +505,9 @@ public final class FogToCloudGateway {
             /**if cpu load is medium and latency is acceptable send to cloud*/
             else if(CpuThroughput.cpuLoad > 7 && NetworkLatency.latency < 3000)
             {
+                System.out.println("IN THE OEIROITY <3");
                 return true;
+
             }
 
             /**if the band width utilization is high and cpu load is medium dont send to cloud*/
