@@ -70,9 +70,9 @@ public class DistanceWarningEventSubscriber implements  UpdateListener {
 
 
        // 1st Temperature in the Warning Sequence
-        DistanceEvent dist1 = (DistanceEvent) eventMap.get("dist1");
+        DistanceEvent dist1 = eventMap.get("dist1");
         // 2nd Temperature in the Warning Sequence
-        DistanceEvent dist2 = (DistanceEvent) eventMap.get("dist2");
+        DistanceEvent dist2 = eventMap.get("dist2");
 
         StringBuilder sb = new StringBuilder();
         sb.append("--------------++++++++++++++++++++++++++++++++++++++++---------------");
@@ -90,7 +90,7 @@ public class DistanceWarningEventSubscriber implements  UpdateListener {
 
 
 
-        if(FogToCloudGateway.schedule(event.getPriority()))
+        if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
             String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getDistance1()+" "+event.getDistance2()+" "+event.getTimeOfReading();
 

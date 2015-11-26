@@ -44,7 +44,7 @@ public class LumiMonitorEventSubscriber implements StatementSubscriber {
     public void update(Map<String, Double> eventMap) {
 
         // average temp over 10 secs
-        Double avg = (Double) eventMap.get("avg_val");
+        Double avg = eventMap.get("avg_val");
         //LuminousEvent avg = (LuminousEvent) eventMap.get("avg_temp");
 
         Date timestamp = new Date();
@@ -52,7 +52,7 @@ public class LumiMonitorEventSubscriber implements StatementSubscriber {
         AvgLumiEvent avgLumiEvent = new AvgLumiEvent(avg.intValue(), timestamp, EventPriorities.getavglumi());
 
 
-        if(FogToCloudGateway.schedule(avgLumiEvent.getPriority()))
+        if(FogToCloudGateway.schedule(avgLumiEvent.getPriority(),avgLumiEvent.getID()))
         {
             String eventtoSend = avgLumiEvent.getID()+" "+avgLumiEvent.getPriority()+" "+avgLumiEvent.getavgluminous()+" "+avgLumiEvent.getTimeOfReading();
 

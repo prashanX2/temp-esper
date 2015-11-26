@@ -148,7 +148,7 @@ public class HumidityEventHandler {
 
 
 
-        if(FogToCloudGateway.schedule(event.getPriority()))
+        if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
             String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.gethumidity()+" "+event.getTimeOfReading();
 

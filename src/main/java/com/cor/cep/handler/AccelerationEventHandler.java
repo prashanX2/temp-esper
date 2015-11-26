@@ -117,7 +117,7 @@ public class AccelerationEventHandler {
     public void handle(AccelerationEvent event) {
 
 
-        if(FogToCloudGateway.schedule(event.getPriority()))
+        if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
             String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getAccelx()+" "+event.getAccely()+" "+event.getAccelz()+" "+event.getTimeOfReading();
 

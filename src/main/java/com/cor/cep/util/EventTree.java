@@ -24,14 +24,14 @@ public final class EventTree {
         eventTreeR1.put("ENTE", 3);
 
 
-        eventTreeR2.put("ALUM",2);
-        eventTreeR2.put("ATEM",4);
+        eventTreeR2.put("ATEM",2);
+        eventTreeR2.put("ENTE",3);
 
 
-        //eventTreeR3.put("ALUM",2);
-        eventTreeR3.put("ATUM",3);
-        eventTreeR3.put("AHUM",6);
 
+
+        eventTreeR3.put("ENTE",3);
+        eventTreeR3.put("WTEM",5);
 
         eventTreeList.add(eventTreeR1);
         eventTreeList.add(eventTreeR2);
@@ -46,24 +46,32 @@ public final class EventTree {
             int max = Collections.max(temptree.values());
             maxPriorityEvent.add(max);
 
-
+            System.out.println("evetn tree root priority "+max);
 
 
         }
+
+        System.out.println("Event tree initialized");
 
 
     }
 
 
 
-    public static int getTreeValue(String eventID)
+    public static int getTreeValue(int priority, String eventID)
     {
-        int max = 0;
+        int max = priority;
+
+
 
         for (int i = 0; i < eventTreeList.size() ; i++)
         {
             if(eventTreeList.get(i).get(eventID) != null)
             {
+
+                if(eventID.equals("ALUM")) {
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@" + i);
+            }
                 if(max <= maxPriorityEvent.get(i))
                 {
                     max = maxPriorityEvent.get(i);

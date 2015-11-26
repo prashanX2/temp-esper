@@ -398,7 +398,7 @@ public final class FogToCloudGateway {
 
 
 
-    public static boolean schedule(int priority)
+    public static boolean schedule(int priority, String eventID)
     {
         if(isCloud)
         {
@@ -406,15 +406,9 @@ public final class FogToCloudGateway {
         }
         else
         {
-            if(scheduletoCloud(priority))
-            {
-                return true;  // schedule in cloud
-            }
-
-            else
-            {
-                return false; // schedule locally
-            }
+            // schedule in cloud
+// schedule locally
+            return scheduletoCloud(priority, eventID);
 
 
 
@@ -426,9 +420,13 @@ public final class FogToCloudGateway {
     }
 
 
-    public static boolean scheduletoCloud(int priority)
+    public static boolean scheduletoCloud(int priority, String eventID)
     {
 
+        priority = EventTree.getTreeValue(priority, eventID);
+        if(eventID.equals("ALUM")) {
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% " + eventID + " " + priority);
+        }
         /**high priority and primary events*/
         if(priority>4)
         {
@@ -580,8 +578,9 @@ public final class FogToCloudGateway {
             //BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             //String sentence = toSend;
             outToServer.writeBytes(toSend);
+
             //modifiedSentence = inFromServer.readLine();
-            //System.out.println("FROM SERVER: " + modifiedSentence);
+            System.out.println("Sent top server "+toSend);
             clientSocket.close();
         }catch(Exception e){System.out.println(e.toString());}
 

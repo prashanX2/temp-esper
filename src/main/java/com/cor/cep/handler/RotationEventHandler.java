@@ -108,7 +108,7 @@ public class RotationEventHandler implements InitializingBean {
 
     public void handle(RotationEvent event) {
 
-        if(FogToCloudGateway.schedule(event.getPriority()))
+        if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
             String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getrotationx()+" "+event.getrotationy()+" "+event.getrotationz()+" "+event.getTimeOfReading();
 

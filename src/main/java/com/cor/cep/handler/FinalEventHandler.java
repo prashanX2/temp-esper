@@ -24,6 +24,8 @@ public class FinalEventHandler {
     WarnTempSubscriber warnTempSubscriber = new WarnTempSubscriber();
     WarnHumiSubscriber warnHumiSubscriber = new WarnHumiSubscriber();
 
+    DistWarnTempSubscriber distWarnTempSubscriber = new DistWarnTempSubscriber();
+
 
     private EPStatement distTempEventStatement;
     private  EPStatement distLumiEventStatement;
@@ -31,6 +33,8 @@ public class FinalEventHandler {
     private EPStatement warnLumiEventStatement;
     private  EPStatement warnTempEventStatement;
     private EPStatement warnHumiEventStatement;
+
+    private  EPStatement distWarnTempEventStatement;
 
     private static Logger tempLOG = LoggerFactory.getLogger(TemperatureEventHandler.class);
 
@@ -53,6 +57,8 @@ public class FinalEventHandler {
         createWarnLumiCheckExpression();
         createWarnTempCheckExpression();
         createWarnHumiCheckExpression();
+
+        createDistWarnTempCheckExpression();
 
 
         //createTemperatureMonitorExpression();
@@ -107,7 +113,12 @@ public class FinalEventHandler {
     }
 
 
+    private void  createDistWarnTempCheckExpression() {
 
+        tempLOG.debug("create Warning distance and high temp Check Expression");
+        distWarnTempEventStatement = epService.epService.getEPAdministrator().createEPL(distWarnTempSubscriber.getStatement());
+        distWarnTempEventStatement.setSubscriber(distWarnTempSubscriber);
+    }
 
 
     public void handle() {

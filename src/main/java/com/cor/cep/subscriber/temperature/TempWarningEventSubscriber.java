@@ -26,7 +26,7 @@ public class TempWarningEventSubscriber implements StatementSubscriber {
     private static Logger LOG = LoggerFactory.getLogger(TempWarningEventSubscriber.class);
 
     /** If 2 consecutive temperature events are greater than this - issue a warning */
-    private static final String WARNING_EVENT_THRESHOLD = "20";
+    private static final String WARNING_EVENT_THRESHOLD = "28";
 
     
     /**
@@ -62,7 +62,7 @@ public class TempWarningEventSubscriber implements StatementSubscriber {
         WarnTempEvent warnTempEvent = new WarnTempEvent(temp2.getTemperature(), temp2.getTimeOfReading(), EventPriorities.getwarntemp());
 
 
-        if(FogToCloudGateway.schedule(warnTempEvent.getPriority()))
+        if(FogToCloudGateway.schedule(warnTempEvent.getPriority(),warnTempEvent.getID()))
         {
             String eventtoSend = warnTempEvent.getID()+" "+warnTempEvent.getPriority()+" "+warnTempEvent.getwarntemperature()+" "+warnTempEvent.getTimeOfReading();
 

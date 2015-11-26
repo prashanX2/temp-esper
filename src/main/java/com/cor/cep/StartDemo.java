@@ -93,11 +93,16 @@ public class StartDemo {
         FogToCloudGateway.initgatewayclient();
 
         //IPCServer generator = (IPCServer) factory.getBean("eventGenerator");
+
+        EventTree.eventtreeinit();
+
         IPCServer generator = new IPCServer();
        generator.startSendingTemperatureReadings(noOfTemperatureEvents);
 
         EventsThroughput eventmonitor = new EventsThroughput();
         eventmonitor.runEventThroughput();
+
+        Predict.initPredict();
 
 
 

@@ -55,20 +55,20 @@ public class LumiWarningEventSubscriber implements StatementSubscriber {
     public void update(Map<String, LuminousEvent> eventMap) {
 
         // 1st Temperature in the Warning Sequence
-        LuminousEvent temp1 = (LuminousEvent) eventMap.get("temp1");
+        LuminousEvent temp1 = eventMap.get("temp1");
         // 2nd Temperature in the Warning Sequence
-        LuminousEvent temp2 = (LuminousEvent) eventMap.get("temp2");
+        LuminousEvent temp2 = eventMap.get("temp2");
 
-        LuminousEvent temp3 = (LuminousEvent) eventMap.get("temp3");
-        LuminousEvent temp4 = (LuminousEvent) eventMap.get("temp4");
-        LuminousEvent temp5 = (LuminousEvent) eventMap.get("temp5");
+        LuminousEvent temp3 = eventMap.get("temp3");
+        LuminousEvent temp4 = eventMap.get("temp4");
+        LuminousEvent temp5 = eventMap.get("temp5");
 
 
 
 
         WarnLumiEvent warnLumiEvent = new WarnLumiEvent(temp5.getluminous(), temp5.getTimeOfReading(),EventPriorities.getwarnlumi());
 
-        if(FogToCloudGateway.schedule(warnLumiEvent.getPriority()))
+        if(FogToCloudGateway.schedule(warnLumiEvent.getPriority(),warnLumiEvent.getID()))
         {
             String eventtoSend = warnLumiEvent.getID()+" "+warnLumiEvent.getPriority()+" "+warnLumiEvent.getwarnluminous()+" "+warnLumiEvent.getTimeOfReading();
 

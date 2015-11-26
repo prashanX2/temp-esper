@@ -122,7 +122,7 @@ public class LuminousEventHandler {
         //LOG.debug(event.toString());
 
 
-        if(FogToCloudGateway.schedule(event.getPriority()))
+        if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
             String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getluminous()+" "+event.getTimeOfReading();
 

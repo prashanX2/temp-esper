@@ -54,9 +54,9 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
     public void update(Map<String, HumidityEvent> eventMap) {
 
         // 1st Temperature in the Warning Sequence
-        HumidityEvent temp1 = (HumidityEvent) eventMap.get("temp1");
+        HumidityEvent temp1 = eventMap.get("temp1");
         // 2nd Temperature in the Warning Sequence
-        HumidityEvent temp2 = (HumidityEvent) eventMap.get("temp2");
+        HumidityEvent temp2 = eventMap.get("temp2");
 
 
 
@@ -69,7 +69,7 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
 
 
 
-        if(FogToCloudGateway.schedule(warnHumiEvent.getPriority()))
+        if(FogToCloudGateway.schedule(warnHumiEvent.getPriority(),warnHumiEvent.getID()))
         {
             String eventtoSend = warnHumiEvent.getID()+" "+warnHumiEvent.getPriority()+" "+warnHumiEvent.getwarnhumidity()+" "+warnHumiEvent.getTimeOfReading();
 

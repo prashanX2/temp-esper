@@ -107,7 +107,7 @@ public class OrientationEventHandler implements InitializingBean {
 
     public void handle(OrientationEvent event) {
 
-        if(FogToCloudGateway.schedule(event.getPriority()))
+        if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
             String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getazimuth()+" "+event.getpitch()+" "+event.getroll()+" "+event.getTimeOfReading();
 

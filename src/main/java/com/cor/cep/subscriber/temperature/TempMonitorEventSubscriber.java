@@ -67,7 +67,7 @@ public class TempMonitorEventSubscriber implements UpdateListener {
 
         AvgTempEvent avgTempEvent = new AvgTempEvent(avg.intValue(), timestamp, EventPriorities.getavgtemp());
 
-        if(FogToCloudGateway.schedule(avgTempEvent.getPriority()))
+        if(FogToCloudGateway.schedule(avgTempEvent.getPriority(),avgTempEvent.getID()))
         {
             String eventtoSend = avgTempEvent.getID()+" "+avgTempEvent.getPriority()+" "+avgTempEvent.getavgtemperature()+" "+avgTempEvent.getTimeOfReading();
 
