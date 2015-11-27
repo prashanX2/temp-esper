@@ -1,17 +1,15 @@
 package com.cor.cep.subscriber.temperature;
 
-import java.util.Date;
-import java.util.Map;
-
 import com.cor.cep.event.AvgTempEvent;
 import com.cor.cep.handler.epService;
-import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.*;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.Map;
 
 /**
  * Wraps Esper Statement and Listener. No dependency on Esper libraries.

@@ -1,8 +1,6 @@
 package com.cor.cep.subscriber.temperature;
 
-import java.util.Map;
-
-import com.cor.cep.event.WarnLumiEvent;
+import com.cor.cep.event.TemperatureEvent;
 import com.cor.cep.event.WarnTempEvent;
 import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
@@ -12,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.cor.cep.event.TemperatureEvent;
+import java.util.Map;
 
 /**
  * Wraps Esper Statement and Listener. No dependency on Esper libraries.

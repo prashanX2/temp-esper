@@ -1,8 +1,6 @@
 package com.cor.cep.util;
 
 
-    import Jama.Matrix;
-    import Jama.QRDecomposition;
 
 
 
@@ -16,8 +14,8 @@ package com.cor.cep.util;
  *
  ******************************************************************************/
 
-    import Jama.Matrix;
-    import Jama.QRDecomposition;
+import Jama.Matrix;
+import Jama.QRDecomposition;
 
     /**
      *  The <tt>PolynomialRegression</tt> class performs a polynomial regression
