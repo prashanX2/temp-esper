@@ -73,6 +73,7 @@ public class CpuThroughput {
 
                     cpuLoad = Float.parseFloat(last);
                     cpuLoad = (cpuLoad/cpuCores)*100;
+                    LogData.cputhroughputWrite(Float.toString(cpuLoad),System.nanoTime() - ResultReciever.systemStartTime);
                     System.out.println("CPU USAGE LOAD AVERAGE 1 MINUTE "+cpuLoad);
 
 

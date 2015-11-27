@@ -9,7 +9,7 @@ public class WarnLumiEvent {
 
     /** Time luminous reading was taken. */
     private Date timeOfReading;
-
+    private long time;
     /**priority of the event*/
     private int priority;
 
@@ -25,11 +25,11 @@ public class WarnLumiEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public WarnLumiEvent(int warnluminous, Date timeOfReading, int priority) {
+    public WarnLumiEvent(int warnluminous, Date timeOfReading, int priority, long time) {
         this.warnluminous = warnluminous;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
-
+        this.time = time;
     }
 
     /**
@@ -54,6 +54,8 @@ public class WarnLumiEvent {
     /**get ID*/
     public String getID(){return ID;}
 
+    /**get time*/
+    public long getTime(){return time;}
     @Override
     public String toString() {
         return "Warning luminousEvent [" + warnluminous + "C  TimeStamp: "+timeOfReading+" Priority: "+priority;

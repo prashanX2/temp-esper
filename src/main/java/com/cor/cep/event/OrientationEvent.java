@@ -11,7 +11,7 @@ public class OrientationEvent {
     private float roll;
     /** Time reading was taken. */
     private Date timeOfReading;
-
+    private long time;
     /**priority of the event*/
     private int priority;
 
@@ -29,12 +29,13 @@ public class OrientationEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public OrientationEvent(float azimuth, float pitch, float roll, Date timeOfReading, int priority) {
+    public OrientationEvent(float azimuth, float pitch, float roll, Date timeOfReading, int priority, long time) {
         this.azimuth = azimuth;
         this.pitch = pitch;
         this.roll = roll;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
     }
 
     /**
@@ -78,6 +79,8 @@ public class OrientationEvent {
     public String getID(){return ID;}
 
 
+    /**get time*/
+    public long getTime(){return time;}
     @Override
     public String toString() {
         return "OrientationEvent [ Azimuth:" + azimuth + " Pitch:"+pitch+" Roll:"+roll+"   TimeStamp: "+timeOfReading+" Priority: "+priority;

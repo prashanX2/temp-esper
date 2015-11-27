@@ -11,6 +11,8 @@ public class AccelerationEvent {
     /** Time reading was taken. */
     private Date timeOfReading;
 
+    private long time;
+
     /**priority of the event*/
     private int priority;
 
@@ -28,12 +30,13 @@ public class AccelerationEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public AccelerationEvent(float accelx, float accely, float accelz, Date timeOfReading, int priority) {
+    public AccelerationEvent(float accelx, float accely, float accelz, Date timeOfReading, int priority,  long time) {
         this.accelx = accelx;
         this.accely = accely;
         this.accelz = accelz;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
     }
 
     /**
@@ -75,6 +78,9 @@ public class AccelerationEvent {
 
     /**get ID(*/
     public String getID(){return ID;}
+
+    /**get time*/
+    public long getTime(){return time;}
 
 
     @Override

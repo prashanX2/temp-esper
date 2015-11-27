@@ -2,6 +2,7 @@ package com.cor.cep.subscriber.EndResult;
 
 import com.cor.cep.event.DistanceEvent;
 
+import com.cor.cep.event.WarnLumiEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
@@ -53,10 +54,10 @@ public class WarnLumiSubscriber implements StatementSubscriber {
 
     public void update(Map<String, Double> eventMap) {
 
-
+        //WarnLumiEvent event = eventMap.get("cnt");
 
         System.out.println("################################################");
-        System.out.println("HIGH LEVELS OF LUMINOUS TAKE ACTION");
+        System.out.println("HIGH LEVELS OF LUMINOUS TAKE ACTION - ");
         System.out.println("################################################");
 
 

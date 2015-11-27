@@ -4,9 +4,7 @@ import com.cor.cep.event.LuminousEvent;
 import com.cor.cep.subscriber.luminous.LumiCriticalEventSubscriber;
 import com.cor.cep.subscriber.luminous.LumiMonitorEventSubscriber;
 import com.cor.cep.subscriber.luminous.LumiWarningEventSubscriber;
-import com.cor.cep.util.EventPriorities;
-import com.cor.cep.util.EventsThroughput;
-import com.cor.cep.util.FogToCloudGateway;
+import com.cor.cep.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -124,7 +122,7 @@ public class LuminousEventHandler {
 
         if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
-            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getluminous()+" "+event.getTimeOfReading();
+            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getluminous()+" "+event.getTime()+" "+event.getTimeOfReading();
 
             FogToCloudGateway.sendtoCloud(eventtoSend);
 
@@ -136,6 +134,7 @@ public class LuminousEventHandler {
             //LOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
+            LogData.LUMIWrite(Float.toString(event.getluminous()), System.nanoTime() - ResultReciever.systemStartTime);
             EventsThroughput.lumicount+=1;
 
         }

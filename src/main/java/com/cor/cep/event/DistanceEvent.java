@@ -10,7 +10,7 @@ public class DistanceEvent {
 
     /** Time distance reading was taken. */
     private Date timeOfReading;
-
+    private long time;
 
     /**priority of the event*/
     private int priority;
@@ -27,10 +27,11 @@ public class DistanceEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public DistanceEvent(int distance, Date timeOfReading, int priority) {
+    public DistanceEvent(int distance, Date timeOfReading, int priority, long time) {
         this.distance = distance;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
     }
 
     /**
@@ -55,6 +56,8 @@ public class DistanceEvent {
     /**get ID*/
     public String getID(){return ID;}
 
+    /**get time*/
+    public long getTime(){return time;}
     @Override
     public String toString() {
         return "distanceEvent [" + distance + "cm]  TimeStamp: "+timeOfReading+" Priority: "+priority;

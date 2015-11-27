@@ -12,7 +12,7 @@ public class EnteredEvent {
 
 
     private Date timeOfReading;
-
+    private long time;
     /**priority of the event*/
     private int priority;
 
@@ -20,11 +20,12 @@ public class EnteredEvent {
     private String ID = "ENTE";
 
 
-    public EnteredEvent(int distance1,int distance2, Date timeOfReading, int priority) {
+    public EnteredEvent(int distance1,int distance2, Date timeOfReading, int priority, long time) {
         this.distance1 = distance1;
         this.distance2 = distance2;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
     }
 
     /**
@@ -54,6 +55,8 @@ public class EnteredEvent {
     /**get ID*/
     public String getID(){return ID;}
 
+    /**get time*/
+    public long getTime(){return time;}
     @Override
     public String toString() {
         return "Entered Event [Distance1 " + distance1 + " Distance2 "+distance2+"  TimeStamp: "+timeOfReading+" Priority: "+priority;

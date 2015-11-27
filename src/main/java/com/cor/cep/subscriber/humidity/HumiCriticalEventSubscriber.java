@@ -53,13 +53,15 @@ public class HumiCriticalEventSubscriber implements StatementSubscriber {
     public void update(Map<String, HumidityEvent> eventMap) {
 
         // 1st Temperature in the Critical Sequence
-        HumidityEvent temp1 = (HumidityEvent) eventMap.get("temp1");
+        HumidityEvent temp1 = eventMap.get("temp1");
         // 2nd Temperature in the Critical Sequence
-        HumidityEvent temp2 = (HumidityEvent) eventMap.get("temp2");
+        HumidityEvent temp2 = eventMap.get("temp2");
         // 3rd Temperature in the Critical Sequence
-        HumidityEvent temp3 = (HumidityEvent) eventMap.get("temp3");
+        HumidityEvent temp3 = eventMap.get("temp3");
         // 4th Temperature in the Critical Sequence
-        HumidityEvent temp4 = (HumidityEvent) eventMap.get("temp4");
+        HumidityEvent temp4 = eventMap.get("temp4");
+
+
 
         StringBuilder sb = new StringBuilder();
         sb.append("***************************************");

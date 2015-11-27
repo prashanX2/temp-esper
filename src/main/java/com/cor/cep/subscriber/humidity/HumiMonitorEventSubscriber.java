@@ -4,9 +4,7 @@ import com.cor.cep.event.AvgHumiEvent;
 import com.cor.cep.event.AvgLumiEvent;
 import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
-import com.cor.cep.util.EventPriorities;
-import com.cor.cep.util.EventsThroughput;
-import com.cor.cep.util.FogToCloudGateway;
+import com.cor.cep.util.*;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,12 +48,12 @@ public class HumiMonitorEventSubscriber implements StatementSubscriber {
 
         Date timestamp = new Date();
 
-        AvgHumiEvent avgHumiEvent = new AvgHumiEvent(avg.intValue(), timestamp, EventPriorities.getavghumi());
+        AvgHumiEvent avgHumiEvent = new AvgHumiEvent(avg.intValue(), timestamp, EventPriorities.getavghumi(),System.nanoTime());
 
 
         if(FogToCloudGateway.schedule(avgHumiEvent.getPriority(),avgHumiEvent.getID()))
         {
-            String eventtoSend = avgHumiEvent.getID()+" "+avgHumiEvent.getPriority()+" "+avgHumiEvent.getavghumidity()+" "+avgHumiEvent.getTimeOfReading();
+            String eventtoSend = avgHumiEvent.getID()+" "+avgHumiEvent.getPriority()+" "+avgHumiEvent.getavghumidity()+" "+avgHumiEvent.getTime()+" "+avgHumiEvent.getTimeOfReading();
 
             FogToCloudGateway.sendtoCloud(eventtoSend);
 
@@ -68,6 +66,7 @@ public class HumiMonitorEventSubscriber implements StatementSubscriber {
             //System.out.println("after temp handle");
             LOG.debug(avgHumiEvent.toString());
             epService.epService.getEPRuntime().sendEvent(avgHumiEvent);
+            LogData.AHUMWrite(Float.toString(avgHumiEvent.getavghumidity()), System.nanoTime() - ResultReciever.systemStartTime);
             EventsThroughput.AVGhumicount+=1;
 
         }

@@ -10,7 +10,7 @@ public class AvgLumiEvent {
 
     /** Time luminous reading was taken. */
     private Date timeOfReading;
-
+    private long time;
     /**priority of the event*/
     private int priority;
 
@@ -26,10 +26,11 @@ public class AvgLumiEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public AvgLumiEvent(int avgluminous, Date timeOfReading, int priority) {
+    public AvgLumiEvent(int avgluminous, Date timeOfReading, int priority, long time) {
         this.avgluminous = avgluminous;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
 
     }
 
@@ -54,6 +55,10 @@ public class AvgLumiEvent {
 
     /**get ID*/
     public String getID(){return ID;}
+
+
+    /**get time*/
+    public long getTime(){return time;}
 
     @Override
     public String toString() {

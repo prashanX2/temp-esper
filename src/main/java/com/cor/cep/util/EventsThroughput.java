@@ -65,6 +65,7 @@ public class EventsThroughput {
 
                         //System.out.println(accelcount+" "+humiditycount);
                         eventpersec = EventsThroughput.totalEventcount();
+                        LogData.eventthroughputWrite(Integer.toString(eventpersec), System.nanoTime() - ResultReciever.systemStartTime);
 
                         EventsThroughput.nullAlleventcount();
 

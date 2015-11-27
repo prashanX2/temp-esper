@@ -6,9 +6,7 @@ import com.cor.cep.event.WarnHumiEvent;
 import com.cor.cep.event.WarnLumiEvent;
 import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
-import com.cor.cep.util.EventPriorities;
-import com.cor.cep.util.EventsThroughput;
-import com.cor.cep.util.FogToCloudGateway;
+import com.cor.cep.util.*;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +61,7 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
 
 
 
-        WarnHumiEvent warnHumiEvent = new WarnHumiEvent(temp2.gethumidity(), temp2.getTimeOfReading(),EventPriorities.getwarnhumi());
+        WarnHumiEvent warnHumiEvent = new WarnHumiEvent(temp2.gethumidity(), temp2.getTimeOfReading(),EventPriorities.getwarnhumi(),System.nanoTime());
 
 
 
@@ -71,7 +69,7 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
 
         if(FogToCloudGateway.schedule(warnHumiEvent.getPriority(),warnHumiEvent.getID()))
         {
-            String eventtoSend = warnHumiEvent.getID()+" "+warnHumiEvent.getPriority()+" "+warnHumiEvent.getwarnhumidity()+" "+warnHumiEvent.getTimeOfReading();
+            String eventtoSend = warnHumiEvent.getID()+" "+warnHumiEvent.getPriority()+" "+warnHumiEvent.getwarnhumidity()+" "+warnHumiEvent.getTime()+" "+warnHumiEvent.getTimeOfReading();
 
             FogToCloudGateway.sendtoCloud(eventtoSend);
 
@@ -85,6 +83,7 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
             LOG.debug(warnHumiEvent.toString());
 
             epService.epService.getEPRuntime().sendEvent(warnHumiEvent);
+            LogData.WHUMWrite(Float.toString(warnHumiEvent.getwarnhumidity()), System.nanoTime() - ResultReciever.systemStartTime);
             EventsThroughput.warnhumicount+=1;
 
         }

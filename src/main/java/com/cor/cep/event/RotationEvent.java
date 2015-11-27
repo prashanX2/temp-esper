@@ -11,7 +11,7 @@ public class RotationEvent {
     private float rotationz;
     /** Time reading was taken. */
     private Date timeOfReading;
-
+    private long time;
     /**priority of the event*/
     private int priority;
 
@@ -29,12 +29,13 @@ public class RotationEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public RotationEvent(float rotationx, float rotationy, float rotationz, Date timeOfReading, int priority) {
+    public RotationEvent(float rotationx, float rotationy, float rotationz, Date timeOfReading, int priority, long time) {
         this.rotationx = rotationx;
         this.rotationy = rotationy;
         this.rotationz = rotationz;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
     }
 
     /**
@@ -77,6 +78,8 @@ public class RotationEvent {
     /**get ID*/
     public String getID(){return ID;}
 
+    /**get time*/
+    public long getTime(){return time;}
     @Override
     public String toString() {
         return "rotationEvent [ X:" + rotationx + " Y:"+rotationy+" Z:"+rotationz+" ]  TimeStamp: "+timeOfReading+" Priority: "+priority;

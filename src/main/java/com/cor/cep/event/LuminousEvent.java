@@ -9,7 +9,7 @@ public class LuminousEvent {
 
     /** Time luminous reading was taken. */
     private Date timeOfReading;
-
+    private long time;
     /**priority of the event*/
     private int priority;
 
@@ -23,10 +23,11 @@ public class LuminousEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public LuminousEvent(int luminous, Date timeOfReading, int priority) {
+    public LuminousEvent(int luminous, Date timeOfReading, int priority, long time) {
         this.luminous = luminous;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
     }
 
     /**
@@ -51,6 +52,8 @@ public class LuminousEvent {
     /**get ID*/
     public String getID(){return ID;}
 
+    /**get time*/
+    public long getTime(){return time;}
     @Override
     public String toString() {
         return "luminousEvent [" + luminous + "C]  TimeStamp: "+timeOfReading+" Priority: "+priority;

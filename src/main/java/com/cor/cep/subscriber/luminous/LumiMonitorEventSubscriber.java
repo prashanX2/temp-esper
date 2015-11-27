@@ -3,9 +3,7 @@ package com.cor.cep.subscriber.luminous;
 import com.cor.cep.event.AvgLumiEvent;
 import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
-import com.cor.cep.util.EventPriorities;
-import com.cor.cep.util.EventsThroughput;
-import com.cor.cep.util.FogToCloudGateway;
+import com.cor.cep.util.*;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,12 +47,12 @@ public class LumiMonitorEventSubscriber implements StatementSubscriber {
 
         Date timestamp = new Date();
 
-        AvgLumiEvent avgLumiEvent = new AvgLumiEvent(avg.intValue(), timestamp, EventPriorities.getavglumi());
+        AvgLumiEvent avgLumiEvent = new AvgLumiEvent(avg.intValue(), timestamp, EventPriorities.getavglumi(),System.nanoTime());
 
 
         if(FogToCloudGateway.schedule(avgLumiEvent.getPriority(),avgLumiEvent.getID()))
         {
-            String eventtoSend = avgLumiEvent.getID()+" "+avgLumiEvent.getPriority()+" "+avgLumiEvent.getavgluminous()+" "+avgLumiEvent.getTimeOfReading();
+            String eventtoSend = avgLumiEvent.getID()+" "+avgLumiEvent.getPriority()+" "+avgLumiEvent.getavgluminous()+" "+avgLumiEvent.getTime()+" "+avgLumiEvent.getTimeOfReading();
 
             FogToCloudGateway.sendtoCloud(eventtoSend);
 
@@ -69,6 +67,7 @@ public class LumiMonitorEventSubscriber implements StatementSubscriber {
 
 
             epService.epService.getEPRuntime().sendEvent(avgLumiEvent);
+            LogData.ALUMWrite(Float.toString(avgLumiEvent.getavgluminous()), System.nanoTime() - ResultReciever.systemStartTime);
             EventsThroughput.AVGlumicount+=1;
 
         }

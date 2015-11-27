@@ -4,9 +4,7 @@ import com.cor.cep.event.LuminousEvent;
 import com.cor.cep.event.WarnLumiEvent;
 import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
-import com.cor.cep.util.EventPriorities;
-import com.cor.cep.util.EventsThroughput;
-import com.cor.cep.util.FogToCloudGateway;
+import com.cor.cep.util.*;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,11 +64,11 @@ public class LumiWarningEventSubscriber implements StatementSubscriber {
 
 
 
-        WarnLumiEvent warnLumiEvent = new WarnLumiEvent(temp5.getluminous(), temp5.getTimeOfReading(),EventPriorities.getwarnlumi());
+        WarnLumiEvent warnLumiEvent = new WarnLumiEvent(temp5.getluminous(), temp5.getTimeOfReading(),EventPriorities.getwarnlumi(),System.nanoTime());
 
         if(FogToCloudGateway.schedule(warnLumiEvent.getPriority(),warnLumiEvent.getID()))
         {
-            String eventtoSend = warnLumiEvent.getID()+" "+warnLumiEvent.getPriority()+" "+warnLumiEvent.getwarnluminous()+" "+warnLumiEvent.getTimeOfReading();
+            String eventtoSend = warnLumiEvent.getID()+" "+warnLumiEvent.getPriority()+" "+warnLumiEvent.getwarnluminous()+" "+warnLumiEvent.getTime()+" "+warnLumiEvent.getTimeOfReading();
 
             FogToCloudGateway.sendtoCloud(eventtoSend);
 
@@ -85,6 +83,7 @@ public class LumiWarningEventSubscriber implements StatementSubscriber {
 
 
             epService.epService.getEPRuntime().sendEvent(warnLumiEvent);
+            LogData.WLUMWrite(Float.toString(warnLumiEvent.getwarnluminous()), System.nanoTime() - ResultReciever.systemStartTime);
             EventsThroughput.warnlumicount+=1;
 
         }

@@ -13,7 +13,7 @@ public class TemperatureEvent {
     
     /** Time temerature reading was taken. */
     private Date timeOfReading;
-
+    private long time;
     /**priority of the event*/
     private int priority;
 
@@ -29,10 +29,11 @@ public class TemperatureEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public TemperatureEvent(int temperature, Date timeOfReading, int priority) {
+    public TemperatureEvent(int temperature, Date timeOfReading, int priority, long time) {
         this.temperature = temperature;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
     }
 
     /**
@@ -57,6 +58,8 @@ public class TemperatureEvent {
     /**get ID*/
     public String getID(){return ID;}
 
+    /**get time*/
+    public long getTime(){return time;}
     @Override
     public String toString() {
         return "TemperatureEvent [" + temperature + "C]  TimeStamp: "+timeOfReading+" Priority: "+priority;

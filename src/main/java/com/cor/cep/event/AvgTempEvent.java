@@ -12,7 +12,7 @@ public class AvgTempEvent {
 
     /** Time temerature reading was taken. */
     private Date timeOfReading;
-
+    private long time;
     /**priority of the event*/
     private int priority;
 
@@ -28,10 +28,11 @@ public class AvgTempEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public AvgTempEvent(int avgtemperature, Date timeOfReading, int priority) {
+    public AvgTempEvent(int avgtemperature, Date timeOfReading, int priority, long time) {
         this.avgtemperature = avgtemperature;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
     }
 
     /**
@@ -58,6 +59,8 @@ public class AvgTempEvent {
     /**get ID*/
     public String getID(){return ID;}
 
+    /**get time*/
+    public long getTime(){return time;}
     @Override
     public String toString() {
         return "AVG TemperatureEvent [" + avgtemperature + "C  TimeStamp: "+timeOfReading+" Priority: "+priority;

@@ -81,6 +81,8 @@ public class NetworkLatency {
                             latency = (f - d) / 1000000;
 
                             System.out.println("Latency to :" + IPAddress + ": " + latency);
+                            LogData.latencyWrite(Long.toString(latency), System.nanoTime() - ResultReciever.systemStartTime);
+
                             Thread.sleep(2000);
 
                             //clientSocket.close();

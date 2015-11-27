@@ -6,9 +6,7 @@ import com.cor.cep.event.WarnLumiEvent;
 import com.cor.cep.event.WarnTempEvent;
 import com.cor.cep.handler.epService;
 import com.cor.cep.subscriber.StatementSubscriber;
-import com.cor.cep.util.EventPriorities;
-import com.cor.cep.util.EventsThroughput;
-import com.cor.cep.util.FogToCloudGateway;
+import com.cor.cep.util.*;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,12 +57,12 @@ public class TempWarningEventSubscriber implements StatementSubscriber {
         TemperatureEvent temp2 = eventMap.get("temp2");
 
 
-        WarnTempEvent warnTempEvent = new WarnTempEvent(temp2.getTemperature(), temp2.getTimeOfReading(), EventPriorities.getwarntemp());
+        WarnTempEvent warnTempEvent = new WarnTempEvent(temp2.getTemperature(), temp2.getTimeOfReading(), EventPriorities.getwarntemp(),System.nanoTime());
 
 
         if(FogToCloudGateway.schedule(warnTempEvent.getPriority(),warnTempEvent.getID()))
         {
-            String eventtoSend = warnTempEvent.getID()+" "+warnTempEvent.getPriority()+" "+warnTempEvent.getwarntemperature()+" "+warnTempEvent.getTimeOfReading();
+            String eventtoSend = warnTempEvent.getID()+" "+warnTempEvent.getPriority()+" "+warnTempEvent.getwarntemperature()+" "+warnTempEvent.getTime()+" "+warnTempEvent.getTimeOfReading();
 
             FogToCloudGateway.sendtoCloud(eventtoSend);
 
@@ -79,6 +77,7 @@ public class TempWarningEventSubscriber implements StatementSubscriber {
 
 
             epService.epService.getEPRuntime().sendEvent(warnTempEvent);
+            LogData.WTEMWrite(Float.toString(warnTempEvent.getwarntemperature()), System.nanoTime() - ResultReciever.systemStartTime);
             EventsThroughput.warntempcount+=1;
 
         }

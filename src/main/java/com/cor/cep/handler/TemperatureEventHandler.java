@@ -3,9 +3,7 @@ package com.cor.cep.handler;
 import com.cor.cep.subscriber.temperature.TempCriticalEventSubscriber;
 import com.cor.cep.subscriber.temperature.TempMonitorEventSubscriber;
 import com.cor.cep.subscriber.temperature.TempWarningEventSubscriber;
-import com.cor.cep.util.EventPriorities;
-import com.cor.cep.util.EventsThroughput;
-import com.cor.cep.util.FogToCloudGateway;
+import com.cor.cep.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -112,7 +110,7 @@ public  class TemperatureEventHandler {
 
         if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
-            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getTemperature()+" "+event.getTimeOfReading();
+            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getTemperature()+" "+event.getTime()+" "+event.getTimeOfReading();
 
             FogToCloudGateway.sendtoCloud(eventtoSend);
 
@@ -126,6 +124,7 @@ public  class TemperatureEventHandler {
             tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
+            LogData.TEMPWrite(Float.toString(event.getTemperature()), System.nanoTime() - ResultReciever.systemStartTime);
             EventsThroughput.tempcount+=1;
 
         }

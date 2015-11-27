@@ -84,6 +84,8 @@ public class NetworkThroughput {
                         }
                         download =  downup[0];
                         upload = downup[1];
+                        LogData.netthroughputWrite(Integer.toString(download), System.nanoTime() - ResultReciever.systemStartTime);
+
                         System.out.println("download throughput: "+download+" || upload throughput: "+upload);
 
 

@@ -131,7 +131,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                AccelerationEvent accel = new AccelerationEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getAccelP());
+                                AccelerationEvent accel = new AccelerationEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getAccelP(),Long.parseLong(decode[5]));
                                 gaccelerationEventHandler.handle(accel);
 
                             }
@@ -144,7 +144,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                GravityEvent gravity = new GravityEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getGravityP());
+                                GravityEvent gravity = new GravityEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getGravityP(),Long.parseLong(decode[5]));
 
                                 ggravityEventHandler.handle(gravity);
 
@@ -157,7 +157,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                RotationEvent rotation = new RotationEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getRotationP());
+                                RotationEvent rotation = new RotationEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getRotationP(),Long.parseLong(decode[5]));
 
                                 grotationEventHandler.handle(rotation);
 
@@ -170,7 +170,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                OrientationEvent orientation = new OrientationEvent(Integer.parseInt(decode[2]),Integer.parseInt(decode[3]),Integer.parseInt(decode[4]),timestamp,EventPriorities.getOrientationP());
+                                OrientationEvent orientation = new OrientationEvent(Integer.parseInt(decode[2]),Integer.parseInt(decode[3]),Integer.parseInt(decode[4]),timestamp,EventPriorities.getOrientationP(),Long.parseLong(decode[5]));
 
                                 gorientationEventHandler.handle(orientation);
 
@@ -183,7 +183,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                LuminousEvent luminous = new LuminousEvent(Integer.parseInt(decode[2]), timestamp,EventPriorities.getLuminousP());
+                                LuminousEvent luminous = new LuminousEvent(Integer.parseInt(decode[2]), timestamp,EventPriorities.getLuminousP(),Long.parseLong(decode[3]));
                                 gluminousEventHandler.handle(luminous);
 
                             }
@@ -199,7 +199,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                HumidityEvent humidity = new HumidityEvent(Integer.parseInt(decode[2]),timestamp,EventPriorities.getHumidityP());
+                                HumidityEvent humidity = new HumidityEvent(Integer.parseInt(decode[2]),timestamp,EventPriorities.getHumidityP(),Long.parseLong(decode[3]));
                                 ghumidityEventHandler.handle(humidity);
 
                             }
@@ -211,7 +211,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                TemperatureEvent temperature = new TemperatureEvent(Integer.parseInt(decode[2]),timestamp, EventPriorities.getTemperatureP());
+                                TemperatureEvent temperature = new TemperatureEvent(Integer.parseInt(decode[2]),timestamp, EventPriorities.getTemperatureP(),Long.parseLong(decode[3]));
                                 gtemperatureEventHandler.handle(temperature);
 
                             }
@@ -226,7 +226,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                DistanceEvent distance = new DistanceEvent(Integer.parseInt(decode[2]),timestamp,EventPriorities.getDistanceP());
+                                DistanceEvent distance = new DistanceEvent(Integer.parseInt(decode[2]),timestamp,EventPriorities.getDistanceP(),Long.parseLong(decode[3]));
                                 gdistanceEventHandler.handle(distance);
 
                             }
@@ -241,7 +241,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                EnteredEvent event = new EnteredEvent(Integer.parseInt(decode[2]),Integer.parseInt(decode[3]),timestamp, EventPriorities.getentered());
+                                EnteredEvent event = new EnteredEvent(Integer.parseInt(decode[2]),Integer.parseInt(decode[3]),timestamp, EventPriorities.getentered(),Long.parseLong(decode[4]));
                                 epService.epService.getEPRuntime().sendEvent(event);
                                 //System.out.println(event.toString());
                                 //EventPriorities.eventCountadd();
@@ -259,7 +259,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                AvgHumiEvent avgHumiEvent = new AvgHumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavghumi());
+                                AvgHumiEvent avgHumiEvent = new AvgHumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavghumi(),Long.parseLong(decode[3]));
                                 gLOG.debug(avgHumiEvent.toString());
                                 epService.epService.getEPRuntime().sendEvent(avgHumiEvent);
                                 EventsThroughput.AVGhumicount+=1;
@@ -273,7 +273,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                WarnHumiEvent warnHumiEvent = new WarnHumiEvent(Integer.parseInt(decode[2]), timestamp,EventPriorities.getwarnhumi());
+                                WarnHumiEvent warnHumiEvent = new WarnHumiEvent(Integer.parseInt(decode[2]), timestamp,EventPriorities.getwarnhumi(),Long.parseLong(decode[3]));
                                 gLOG.debug(warnHumiEvent.toString());
 
                                 epService.epService.getEPRuntime().sendEvent(warnHumiEvent);
@@ -289,7 +289,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                AvgLumiEvent avgLumiEvent = new AvgLumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavglumi());
+                                AvgLumiEvent avgLumiEvent = new AvgLumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavglumi(),Long.parseLong(decode[3]));
                                 gLOG.debug(avgLumiEvent.toString());
 
 
@@ -305,7 +305,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                WarnLumiEvent warnLumiEvent = new WarnLumiEvent(Integer.parseInt(decode[2]), timestamp ,EventPriorities.getwarnlumi());
+                                WarnLumiEvent warnLumiEvent = new WarnLumiEvent(Integer.parseInt(decode[2]), timestamp ,EventPriorities.getwarnlumi(),Long.parseLong(decode[3]));
                                 gLOG.debug(warnLumiEvent.toString());
 
 
@@ -322,7 +322,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                AvgTempEvent avgTempEvent = new AvgTempEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavgtemp());
+                                AvgTempEvent avgTempEvent = new AvgTempEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavgtemp(),Long.parseLong(decode[3]));
                                 gLOG.debug(avgTempEvent.toString());
 
 
@@ -338,7 +338,7 @@ public final class FogToCloudGateway {
                                 Date timestamp = new Date();
 
 
-                                WarnTempEvent warnTempEvent = new WarnTempEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getwarntemp());
+                                WarnTempEvent warnTempEvent = new WarnTempEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getwarntemp(),Long.parseLong(decode[3]));
                                 gLOG.debug(warnTempEvent.toString());
 
 
@@ -543,7 +543,127 @@ public final class FogToCloudGateway {
 
 
 
+    /**Predict system behaviour for X number of seconds before hand and schedule accordingly*/
+    public static boolean pscheduletoCloud(int priority, String eventID)
+    {
 
+        priority = EventTree.getTreeValue(priority, eventID);
+        if(eventID.equals("ALUM")) {
+            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% " + eventID + " " + priority);
+        }
+        /**high priority and primary events*/
+        if(priority>4)
+        {
+            /**if max number of events that the engine can handle is reached send to cloud*/
+            if(Predict.peventspersec > EventsThroughput.maxEventsPerSec)
+            {
+
+                return true;
+            }
+
+            /**if cpu load is extreme and latency is acceptable send to cloud*/
+            else if(Predict.pcputhroughput >100 && Predict.platency <500)
+            {
+                return true;
+            }
+
+            /**if cpu load is extreme and latency is very high dont send to cloud*/
+            else if(Predict.pcputhroughput >100 && Predict.platency >1000)
+            {
+                return false;
+            }
+
+            else
+            {
+                return false;
+
+            }
+
+
+
+        }
+
+        /**normal priority events */
+        else if(priority == 3)
+        {
+
+            /**if max number of events that the engine can handle is reached send to cloud*/
+            if(Predict.peventspersec > EventsThroughput.maxEventsPerSec)
+            {
+
+                return true;
+            }
+
+            /**if cpu load is medium and latency is acceptable send to cloud*/
+            else if(Predict.pcputhroughput > 50 && Predict.platency < 1000)
+            {
+                return true;
+            }
+
+            /**if the band width utilization is high and cpu load is medium dont send to cloud*/
+            else if(Predict.pcputhroughput < 50 && (maxBandwidth - Predict.pdownload) < 50)
+            {
+                return false;
+            }
+
+            else
+            {
+                return false;
+            }
+
+
+        }
+
+        /**low priority events */
+        else if(priority < 3)
+        {
+            /**if max number of events that the engine can handle is reached send to cloud*/
+            if(Predict.peventspersec > EventsThroughput.maxEventsPerSec)
+            {
+
+                return true;
+            }
+
+            /**if cpu load is medium and latency is acceptable send to cloud*/
+            else if(Predict.pcputhroughput > 7 && Predict.platency < 3000)
+            {
+                System.out.println("IN THE OEIROITY <3");
+                return true;
+
+            }
+
+            /**if the band width utilization is high and cpu load is medium dont send to cloud*/
+            else if(Predict.pcputhroughput < 30 && (maxBandwidth - Predict.pdownload) < 200)
+            {
+                return false;
+            }
+
+            else
+            {
+                return false;
+            }
+
+        }
+
+        else
+        {
+            return false;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
 
 
 

@@ -2,6 +2,7 @@ package com.cor.cep.subscriber.EndResult;
 
 import com.cor.cep.event.DistanceEvent;
 
+import com.cor.cep.event.EnteredEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
@@ -55,8 +56,10 @@ public class DistLumiSubscriber implements StatementSubscriber {
     }
 
 
-    public void update(Map<String, Double> eventMap)
+    public void update(Map<String, EnteredEvent> eventMap)
     {
+
+
         System.out.println("################################################");
         System.out.println("NEED TO INCREASE LIGHTING CONDITIONS");
         System.out.println("################################################");

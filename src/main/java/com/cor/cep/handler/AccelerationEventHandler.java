@@ -4,9 +4,7 @@ package com.cor.cep.handler;
 import com.cor.cep.event.AccelerationEvent;
 import com.cor.cep.event.TemperatureEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
-import com.cor.cep.util.EventPriorities;
-import com.cor.cep.util.EventsThroughput;
-import com.cor.cep.util.FogToCloudGateway;
+import com.cor.cep.util.*;
 import com.espertech.esper.client.EPStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,7 +117,7 @@ public class AccelerationEventHandler {
 
         if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
-            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getAccelx()+" "+event.getAccely()+" "+event.getAccelz()+" "+event.getTimeOfReading();
+            String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getAccelx()+" "+event.getAccely()+" "+event.getAccelz()+" "+event.getTime()+" "+event.getTimeOfReading();
 
             FogToCloudGateway.sendtoCloud(eventtoSend);
 
@@ -131,6 +129,7 @@ public class AccelerationEventHandler {
             //tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
+            LogData.ACCEWrite(Float.toString(event.getAccelx()),System.nanoTime()- ResultReciever.systemStartTime);
             EventsThroughput.accelcount+=1;
 
         }

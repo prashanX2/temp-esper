@@ -76,9 +76,14 @@ public class IPCServer {
 
 
 
+            ResultReciever.systemStartTime = System.nanoTime();
 
             xxrayExecutor.submit(new Runnable() {
                 public void run() {
+
+                    String temp = "";
+
+                    long atime = 0;
 
                     while (true) {
 
@@ -89,44 +94,56 @@ public class IPCServer {
                         try {
                             serverSocket.receive(receivePacket);
                             //System.out.println("packet recieved");
+                            atime = System.nanoTime()-ResultReciever.systemStartTime;
 
                         } catch (Exception ex) {
                             System.out.println(ex.toString());
                         }
 
+
+
+
                         String sentence = new String(receivePacket.getData());
-                        String decode[] = sentence.split(" ");
-                        //System.out.println(sentence);
+                        sentence = sentence.replace("\00", "");
+                        if (temp.equals(sentence)) {
+                            //do nothing
+                        } else {
+
+                            temp = sentence;
+                            LogData.writetoFile(sentence,atime);
+
+                            String decode[] = sentence.split(" ");
+                            //System.out.println(sentence);
 
 
-                        if (decode[0].equals("H001")) {
-                            IPCServer_H001.decodeStream(decode);
-                            H001Gen();
+                            if (decode[0].equals("H001")) {
+                                IPCServer_H001.decodeStream(decode);
+                                H001Gen();
 
-                        }
+                            }
 
-                        if (decode[0].equals("STH1")) {
-                            IPCServer_STH1.decodeStream(decode);
-                            STH1Gen();
-
-
-                        }
-
-                        if (decode[0].equals("SD01")) {
-                            IPCServer_SD01.decodeStream(decode);
-                            SD01Gen();
-                        }
+                            if (decode[0].equals("STH1")) {
+                                IPCServer_STH1.decodeStream(decode);
+                                STH1Gen();
 
 
-                        Arrays.fill(receiveData, (byte) 0);
+                            }
 
-                        try {
-                            Thread.sleep(1);
-                        } catch (InterruptedException e) {
-                            LOG.error("Thread Interrupted", e);
+                            if (decode[0].equals("SD01")) {
+                                IPCServer_SD01.decodeStream(decode);
+                                SD01Gen();
+                            }
+
+
+                            Arrays.fill(receiveData, (byte) 0);
+
+                            try {
+                                Thread.sleep(1);
+                            } catch (InterruptedException e) {
+                                LOG.error("Thread Interrupted", e);
+                            }
                         }
                     }
-
                 }
             });
 
@@ -142,11 +159,11 @@ public class IPCServer {
             {
                 Date timestamp = new Date();
 
-                AccelerationEvent accel = new AccelerationEvent(IPCServer_H001.getaccelx(),IPCServer_H001.getaccely(),IPCServer_H001.getaccelz(),timestamp,EventPriorities.getAccelP());
-                GravityEvent gravity = new GravityEvent(IPCServer_H001.getgravityx(),IPCServer_H001.getgravityy(),IPCServer_H001.getgravityz(),timestamp,EventPriorities.getGravityP());
-                RotationEvent rotation = new RotationEvent(IPCServer_H001.getrotationx(),IPCServer_H001.getrotationy(),IPCServer_H001.getrotationz(),timestamp,EventPriorities.getRotationP());
-                OrientationEvent orientation = new OrientationEvent(IPCServer_H001.getazi(),IPCServer_H001.getpitch(),IPCServer_H001.getroll(),timestamp,EventPriorities.getOrientationP());
-                LuminousEvent luminous = new LuminousEvent(IPCServer_H001.getlumi(), timestamp,EventPriorities.getLuminousP());
+                AccelerationEvent accel = new AccelerationEvent(IPCServer_H001.getaccelx(),IPCServer_H001.getaccely(),IPCServer_H001.getaccelz(),timestamp,EventPriorities.getAccelP(),System.nanoTime());
+                GravityEvent gravity = new GravityEvent(IPCServer_H001.getgravityx(),IPCServer_H001.getgravityy(),IPCServer_H001.getgravityz(),timestamp,EventPriorities.getGravityP(),System.nanoTime());
+                RotationEvent rotation = new RotationEvent(IPCServer_H001.getrotationx(),IPCServer_H001.getrotationy(),IPCServer_H001.getrotationz(),timestamp,EventPriorities.getRotationP(),System.nanoTime());
+                OrientationEvent orientation = new OrientationEvent(IPCServer_H001.getazi(),IPCServer_H001.getpitch(),IPCServer_H001.getroll(),timestamp,EventPriorities.getOrientationP(),System.nanoTime());
+                LuminousEvent luminous = new LuminousEvent(IPCServer_H001.getlumi(), timestamp,EventPriorities.getLuminousP(),System.nanoTime());
 
 
                 accelerationEventHandler.handle(accel);
@@ -166,8 +183,8 @@ public class IPCServer {
             {
                 Date timestamp = new Date();
 
-                HumidityEvent humidity = new HumidityEvent(IPCServer_STH1.getHumidity(),timestamp,EventPriorities.getHumidityP());
-                TemperatureEvent temperature = new TemperatureEvent(IPCServer_STH1.getTemp(),timestamp, EventPriorities.getTemperatureP());
+                HumidityEvent humidity = new HumidityEvent(IPCServer_STH1.getHumidity(),timestamp,EventPriorities.getHumidityP(),System.nanoTime());
+                TemperatureEvent temperature = new TemperatureEvent(IPCServer_STH1.getTemp(),timestamp, EventPriorities.getTemperatureP(),System.nanoTime());
 
                 humidityEventHandler.handle(humidity);
                 temperatureEventHandler.handle(temperature);
@@ -180,7 +197,7 @@ public class IPCServer {
             {
                 Date timestamp = new Date();
 
-                DistanceEvent distance = new DistanceEvent(IPCServer_SD01.getDistance(),timestamp,EventPriorities.getDistanceP());
+                DistanceEvent distance = new DistanceEvent(IPCServer_SD01.getDistance(),timestamp,EventPriorities.getDistanceP(),System.nanoTime());
 
                 distanceEventHandler.handle(distance);
 

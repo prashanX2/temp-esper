@@ -10,7 +10,7 @@ public class HumidityEvent {
 
     /** Time humidity reading was taken. */
     private Date timeOfReading;
-
+    private long time;
     /**priority of the event*/
     private int priority;
 
@@ -26,10 +26,11 @@ public class HumidityEvent {
      * @param timeOfReading Time of Reading
      * @param priority priority of the event
      */
-    public HumidityEvent(int humidity, Date timeOfReading, int priority) {
+    public HumidityEvent(int humidity, Date timeOfReading, int priority, long time) {
         this.humidity = humidity;
         this.timeOfReading = timeOfReading;
         this.priority = priority;
+        this.time = time;
     }
 
     /**
@@ -54,6 +55,8 @@ public class HumidityEvent {
     /**get ID*/
     public String getID(){return ID;}
 
+    /**get time*/
+    public long getTime(){return time;}
     @Override
     public String toString() {
         return "HumidityEvent [" + humidity + "%]  TimeStamp: "+timeOfReading+" Priority: "+priority;
