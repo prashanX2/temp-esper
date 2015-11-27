@@ -77,7 +77,14 @@ public class TempWarningEventSubscriber implements StatementSubscriber {
 
 
             epService.epService.getEPRuntime().sendEvent(warnTempEvent);
-            LogData.WTEMWrite(Float.toString(warnTempEvent.getwarntemperature()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.WTEMWrite(Float.toString(warnTempEvent.getwarntemperature()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = warnTempEvent.getID()+" "+warnTempEvent.getPriority()+" "+warnTempEvent.getwarntemperature()+" "+warnTempEvent.getTime()+" "+warnTempEvent.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.warntempcount+=1;
 
         }

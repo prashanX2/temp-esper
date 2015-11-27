@@ -119,7 +119,14 @@ public class OrientationEventHandler implements InitializingBean {
            //tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
-            LogData.ORIEWrite(Float.toString(event.getazimuth()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.ORIEWrite(Float.toString(event.getazimuth()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getazimuth()+" "+event.getpitch()+" "+event.getroll()+" "+event.getTime()+" "+event.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.orientationcount+=1;
 
         }

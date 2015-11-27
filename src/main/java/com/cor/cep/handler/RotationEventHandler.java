@@ -120,7 +120,14 @@ public class RotationEventHandler implements InitializingBean {
             //tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
-            LogData.ROTAWrite(Float.toString(event.getrotationx()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.ROTAWrite(Float.toString(event.getrotationx()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getrotationx()+" "+event.getrotationy()+" "+event.getrotationz()+" "+event.getTime()+" "+event.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.rotationcount+=1;
 
         }

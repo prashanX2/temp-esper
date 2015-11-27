@@ -66,7 +66,14 @@ public class HumiMonitorEventSubscriber implements StatementSubscriber {
             //System.out.println("after temp handle");
             LOG.debug(avgHumiEvent.toString());
             epService.epService.getEPRuntime().sendEvent(avgHumiEvent);
-            LogData.AHUMWrite(Float.toString(avgHumiEvent.getavghumidity()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.AHUMWrite(Float.toString(avgHumiEvent.getavghumidity()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = avgHumiEvent.getID()+" "+avgHumiEvent.getPriority()+" "+avgHumiEvent.getavghumidity()+" "+avgHumiEvent.getTime()+" "+avgHumiEvent.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.AVGhumicount+=1;
 
         }

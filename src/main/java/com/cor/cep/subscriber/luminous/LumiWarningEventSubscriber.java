@@ -83,7 +83,14 @@ public class LumiWarningEventSubscriber implements StatementSubscriber {
 
 
             epService.epService.getEPRuntime().sendEvent(warnLumiEvent);
-            LogData.WLUMWrite(Float.toString(warnLumiEvent.getwarnluminous()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.WLUMWrite(Float.toString(warnLumiEvent.getwarnluminous()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = warnLumiEvent.getID()+" "+warnLumiEvent.getPriority()+" "+warnLumiEvent.getwarnluminous()+" "+warnLumiEvent.getTime()+" "+warnLumiEvent.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.warnlumicount+=1;
 
         }

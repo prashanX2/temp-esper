@@ -82,7 +82,14 @@ public class TempMonitorEventSubscriber implements UpdateListener {
 
 
             epService.epService.getEPRuntime().sendEvent(avgTempEvent);
-            LogData.ATEMWrite(Float.toString(avgTempEvent.getavgtemperature()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.ATEMWrite(Float.toString(avgTempEvent.getavgtemperature()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = avgTempEvent.getID()+" "+avgTempEvent.getPriority()+" "+avgTempEvent.getavgtemperature()+" "+avgTempEvent.getTime()+" "+avgTempEvent.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.AVGtempcount+=1;
 
         }

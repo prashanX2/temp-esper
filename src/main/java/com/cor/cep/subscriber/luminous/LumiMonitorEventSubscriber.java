@@ -67,7 +67,14 @@ public class LumiMonitorEventSubscriber implements StatementSubscriber {
 
 
             epService.epService.getEPRuntime().sendEvent(avgLumiEvent);
-            LogData.ALUMWrite(Float.toString(avgLumiEvent.getavgluminous()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.ALUMWrite(Float.toString(avgLumiEvent.getavgluminous()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = avgLumiEvent.getID()+" "+avgLumiEvent.getPriority()+" "+avgLumiEvent.getavgluminous()+" "+avgLumiEvent.getTime()+" "+avgLumiEvent.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.AVGlumicount+=1;
 
         }

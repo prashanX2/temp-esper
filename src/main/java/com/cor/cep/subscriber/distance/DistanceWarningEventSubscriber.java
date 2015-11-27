@@ -61,7 +61,14 @@ public class DistanceWarningEventSubscriber implements UpdateListener {
         {
             epService.epService.getEPRuntime().sendEvent(event);
             System.out.println(event.toString());
-            LogData.ENTEWrite(Float.toString(event.getDistance1()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.ENTEWrite(Float.toString(event.getDistance1()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getDistance1()+" "+event.getDistance2()+" "+event.getTime()+" "+event.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
 //EventPriorities.eventCountadd();
             EventsThroughput.entered += 1;
             LOG.debug(sb.toString());

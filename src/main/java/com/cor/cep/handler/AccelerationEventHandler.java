@@ -115,6 +115,7 @@ public class AccelerationEventHandler {
     public void handle(AccelerationEvent event) {
 
 
+
         if(FogToCloudGateway.schedule(event.getPriority(),event.getID()))
         {
             String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getAccelx()+" "+event.getAccely()+" "+event.getAccelz()+" "+event.getTime()+" "+event.getTimeOfReading();
@@ -129,7 +130,14 @@ public class AccelerationEventHandler {
             //tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
-            LogData.ACCEWrite(Float.toString(event.getAccelx()),System.nanoTime()- ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud) {
+                LogData.ACCEWrite(Float.toString(event.getAccelx()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getAccelx()+" "+event.getAccely()+" "+event.getAccelz()+" "+event.getTime()+" "+event.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.accelcount+=1;
 
         }

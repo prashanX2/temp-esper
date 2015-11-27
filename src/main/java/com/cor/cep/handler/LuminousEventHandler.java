@@ -134,7 +134,15 @@ public class LuminousEventHandler {
             //LOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
-            LogData.LUMIWrite(Float.toString(event.getluminous()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.LUMIWrite(Float.toString(event.getluminous()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getluminous()+" "+event.getTime()+" "+event.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
+
             EventsThroughput.lumicount+=1;
 
         }

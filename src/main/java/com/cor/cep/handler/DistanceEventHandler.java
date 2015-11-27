@@ -139,7 +139,15 @@ public class DistanceEventHandler {
             tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
-            LogData.DISTWrite(Float.toString(event.getDistance()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.DISTWrite(Float.toString(event.getDistance()), System.nanoTime() - ResultReciever.systemStartTime);
+            }
+            else
+            {
+                String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getDistance()+" "+event.getTime()+" "+event.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.distancecount+=1;
 
         }

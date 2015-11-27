@@ -161,7 +161,14 @@ public class HumidityEventHandler {
             tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
-            LogData.HUMIWrite(Float.toString(event.gethumidity()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.HUMIWrite(Float.toString(event.gethumidity()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.gethumidity()+" "+event.getTime()+" "+event.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.humiditycount+=1;
 
         }

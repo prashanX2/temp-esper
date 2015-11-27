@@ -52,6 +52,7 @@ public final class FogToCloudGateway {
 
 
 
+    public static String clientAddress;
 
     public static boolean isCloud = false;
     public static Socket gatewayclientSocket;
@@ -114,9 +115,10 @@ public final class FogToCloudGateway {
 
                             Socket connectionSocket = gatewayserverSocket.accept();
                             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+                            connectionSocket.getRemoteSocketAddress().toString();
                             //DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
                             String clientSentence = inFromClient.readLine();
-                            System.out.println("packet Received: " + clientSentence);
+                            System.out.println("-----------------------packet Received from "+clientAddress+" :" + clientSentence);
 
                             String decode[] = clientSentence.split(" ");
 
@@ -219,7 +221,7 @@ public final class FogToCloudGateway {
 
                             /**stand alone sensors 2 (SD01)*/
 
-                            if(decode[0].equals("TEMP"))
+                            if(decode[0].equals("DIST"))
                             {
 
 

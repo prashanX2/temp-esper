@@ -20,6 +20,7 @@ public class StartDemo {
 
 
 
+        public static ResultSender resultSender = new ResultSender();
 
 
 
@@ -39,13 +40,18 @@ public class StartDemo {
         {
             FogToCloudGateway.initgatewayclient();
 
+            ResultReciever.start();
+
 
         }
         else if(answer.equals("y"))
         {
+
             FogToCloudGateway.isCloud=true;
 
             FogToCloudGateway.initgatewayserver();
+
+            ResultSender.start();
 
         }
 

@@ -121,7 +121,14 @@ public class GravityEventHandler implements InitializingBean {
            //tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
-            LogData.GRAVWrite(Float.toString(event.getgravityx()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud)
+            {LogData.GRAVWrite(Float.toString(event.getgravityx()), System.nanoTime() - ResultReciever.systemStartTime);}
+            else
+            {
+                String eventtoSend = event.getID()+" "+event.getPriority()+" "+event.getgravityx()+" "+event.getgravityy()+" "+event.getgravityz()+" "+event.getTime()+" "+event.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.gravitycount+=1;
 
         }

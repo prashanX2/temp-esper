@@ -83,7 +83,14 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
             LOG.debug(warnHumiEvent.toString());
 
             epService.epService.getEPRuntime().sendEvent(warnHumiEvent);
-            LogData.WHUMWrite(Float.toString(warnHumiEvent.getwarnhumidity()), System.nanoTime() - ResultReciever.systemStartTime);
+            if(!FogToCloudGateway.isCloud){
+                LogData.WHUMWrite(Float.toString(warnHumiEvent.getwarnhumidity()), System.nanoTime() - ResultReciever.systemStartTime);
+            }else
+            {
+                String eventtoSend = warnHumiEvent.getID()+" "+warnHumiEvent.getPriority()+" "+warnHumiEvent.getwarnhumidity()+" "+warnHumiEvent.getTime()+" "+warnHumiEvent.getTimeOfReading();
+
+                ResultSender.send(eventtoSend);
+            }
             EventsThroughput.warnhumicount+=1;
 
         }
