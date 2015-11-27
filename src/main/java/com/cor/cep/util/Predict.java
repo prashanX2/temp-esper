@@ -34,7 +34,7 @@ public final class Predict {
 
                 try {
                     Thread.sleep(4000); // sleep for 10 sec
-                    System.out.println("**************** FILLING QUEUES STARTED");
+                    System.out.println("***************** FILLING QUEUES STARTED");
                     fillQueues();
 
 
