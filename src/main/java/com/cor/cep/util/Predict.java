@@ -72,7 +72,7 @@ public final class Predict {
 
                         if(latencyQueue.size() >= historysize)
                         {
-                            System.out.println(latencyQueue.size());
+                            //System.out.println(latencyQueue.size());
                             platency = predictonQueues(latencyQueue, "latency");
                             LogData.platencyWrite(Long.toString(platency), (System.nanoTime() - ResultReciever.systemStartTime)+(predictdistance*1000));
                             latencyQueue.remove();
@@ -82,7 +82,7 @@ public final class Predict {
 
                         if(downloadQueue.size() >= historysize)
                         {
-                            System.out.println(downloadQueue.size());
+                            //System.out.println(downloadQueue.size());
                             pdownload = predictonQueues(downloadQueue, "download");
                             LogData.pnetthroughputWrite(Integer.toString(pdownload), (System.nanoTime() - ResultReciever.systemStartTime)+(predictdistance*1000));
                             downloadQueue.remove();
@@ -91,7 +91,7 @@ public final class Predict {
 
                         if(cputhroughputQueue.size() >= historysize)
                         {
-                            System.out.println(cputhroughputQueue.size());
+                            //System.out.println(cputhroughputQueue.size());
                             pcputhroughput = predictonQueues(cputhroughputQueue, "cpu throughput");
                             LogData.pcputhroughputWrite(Float.toString(pcputhroughput), (System.nanoTime() - ResultReciever.systemStartTime)+(predictdistance*1000));
                             cputhroughputQueue.remove();
@@ -100,7 +100,7 @@ public final class Predict {
 
                         if(eventspersecQueue.size() >= historysize)
                         {
-                            System.out.println(eventspersecQueue.size());
+                            //System.out.println(eventspersecQueue.size());
                             peventspersec = predictonQueues(eventspersecQueue, "eventspersec");
                             LogData.peventthroughputWrite(Integer.toString(peventspersec), (System.nanoTime() - ResultReciever.systemStartTime)+(predictdistance*1000));
                             eventspersecQueue.remove();
@@ -161,11 +161,11 @@ public final class Predict {
             System.out.print(y[i]+" ");
         }
 
-        System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression.predict((x.length+predictdistance)));
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression2.predict((x.length+predictdistance)));
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression3.predict((x.length+predictdistance)));
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression4.predict((x.length+predictdistance)));
-        System.out.println(latencyQueue.size());
+        //System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression.predict((x.length+predictdistance)));
+        //System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression2.predict((x.length+predictdistance)));
+        //System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression3.predict((x.length+predictdistance)));
+        //System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression4.predict((x.length+predictdistance)));
+        //System.out.println(latencyQueue.size());
 
         return (int)regression3.predict((x.length+predictdistance));
     }

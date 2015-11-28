@@ -3,6 +3,8 @@ package com.cor.cep;
 import com.cor.cep.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Scanner;
 
@@ -101,9 +103,9 @@ public class StartDemo {
 
         EventTree.eventtreeinit();
 
-        IPCServer generator = new IPCServer();
+        // IPCServer generator = new IPCServer();
 
-        // IPCServerSimu generator = new IPCServerSimu();
+        IPCServerSimu generator = new IPCServerSimu();
        generator.startSendingTemperatureReadings(noOfTemperatureEvents);
 
         EventsThroughput eventmonitor = new EventsThroughput();

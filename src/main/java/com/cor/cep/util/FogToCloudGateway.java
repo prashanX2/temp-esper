@@ -402,8 +402,18 @@ public final class FogToCloudGateway {
 
     public static boolean schedule(int priority, String eventID)
     {
-        return !isCloud;
 
+        if(isCloud)
+        {
+            return false;
+        }
+        else
+        {
+            /**
+            return scheduletoCloud(priority,eventID);
+             */
+            return true;
+        }
 
     }
 
