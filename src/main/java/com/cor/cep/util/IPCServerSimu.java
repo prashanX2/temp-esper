@@ -138,11 +138,13 @@ public class IPCServerSimu {
                                 //LogData.writetoFile(sentence, atime);
                                 String decode[] = sentence1.split(" ");
 
+                                double t1 = Double.parseDouble(decode[decode.length-1])*1000;
 
 
-                                timeinterval =   Integer.parseInt(decode[decode.length-1]) - temptimeinterval;
 
-                                temptimeinterval =  Integer.parseInt(decode[decode.length-1]);
+                                timeinterval =  ((int)t1 - temptimeinterval);
+
+                                temptimeinterval =  (int)t1;
                                 //System.out.println(sentence);
 
 

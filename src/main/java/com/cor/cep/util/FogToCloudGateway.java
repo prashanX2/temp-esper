@@ -57,7 +57,7 @@ public final class FogToCloudGateway {
     public static boolean isCloud = false;
     public static Socket gatewayclientSocket;
     public static InetAddress gatewayserverIPAddress;
-    public static DataOutputStream outToServer;
+    //public static DataOutputStream outToServer;
 
 
     //public static DatagramSocket gatewayserverSocket;
@@ -86,6 +86,10 @@ public final class FogToCloudGateway {
     }
 
 
+    public static boolean clientconnected = false;
+    public static Socket  xconnectionSocket;
+    public static BufferedReader xinFromClient;
+
     public static void initgatewayserver()
     {
         try
@@ -103,276 +107,266 @@ public final class FogToCloudGateway {
             serverExecutor.submit(new Runnable() {
                 public void run() {
 
-                    while (true) {
 
-
-
-
-                        //DatagramPacket receivePacket = new DatagramPacket(gatewayreceiveData, gatewayreceiveData.length);
-
-
+                    if (!clientconnected) {
                         try {
+                            xconnectionSocket = gatewayserverSocket.accept();
+                            xinFromClient = new BufferedReader(new InputStreamReader(xconnectionSocket.getInputStream()));
 
-                            Socket connectionSocket = gatewayserverSocket.accept();
-                            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-                            connectionSocket.getRemoteSocketAddress().toString();
-                            //DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-                            String clientSentence = inFromClient.readLine();
-                            System.out.println("-----------------------packet Received from "+clientAddress+" :" + clientSentence);
 
-                            String decode[] = clientSentence.split(" ");
-
-
-
-                          /**sensor hub 1 events (H001)*/
-
-                            if(decode[0].equals("ACCE"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                AccelerationEvent accel = new AccelerationEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getAccelP(),Long.parseLong(decode[5]));
-                                gaccelerationEventHandler.handle(accel);
-
-                            }
-
-
-                            if(decode[0].equals("GRAV"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                GravityEvent gravity = new GravityEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getGravityP(),Long.parseLong(decode[5]));
-
-                                ggravityEventHandler.handle(gravity);
-
-                            }
-
-                            if(decode[0].equals("ROTA"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                RotationEvent rotation = new RotationEvent(Float.parseFloat(decode[2]),Float.parseFloat(decode[3]),Float.parseFloat(decode[4]),timestamp,EventPriorities.getRotationP(),Long.parseLong(decode[5]));
-
-                                grotationEventHandler.handle(rotation);
-
-                            }
-
-                            if(decode[0].equals("ORIE"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                OrientationEvent orientation = new OrientationEvent(Integer.parseInt(decode[2]),Integer.parseInt(decode[3]),Integer.parseInt(decode[4]),timestamp,EventPriorities.getOrientationP(),Long.parseLong(decode[5]));
-
-                                gorientationEventHandler.handle(orientation);
-
-                            }
-
-                            if(decode[0].equals("LUMI"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                LuminousEvent luminous = new LuminousEvent(Integer.parseInt(decode[2]), timestamp,EventPriorities.getLuminousP(),Long.parseLong(decode[3]));
-                                gluminousEventHandler.handle(luminous);
-
-                            }
-
-
-
-                            /**stand alone sensors 1 (STH1)*/
-
-                            if(decode[0].equals("HUMI"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                HumidityEvent humidity = new HumidityEvent(Integer.parseInt(decode[2]),timestamp,EventPriorities.getHumidityP(),Long.parseLong(decode[3]));
-                                ghumidityEventHandler.handle(humidity);
-
-                            }
-
-                            if(decode[0].equals("TEMP"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                TemperatureEvent temperature = new TemperatureEvent(Integer.parseInt(decode[2]),timestamp, EventPriorities.getTemperatureP(),Long.parseLong(decode[3]));
-                                gtemperatureEventHandler.handle(temperature);
-
-                            }
-
-
-                            /**stand alone sensors 2 (SD01)*/
-
-                            if(decode[0].equals("DIST"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                DistanceEvent distance = new DistanceEvent(Integer.parseInt(decode[2]),timestamp,EventPriorities.getDistanceP(),Long.parseLong(decode[3]));
-                                gdistanceEventHandler.handle(distance);
-
-                            }
-
-
-                            /**secondary events*/
-
-                            if(decode[0].equals("ENTE"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                EnteredEvent event = new EnteredEvent(Integer.parseInt(decode[2]),Integer.parseInt(decode[3]),timestamp, EventPriorities.getentered(),Long.parseLong(decode[4]));
-                                epService.epService.getEPRuntime().sendEvent(event);
-                                //System.out.println(event.toString());
-                                //EventPriorities.eventCountadd();
-                                EventsThroughput.entered += 1;
-
-                                gLOG.debug(event.toString());
-
-                            }
-
-                            // humidity secondary events
-                            if(decode[0].equals("AHUM"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                AvgHumiEvent avgHumiEvent = new AvgHumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavghumi(),Long.parseLong(decode[3]));
-                                gLOG.debug(avgHumiEvent.toString());
-                                epService.epService.getEPRuntime().sendEvent(avgHumiEvent);
-                                EventsThroughput.AVGhumicount+=1;
-
-                            }
-
-                            if(decode[0].equals("WHUM"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                WarnHumiEvent warnHumiEvent = new WarnHumiEvent(Integer.parseInt(decode[2]), timestamp,EventPriorities.getwarnhumi(),Long.parseLong(decode[3]));
-                                gLOG.debug(warnHumiEvent.toString());
-
-                                epService.epService.getEPRuntime().sendEvent(warnHumiEvent);
-                                EventsThroughput.warnhumicount+=1;
-
-                            }
-
-                            // luminous secondary events
-                            if(decode[0].equals("ALUM"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                AvgLumiEvent avgLumiEvent = new AvgLumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavglumi(),Long.parseLong(decode[3]));
-                                gLOG.debug(avgLumiEvent.toString());
-
-
-                                epService.epService.getEPRuntime().sendEvent(avgLumiEvent);
-                                EventsThroughput.AVGlumicount+=1;
-
-                            }
-
-                            if(decode[0].equals("WLUM"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                WarnLumiEvent warnLumiEvent = new WarnLumiEvent(Integer.parseInt(decode[2]), timestamp ,EventPriorities.getwarnlumi(),Long.parseLong(decode[3]));
-                                gLOG.debug(warnLumiEvent.toString());
-
-
-                                epService.epService.getEPRuntime().sendEvent(warnLumiEvent);
-                                EventsThroughput.warnlumicount+=1;
-
-                            }
-
-                            // temperature secondary events
-                            if(decode[0].equals("ATEM"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                AvgTempEvent avgTempEvent = new AvgTempEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavgtemp(),Long.parseLong(decode[3]));
-                                gLOG.debug(avgTempEvent.toString());
-
-
-                                epService.epService.getEPRuntime().sendEvent(avgTempEvent);
-                                EventsThroughput.AVGtempcount+=1;
-
-                            }
-
-                            if(decode[0].equals("WTEM"))
-                            {
-
-
-                                Date timestamp = new Date();
-
-
-                                WarnTempEvent warnTempEvent = new WarnTempEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getwarntemp(),Long.parseLong(decode[3]));
-                                gLOG.debug(warnTempEvent.toString());
-
-
-                                epService.epService.getEPRuntime().sendEvent(warnTempEvent);
-                                EventsThroughput.warntempcount+=1;
-
-                            }
-
-
-
-
-
-
-
-
-
-
-                        } catch (Exception ex) {
-                            System.out.println(ex.toString());
-                        }
-
-
-                       // Arrays.fill(gatewayreceiveData, (byte) 0);
-
-                        try {
-                            Thread.sleep(1);
-                        } catch (InterruptedException e) {
-                            //LOG.error("Thread Interrupted", e);
+                        } catch (Exception et) {
+                            System.out.println(et.toString());
                         }
                     }
 
+
+                    String line;
+                    String clientSentence;
+
+
+                    while (true)
+                    {
+                        try {
+                            if ((line = xinFromClient.readLine()) != null) {
+                                //String modifiedSentence = line;
+                                clientSentence = line;
+                                System.out.println("-----------------------packet Received from " + clientAddress + " :" + clientSentence);
+
+                                String decode[] = clientSentence.split(" ");
+
+
+                                /**sensor hub 1 events (H001)*/
+
+                                if (decode[0].equals("ACCE")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    AccelerationEvent accel = new AccelerationEvent(Float.parseFloat(decode[2]), Float.parseFloat(decode[3]), Float.parseFloat(decode[4]), timestamp, EventPriorities.getAccelP(), Long.parseLong(decode[5]));
+                                    gaccelerationEventHandler.handle(accel);
+
+                                }
+
+
+                                if (decode[0].equals("GRAV")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    GravityEvent gravity = new GravityEvent(Float.parseFloat(decode[2]), Float.parseFloat(decode[3]), Float.parseFloat(decode[4]), timestamp, EventPriorities.getGravityP(), Long.parseLong(decode[5]));
+
+                                    ggravityEventHandler.handle(gravity);
+
+                                }
+
+                                if (decode[0].equals("ROTA")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    RotationEvent rotation = new RotationEvent(Float.parseFloat(decode[2]), Float.parseFloat(decode[3]), Float.parseFloat(decode[4]), timestamp, EventPriorities.getRotationP(), Long.parseLong(decode[5]));
+
+                                    grotationEventHandler.handle(rotation);
+
+                                }
+
+                                if (decode[0].equals("ORIE")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    OrientationEvent orientation = new OrientationEvent(Integer.parseInt(decode[2]), Integer.parseInt(decode[3]), Integer.parseInt(decode[4]), timestamp, EventPriorities.getOrientationP(), Long.parseLong(decode[5]));
+
+                                    gorientationEventHandler.handle(orientation);
+
+                                }
+
+                                if (decode[0].equals("LUMI")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    LuminousEvent luminous = new LuminousEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getLuminousP(), Long.parseLong(decode[3]));
+                                    gluminousEventHandler.handle(luminous);
+
+                                }
+
+
+                                /**stand alone sensors 1 (STH1)*/
+
+                                if (decode[0].equals("HUMI")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    HumidityEvent humidity = new HumidityEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getHumidityP(), Long.parseLong(decode[3]));
+                                    ghumidityEventHandler.handle(humidity);
+
+                                }
+
+                                if (decode[0].equals("TEMP")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    TemperatureEvent temperature = new TemperatureEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getTemperatureP(), Long.parseLong(decode[3]));
+                                    gtemperatureEventHandler.handle(temperature);
+
+                                }
+
+
+                                /**stand alone sensors 2 (SD01)*/
+
+                                if (decode[0].equals("DIST")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    DistanceEvent distance = new DistanceEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getDistanceP(), Long.parseLong(decode[3]));
+                                    gdistanceEventHandler.handle(distance);
+
+                                }
+
+
+                                /**secondary events*/
+
+                                if (decode[0].equals("ENTE")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    EnteredEvent event = new EnteredEvent(Integer.parseInt(decode[2]), Integer.parseInt(decode[3]), timestamp, EventPriorities.getentered(), Long.parseLong(decode[4]));
+                                    epService.epService.getEPRuntime().sendEvent(event);
+                                    //System.out.println(event.toString());
+                                    //EventPriorities.eventCountadd();
+                                    EventsThroughput.entered += 1;
+
+                                    gLOG.debug(event.toString());
+
+                                }
+
+                                // humidity secondary events
+                                if (decode[0].equals("AHUM")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    AvgHumiEvent avgHumiEvent = new AvgHumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavghumi(), Long.parseLong(decode[3]));
+                                    gLOG.debug(avgHumiEvent.toString());
+                                    epService.epService.getEPRuntime().sendEvent(avgHumiEvent);
+                                    EventsThroughput.AVGhumicount += 1;
+
+                                }
+
+                                if (decode[0].equals("WHUM")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    WarnHumiEvent warnHumiEvent = new WarnHumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getwarnhumi(), Long.parseLong(decode[3]));
+                                    gLOG.debug(warnHumiEvent.toString());
+
+                                    epService.epService.getEPRuntime().sendEvent(warnHumiEvent);
+                                    EventsThroughput.warnhumicount += 1;
+
+                                }
+
+                                // luminous secondary events
+                                if (decode[0].equals("ALUM")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    AvgLumiEvent avgLumiEvent = new AvgLumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavglumi(), Long.parseLong(decode[3]));
+                                    gLOG.debug(avgLumiEvent.toString());
+
+
+                                    epService.epService.getEPRuntime().sendEvent(avgLumiEvent);
+                                    EventsThroughput.AVGlumicount += 1;
+
+                                }
+
+                                if (decode[0].equals("WLUM")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    WarnLumiEvent warnLumiEvent = new WarnLumiEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getwarnlumi(), Long.parseLong(decode[3]));
+                                    gLOG.debug(warnLumiEvent.toString());
+
+
+                                    epService.epService.getEPRuntime().sendEvent(warnLumiEvent);
+                                    EventsThroughput.warnlumicount += 1;
+
+                                }
+
+                                // temperature secondary events
+                                if (decode[0].equals("ATEM")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    AvgTempEvent avgTempEvent = new AvgTempEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getavgtemp(), Long.parseLong(decode[3]));
+                                    gLOG.debug(avgTempEvent.toString());
+
+
+                                    epService.epService.getEPRuntime().sendEvent(avgTempEvent);
+                                    EventsThroughput.AVGtempcount += 1;
+
+                                }
+
+                                if (decode[0].equals("WTEM")) {
+
+
+                                    Date timestamp = new Date();
+
+
+                                    WarnTempEvent warnTempEvent = new WarnTempEvent(Integer.parseInt(decode[2]), timestamp, EventPriorities.getwarntemp(), Long.parseLong(decode[3]));
+                                    gLOG.debug(warnTempEvent.toString());
+
+
+                                    epService.epService.getEPRuntime().sendEvent(warnTempEvent);
+                                    EventsThroughput.warntempcount += 1;
+
+                                }
+
+
+
+
+
+
+                            }
+
+                            Thread.sleep(1);
+                        }catch (Exception et) {
+                            System.out.println(et.toString());
+                        }
+                    }
+
+
+
+
+
+                    // Arrays.fill(gatewayreceiveData, (byte) 0);
+
+
                 }
+
+
             });
 
 
@@ -412,7 +406,7 @@ public final class FogToCloudGateway {
             /**
             return scheduletoCloud(priority,eventID);
              */
-            return false;
+            return true;
         }
 
     }
@@ -673,33 +667,38 @@ public final class FogToCloudGateway {
 
 
 
-
-
+    public static Socket clientSocket;
+    public static DataOutputStream outToServer;
+    public static boolean firsttry = false;
 
 
     public static void sendtoCloud(String toSend)
     {
-        //byte[] sendData = new byte[1024];
+        if(firsttry == false)
+        {
+            try {
+                clientSocket = new Socket("104.43.197.157", 55555);
 
-        //sendData = toSend.getBytes();
+                outToServer = new DataOutputStream(clientSocket.getOutputStream());
+            }catch(Exception e){System.out.println(e.toString());}
+            {
 
-        //DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, gatewayserverIPAddress, 55555);
+            }
+        }
+
 
         try
         {
-            //outToServer = new DataOutputStream(gatewayclientSocket.getOutputStream());
-            //outToServer.writeBytes(toSend);
 
-            Socket clientSocket = new Socket("104.43.197.157", 55555);
 
-            DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-            //BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            //String sentence = toSend;
-            outToServer.writeBytes(toSend);
 
-            //modifiedSentence = inFromServer.readLine();
-            System.out.println("Sent top server "+toSend);
-            clientSocket.close();
+
+            outToServer.writeBytes(toSend+"\n");
+            outToServer.flush();
+
+
+            System.out.println("Sent top server " + toSend);
+            //clientSocket.close();
         }catch(Exception e){System.out.println(e.toString());}
 
 
