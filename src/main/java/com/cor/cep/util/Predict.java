@@ -157,10 +157,11 @@ public final class Predict {
         PolynomialRegression regression3 = new PolynomialRegression(x, y, 2);
         PolynomialRegression regression4 = new PolynomialRegression(x, y, 1);
 
+        /**
         for (int i = 0; i < y.length ; i++) {
             System.out.print(y[i]+" ");
         }
-
+*/
         //System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression.predict((x.length+predictdistance)));
         //System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression2.predict((x.length+predictdistance)));
         //System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "+predicttype+"  predict "+regression3.predict((x.length+predictdistance)));

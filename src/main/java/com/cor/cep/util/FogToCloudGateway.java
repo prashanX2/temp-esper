@@ -412,7 +412,7 @@ public final class FogToCloudGateway {
             /**
             return scheduletoCloud(priority,eventID);
              */
-            return true;
+            return false;
         }
 
     }
