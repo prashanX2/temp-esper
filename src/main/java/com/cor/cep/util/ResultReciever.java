@@ -74,7 +74,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CACCEWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CACCEWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
 
 
@@ -85,7 +85,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CGRAVWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CGRAVWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -93,7 +93,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CROTAWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CROTAWrite(decode[2],System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -101,7 +101,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CORIEWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CORIEWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -109,7 +109,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CLUMIWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CLUMIWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -121,7 +121,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CHUMIWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CHUMIWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -129,7 +129,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CTEMPWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CTEMPWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -140,7 +140,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CDISTWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CDISTWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -151,7 +151,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CENTEWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CENTEWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -160,7 +160,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CAHUMWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CAHUMWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -168,7 +168,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CWHUMWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CWHUMWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -177,7 +177,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CALUMWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CALUMWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -185,7 +185,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CWLUMWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CWLUMWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -194,7 +194,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CATEMWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CATEMWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
@@ -202,7 +202,7 @@ public final class ResultReciever {
         {
 
 
-            LogData.CWTEMWrite(decode[2], ResultReciever.systemStartTime - System.nanoTime());
+            LogData.CWTEMWrite(decode[2], System.nanoTime() - ResultReciever.systemStartTime);
 
         }
 
