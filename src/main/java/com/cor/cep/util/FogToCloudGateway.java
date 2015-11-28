@@ -110,9 +110,10 @@ public final class FogToCloudGateway {
 
                     if (!clientconnected) {
                         try {
+
                             xconnectionSocket = gatewayserverSocket.accept();
                             xinFromClient = new BufferedReader(new InputStreamReader(xconnectionSocket.getInputStream()));
-
+                            System.out.println("---------------------------------------------------------------------------------client connected to cloud gateway");
 
                         } catch (Exception et) {
                             System.out.println(et.toString());
