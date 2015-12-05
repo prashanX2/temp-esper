@@ -380,12 +380,18 @@ public final class FogToCloudGateway {
         {
             return false;
         }
-        else
-        {
+        else {
             /**
-            return scheduletoCloud(priority,eventID);
+             return scheduletoCloud(priority,eventID);
+
              */
-            return true;
+            if (eventID.equals("LUMI")) {
+                return false;
+            }
+            else
+            {
+                return  false;
+            }
         }
 
     }
@@ -646,30 +652,37 @@ public final class FogToCloudGateway {
 
 
 
-   
+
 
 
     public static void sendtoCloud(String toSend)
     {
 
+        final String xtoSend = toSend;
+
+        ExecutorService sendto = Executors.newSingleThreadExecutor();
+
+        sendto.submit(new Runnable() {
+            public void run() {
+
+                try {
 
 
-        try
-        {
+                    Socket clientSocket = new Socket("104.43.197.157", 55555);
+
+                    DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+
+                    outToServer.writeBytes(xtoSend);
+                    outToServer.flush();
 
 
-            Socket clientSocket = new Socket("104.43.197.157", 55555);
-
-            DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-
-            outToServer.writeBytes(toSend);
-            outToServer.flush();
-
-
-            System.out.println("Sent top server " + toSend);
-            clientSocket.close();
-        }catch(Exception e){System.out.println(e.toString());}
-
+                    System.out.println("Sent top server " + xtoSend);
+                    clientSocket.close();
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+        });
 
 
     }

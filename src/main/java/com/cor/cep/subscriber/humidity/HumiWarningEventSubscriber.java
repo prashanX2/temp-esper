@@ -24,7 +24,7 @@ public class HumiWarningEventSubscriber implements StatementSubscriber {
     private static Logger LOG = LoggerFactory.getLogger(HumiWarningEventSubscriber.class);
 
     /** If 2 consecutive temperature events are greater than this - issue a warning */
-    private static final String WARNING_EVENT_THRESHOLD = "50";
+    private static final String WARNING_EVENT_THRESHOLD = "60";
 
     
     /**

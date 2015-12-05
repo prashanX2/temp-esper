@@ -82,11 +82,11 @@ public class NetworkThroughput {
 
                             }catch(Exception hh){}
                         }
-                        download =  downup[0];
-                        upload = downup[1];
+                        upload =  downup[0];
+                        download = downup[1];
                         LogData.netthroughputWrite(Integer.toString(download), System.nanoTime() - ResultReciever.systemStartTime);
 
-                        System.out.println("download throughput: "+download+" || upload throughput: "+upload);
+                        System.out.println("download throughput: "+upload+" || upload throughput: "+download);
 
 
                        // download = (int)Float.parseFloat(out[23]);
