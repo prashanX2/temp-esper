@@ -109,6 +109,7 @@ public class IPCServerSimu {
 
                                 System.out.println("-----------------------------SIMULATOR ENDED: TIME ELAPSED "+(System.nanoTime()-ResultReciever.systemStartTime)/1000000);
 
+                                System.exit(0);
                                 break;
                             }
 

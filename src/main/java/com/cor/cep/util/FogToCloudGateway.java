@@ -116,6 +116,8 @@ public final class FogToCloudGateway {
                             connectionSocket.getRemoteSocketAddress().toString();
                             //DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
                             String clientSentence = inFromClient.readLine();
+                            connectionSocket.close();
+                            inFromClient.close();
                             System.out.println("-----------------------packet Received from " + clientAddress + " :" + clientSentence);
 
                             String decode[] = clientSentence.split(" ");
@@ -385,8 +387,8 @@ public final class FogToCloudGateway {
              return scheduletoCloud(priority,eventID);
 
              */
-            if (eventID.equals("LUMI")) {
-                return false;
+            if (eventID.equals("LUMI") || eventID.equals("TEMP") || eventID.equals("HUMI") || eventID.equals("DIST") || eventID.equals("ACCE")) {
+                return true;
             }
             else
             {
@@ -674,12 +676,16 @@ public final class FogToCloudGateway {
 
                     outToServer.writeBytes(xtoSend);
                     outToServer.flush();
-
+                    outToServer.close();
 
                     System.out.println("Sent top server " + xtoSend);
                     clientSocket.close();
                 } catch (Exception e) {
-                    System.out.println(e.toString());
+                    System.out.println("//////////////////////////////////////////////////////////////////////////////////////Exception to cloud send"+e.toString());
+                    System.out.println("//////////////////////////////////////////////////////////////////////////////////////Exception to cloud send"+e.toString());
+                    System.out.println("//////////////////////////////////////////////////////////////////////////////////////Exception to cloud send"+e.toString());
+                    System.out.println("//////////////////////////////////////////////////////////////////////////////////////Exception to cloud send"+e.toString());
+                    System.out.println("//////////////////////////////////////////////////////////////////////////////////////Exception to cloud send"+e.toString());
                 }
             }
         });
