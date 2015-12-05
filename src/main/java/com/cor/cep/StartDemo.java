@@ -40,7 +40,7 @@ public class StartDemo {
         {
             FogToCloudGateway.initgatewayclient();
 
-            ResultReciever.start();
+            //ResultReciever.start();
 
 
         }
@@ -51,7 +51,7 @@ public class StartDemo {
 
             FogToCloudGateway.initgatewayserver();
 
-            ResultSender.start();
+            //ResultSender.start();
 
         }
 
