@@ -83,7 +83,7 @@ public class NetworkLatency {
                             System.out.println("Latency to :" + IPAddress + ": " + latency);
                             LogData.latencyWrite(Long.toString(latency), System.nanoTime() - ResultReciever.systemStartTime);
 
-                            Thread.sleep(2000);
+                            Thread.sleep(1000);
 
                             //clientSocket.close();
 

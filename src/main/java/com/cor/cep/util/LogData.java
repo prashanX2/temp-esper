@@ -23,6 +23,10 @@ public class LogData {
     public static PrintWriter peventthroughputwriter;
 
 
+    public static PrintWriter primaryeventthroughputwriter;
+    public static PrintWriter secondaryeventthroughputwriter;
+    public static PrintWriter tiertarythroughputwriter;
+
 
     /**individual event logger*/
     public static PrintWriter ACCE;
@@ -108,7 +112,9 @@ public class LogData {
             eventthroughputwriter = new PrintWriter("eventthroughput.txt", "UTF-8");
             peventthroughputwriter = new PrintWriter("peventthroughput.txt", "UTF-8");
 
-
+            primaryeventthroughputwriter = new PrintWriter("primaryeventthroughput.txt", "UTF-8");
+            secondaryeventthroughputwriter = new PrintWriter("secondaryeventthroughput.txt", "UTF-8");
+            tiertarythroughputwriter = new PrintWriter("tiertaryeventthroughput.txt", "UTF-8");
 
             ACCE = new PrintWriter("ACCE.txt", "UTF-8");
             CACCE = new PrintWriter("CACCE.txt", "UTF-8");
@@ -294,6 +300,48 @@ public class LogData {
 
 
 
+    public static void primaryeventthroughputWrite(String sentence, long receievetime)
+    {
+        try {
+
+            Double rtime = receievetime/divide;
+
+            primaryeventthroughputwriter.println(sentence + " " + rtime);
+            //System.out.println("wrote to file");
+            primaryeventthroughputwriter.flush();
+        }
+        catch(Exception e){System.out.println(e.toString());}
+
+    }
+
+    public static void secondaryeventthroughputWrite(String sentence, long receievetime)
+    {
+        try {
+
+            Double rtime = receievetime/divide;
+
+            secondaryeventthroughputwriter.println(sentence + " " + rtime);
+            //System.out.println("wrote to file");
+            secondaryeventthroughputwriter.flush();
+        }
+        catch(Exception e){System.out.println(e.toString());}
+
+    }
+
+    public static void tiertaryeventthroughputWrite(String sentence, long receievetime)
+    {
+        try {
+
+            Double rtime = receievetime/divide;
+
+            tiertarythroughputwriter.println(sentence + " " + rtime);
+            //System.out.println("wrote to file");
+            tiertarythroughputwriter.flush();
+        }
+        catch(Exception e){System.out.println(e.toString());}
+
+    }
+
     public static void eventthroughputWrite(String sentence, long receievetime)
     {
         try {
@@ -307,6 +355,8 @@ public class LogData {
         catch(Exception e){System.out.println(e.toString());}
 
     }
+
+
 
     public static void peventthroughputWrite(String sentence, long receievetime)
     {

@@ -387,8 +387,8 @@ public final class FogToCloudGateway {
              return scheduletoCloud(priority,eventID);
 
              */
-            if (eventID.equals("LUMI") || eventID.equals("TEMP") || eventID.equals("HUMI") || eventID.equals("DIST") || eventID.equals("ACCE")) {
-                return true;
+            if (eventID.equals("LUMI") || eventID.equals("TEMP") || eventID.equals("HUMI") || eventID.equals("DIST") || eventID.equals("GRAV")) {
+                return false;
             }
             else
             {

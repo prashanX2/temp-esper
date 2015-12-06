@@ -1,6 +1,8 @@
 package com.cor.cep.util;
 
 
+import com.cor.cep.event.WarnHumiEvent;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -66,6 +68,10 @@ public class EventsThroughput {
                         //System.out.println(accelcount+" "+humiditycount);
                         eventpersec = EventsThroughput.totalEventcount();
                         LogData.eventthroughputWrite(Integer.toString(eventpersec), System.nanoTime() - ResultReciever.systemStartTime);
+
+                        LogData.primaryeventthroughputWrite(Integer.toString(accelcount+gravitycount+rotationcount+orientationcount+lumicount+distancecount+tempcount+humiditycount), System.nanoTime() - ResultReciever.systemStartTime);
+                        LogData.secondaryeventthroughputWrite(Integer.toString(AVGtempcount+AVGhumicount+AVGlumicount+warntempcount+warnhumicount+warnlumicount+entered), System.nanoTime() - ResultReciever.systemStartTime );
+                        //LogData.tiertaryeventthroughputWrite(Integer.toString(eventpersec), System.nanoTime() - ResultReciever.systemStartTime );
 
                         EventsThroughput.nullAlleventcount();
 
