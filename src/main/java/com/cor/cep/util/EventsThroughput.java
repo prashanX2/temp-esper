@@ -50,6 +50,13 @@ public class EventsThroughput {
     public static int entered = 0;
 
 
+    /**teirtary events*/
+
+    public static int distlumicount = 0;
+    public static int disttempcount = 0;
+    public static int distwarntempcount = 0;
+
+
 
 
 
@@ -71,7 +78,7 @@ public class EventsThroughput {
 
                         LogData.primaryeventthroughputWrite(Integer.toString(accelcount+gravitycount+rotationcount+orientationcount+lumicount+distancecount+tempcount+humiditycount), System.nanoTime() - ResultReciever.systemStartTime);
                         LogData.secondaryeventthroughputWrite(Integer.toString(AVGtempcount+AVGhumicount+AVGlumicount+warntempcount+warnhumicount+warnlumicount+entered), System.nanoTime() - ResultReciever.systemStartTime );
-                        //LogData.tiertaryeventthroughputWrite(Integer.toString(eventpersec), System.nanoTime() - ResultReciever.systemStartTime );
+                        LogData.tiertaryeventthroughputWrite(Integer.toString(distlumicount+disttempcount+distwarntempcount), System.nanoTime() - ResultReciever.systemStartTime );
 
                         EventsThroughput.nullAlleventcount();
 
@@ -126,6 +133,9 @@ public class EventsThroughput {
 
         entered = 0;
 
+        distlumicount = 0;
+        disttempcount = 0;
+        distwarntempcount = 0;
 
 
     }

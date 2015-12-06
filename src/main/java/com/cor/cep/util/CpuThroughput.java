@@ -98,7 +98,7 @@ public class CpuThroughput {
 
 
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(250);
                     } catch (Exception tr) {
                         System.out.println(tr);
                     }

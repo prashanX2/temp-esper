@@ -4,6 +4,7 @@ import com.cor.cep.event.DistanceEvent;
 
 import com.cor.cep.event.EnteredEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
+import com.cor.cep.util.EventsThroughput;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,7 @@ public class DistLumiSubscriber implements StatementSubscriber {
     public void update(Map<String, EnteredEvent> eventMap)
     {
 
+        EventsThroughput.distlumicount++;
 
         System.out.println("################################################");
         System.out.println("NEED TO INCREASE LIGHTING CONDITIONS");
