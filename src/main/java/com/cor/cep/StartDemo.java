@@ -40,7 +40,7 @@ public class StartDemo {
         {
             FogToCloudGateway.initgatewayclient();
 
-            //ResultReciever.start();
+            ResultReciever.start();
 
 
         }
@@ -51,7 +51,7 @@ public class StartDemo {
 
             FogToCloudGateway.initgatewayserver();
 
-            //ResultSender.start();
+            ResultSender.start();
 
         }
 
@@ -103,9 +103,9 @@ public class StartDemo {
 
         EventTree.eventtreeinit();
 
-        //   IPCServer generator = new IPCServer();
+       IPCServer generator = new IPCServer();
 
-        IPCServerSimu generator = new IPCServerSimu();
+        //IPCServerSimu generator = new IPCServerSimu();
        generator.startSendingTemperatureReadings(noOfTemperatureEvents);
 
         EventsThroughput eventmonitor = new EventsThroughput();

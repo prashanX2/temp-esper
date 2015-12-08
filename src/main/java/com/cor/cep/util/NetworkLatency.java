@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 public class NetworkLatency {
 
     public static boolean isServer = false;
-    public static long latency;
+    public static long latency = 400;
 
     public void clientLatency()
     {
@@ -35,7 +35,7 @@ public class NetworkLatency {
 
                         try {
 
-                            InetAddress IPAddress = InetAddress.getByName("104.43.197.157");
+                           InetAddress IPAddress = InetAddress.getByName("104.43.197.157");
                             //DatagramSocket clientSocket = new DatagramSocket();
                             Socket clientSocket = new Socket(IPAddress, 44444);
                             long c = System.nanoTime();
@@ -77,10 +77,11 @@ public class NetworkLatency {
 
                             //String modifiedSentence = new String(receivePacket.getData());
 
+                                //latency=900;
 
                             latency = (f - d) / 1000000;
 
-                            System.out.println("Latency to :" + IPAddress + ": " + latency);
+                           System.out.println("Latency to :" + IPAddress + ": " + latency);
                             LogData.latencyWrite(Long.toString(latency), System.nanoTime() - ResultReciever.systemStartTime);
 
                             Thread.sleep(1000);

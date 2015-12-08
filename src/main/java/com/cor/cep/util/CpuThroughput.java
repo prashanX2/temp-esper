@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 
 public class CpuThroughput {
 
-    public static float cpuLoad;
+    public static float cpuLoad = 0;
 
     public static int cpuCores = 0;
 
@@ -73,6 +73,14 @@ public class CpuThroughput {
 
                     cpuLoad = Float.parseFloat(last);
                     cpuLoad = (cpuLoad/cpuCores)*100;
+
+
+
+                    //if(cpuLoad<96)
+                    //cpuLoad++;
+
+
+
                     LogData.cputhroughputWrite(Float.toString(cpuLoad),System.nanoTime() - ResultReciever.systemStartTime);
                     System.out.println("CPU USAGE LOAD AVERAGE 1 MINUTE "+cpuLoad);
 
@@ -98,7 +106,7 @@ public class CpuThroughput {
 
 
                     try {
-                        Thread.sleep(250);
+                        Thread.sleep(2000);
                     } catch (Exception tr) {
                         System.out.println(tr);
                     }

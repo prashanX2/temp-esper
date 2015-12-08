@@ -5,6 +5,7 @@ import com.cor.cep.event.DistanceEvent;
 import com.cor.cep.event.EnteredEvent;
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +62,16 @@ public class DistLumiSubscriber implements StatementSubscriber {
     {
 
         EventsThroughput.distlumicount++;
+
+        if(FogToCloudGateway.isCloud)
+        {
+            EventsThroughput.cdistlumicount++;
+        }
+        else
+        {
+            EventsThroughput.ldistlumicount++;
+
+        }
 
         System.out.println("################################################");
         System.out.println("NEED TO INCREASE LIGHTING CONDITIONS");

@@ -4,6 +4,7 @@ import com.cor.cep.event.DistanceEvent;
 
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,17 @@ public class DistTempSubscriber implements StatementSubscriber {
     public void update(Map<String, Double> eventMap)
     {
         EventsThroughput.disttempcount++;
+        if(FogToCloudGateway.isCloud)
+        {
+            EventsThroughput.cdisttempcount++;
+        }
+        else
+        {
+            EventsThroughput.ldisttempcount++;
+
+        }
+
+
         System.out.println("################################################");
         System.out.println("NEED TO LOWER A/C");
         System.out.println("################################################");

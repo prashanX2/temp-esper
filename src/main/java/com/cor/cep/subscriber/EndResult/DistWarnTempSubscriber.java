@@ -4,6 +4,7 @@ import com.cor.cep.event.DistanceEvent;
 
 import com.cor.cep.subscriber.StatementSubscriber;
 import com.cor.cep.util.EventsThroughput;
+import com.cor.cep.util.FogToCloudGateway;
 import com.espertech.esper.client.EventBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,18 @@ public class DistWarnTempSubscriber implements StatementSubscriber {
     public void update(Map<String, Double> eventMap)
     {
         EventsThroughput.distwarntempcount++;
+
+
+        if(FogToCloudGateway.isCloud)
+        {
+            EventsThroughput.cdistwarntempcount++;
+        }
+        else
+        {
+            EventsThroughput.ldistwarntempcount++;
+
+        }
+
         System.out.println("################################################");
         System.out.println("EXIT AT ONCE TEMPERATURE LEVELS TOO HIGH");
         System.out.println("################################################");

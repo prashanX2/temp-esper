@@ -64,7 +64,7 @@ public final class FogToCloudGateway {
     public static  ServerSocket gatewayserverSocket;
 
     public static int eventPacektSize = 1; // in KB
-    public static int maxBandwidth = 1024; // in KB
+    public static int maxBandwidth = 128; // in KB
 
 
 
@@ -387,11 +387,191 @@ public final class FogToCloudGateway {
              return scheduletoCloud(priority,eventID);
 
              */
-            if (eventID.equals("LUMI") || eventID.equals("TEMP") || eventID.equals("HUMI") || eventID.equals("DIST") || eventID.equals("GRAV")) {
+            if (eventID.equals("LUMI")) {
+
+                if(eventID.equals("ACCE"))
+                {
+
+                    EventsThroughput.caccelcount++;
+
+                }
+
+                if(eventID.equals("GRAV"))
+                {
+
+                    EventsThroughput.cgravitycount++;
+
+                }
+
+                if(eventID.equals("ROTA"))
+                {
+
+                    EventsThroughput.crotationcount++;
+
+                }
+
+                if(eventID.equals("ORIE"))
+                {
+
+                    EventsThroughput.corientationcount++;
+
+                }
+
+                if(eventID.equals("LUMI"))
+                {
+
+                    EventsThroughput.clumicount++;
+
+                }
+
+
+                if(eventID.equals("ALUM"))
+                {
+
+                    EventsThroughput.cAVGlumicount++;
+
+                }
+
+                if(eventID.equals("AHUM"))
+                {
+
+                    EventsThroughput.cAVGhumicount++;
+
+                }
+                if(eventID.equals("ATEM"))
+                {
+
+                    EventsThroughput.cAVGtempcount++;
+
+                }
+
+                if(eventID.equals("WLUM"))
+                {
+
+                    EventsThroughput.cwarnlumicount++;
+
+                }
+
+                if(eventID.equals("WHUM"))
+                {
+
+                    EventsThroughput.cwarnhumicount++;
+
+                }
+                if(eventID.equals("WTEM"))
+                {
+
+                    EventsThroughput.cwarntempcount++;
+
+                }
+
+
+                if(eventID.equals("ENTE"))
+                {
+
+                    EventsThroughput.centered++;
+
+                }
+
+
+
+
+
+                EventsThroughput.cloudevent++;
                 return false;
+
             }
             else
             {
+
+                if(eventID.equals("ACCE"))
+                {
+
+                    EventsThroughput.laccelcount++;
+
+                }
+
+                if(eventID.equals("GRAV"))
+                {
+
+                    EventsThroughput.lgravitycount++;
+
+                }
+
+                if(eventID.equals("ROTA"))
+                {
+
+                    EventsThroughput.lrotationcount++;
+
+                }
+
+                if(eventID.equals("ORIE"))
+                {
+
+                    EventsThroughput.lorientationcount++;
+
+                }
+
+                if(eventID.equals("LUMI"))
+                {
+
+                    EventsThroughput.llumicount++;
+
+                }
+
+
+                if(eventID.equals("ALUM"))
+                {
+
+                    EventsThroughput.lAVGlumicount++;
+
+                }
+
+                if(eventID.equals("AHUM"))
+                {
+
+                    EventsThroughput.lAVGhumicount++;
+
+                }
+                if(eventID.equals("ATEM"))
+                {
+
+                    EventsThroughput.lAVGtempcount++;
+
+                }
+
+                if(eventID.equals("WLUM"))
+                {
+
+                    EventsThroughput.lwarnlumicount++;
+
+                }
+
+                if(eventID.equals("WHUM"))
+                {
+
+                    EventsThroughput.lwarnhumicount++;
+
+                }
+                if(eventID.equals("WTEM"))
+                {
+
+                    EventsThroughput.lwarntempcount++;
+
+                }
+
+
+                if(eventID.equals("ENTE"))
+                {
+
+                    EventsThroughput.lentered++;
+
+                }
+
+
+
+
+                EventsThroughput.localevent++;
                 return  false;
             }
         }
@@ -402,10 +582,8 @@ public final class FogToCloudGateway {
     public static boolean scheduletoCloud(int priority, String eventID)
     {
 
-        priority = EventTree.getTreeValue(priority, eventID);
-        if(eventID.equals("ALUM")) {
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% " + eventID + " " + priority);
-        }
+        //priority = EventTree.getTreeValue(priority, eventID);
+
         /**high priority and primary events*/
         if(priority>4)
         {
@@ -417,13 +595,13 @@ public final class FogToCloudGateway {
             }
 
             /**if cpu load is extreme and latency is acceptable send to cloud*/
-            else if(CpuThroughput.cpuLoad >100 && NetworkLatency.latency <500)
+            else if(CpuThroughput.cpuLoad >90 && NetworkLatency.latency <500)
             {
                 return true;
             }
 
             /**if cpu load is extreme and latency is very high dont send to cloud*/
-            else if(CpuThroughput.cpuLoad >100 && NetworkLatency.latency >1000)
+            else if(CpuThroughput.cpuLoad > 90 && NetworkLatency.latency >1000)
             {
                 return false;
             }
@@ -456,10 +634,15 @@ public final class FogToCloudGateway {
             }
 
             /**if the band width utilization is high and cpu load is medium dont send to cloud*/
-            else if(CpuThroughput.cpuLoad < 50 && (maxBandwidth - NetworkThroughput.download) < 50)
+            else if(CpuThroughput.cpuLoad >30 && CpuThroughput.cpuLoad <50 && NetworkThroughput.download < 70)
+            {
+                return true;
+            }
+            else if(CpuThroughput.cpuLoad >30 && CpuThroughput.cpuLoad <50 && NetworkThroughput.download > 70)
             {
                 return false;
             }
+
 
             else
             {
@@ -480,7 +663,7 @@ public final class FogToCloudGateway {
             }
 
             /**if cpu load is medium and latency is acceptable send to cloud*/
-            else if(CpuThroughput.cpuLoad > 7 && NetworkLatency.latency < 3000)
+            else if(CpuThroughput.cpuLoad > 10 && NetworkLatency.latency < 3000)
             {
                 System.out.println("IN THE OEIROITY <3");
                 return true;
@@ -488,9 +671,9 @@ public final class FogToCloudGateway {
             }
 
             /**if the band width utilization is high and cpu load is medium dont send to cloud*/
-            else if(CpuThroughput.cpuLoad < 30 && (maxBandwidth - NetworkThroughput.download) < 200)
+            else if(CpuThroughput.cpuLoad < 10 && NetworkThroughput.download < 50)
             {
-                return false;
+                return true;
             }
 
             else
@@ -660,6 +843,7 @@ public final class FogToCloudGateway {
     public static void sendtoCloud(String toSend)
     {
 
+
         final String xtoSend = toSend;
 
         ExecutorService sendto = Executors.newSingleThreadExecutor();
@@ -689,6 +873,8 @@ public final class FogToCloudGateway {
                 }
             }
         });
+
+
 
 
     }

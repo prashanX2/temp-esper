@@ -12,7 +12,7 @@ public class NetworkThroughput {
 
     public static int upload;
 
-    public static int download;
+    public static int download = 0;
 
 
         public String executeCommand(String command)
@@ -84,9 +84,13 @@ public class NetworkThroughput {
                         }
                         upload =  downup[0];
                         download = downup[1];
+                        //download +=5;
                         LogData.netthroughputWrite(Integer.toString(download), System.nanoTime() - ResultReciever.systemStartTime);
 
-                        System.out.println("download throughput: "+upload+" || upload throughput: "+download);
+                        System.out.println("download throughput: " + upload + " || upload throughput: "+download);
+
+
+
 
 
                        // download = (int)Float.parseFloat(out[23]);
