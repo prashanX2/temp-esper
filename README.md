@@ -1,7 +1,7 @@
 Fog Computing based CEP Engine
 ==================
 
-This Engine written using Esper CEP engine make use of Fog computing and also Cloud computing vai the gateway according to event priorities.
+This engine written using Esper CEP engine make use of Fog computing and also Cloud computing via a gateway event scheduling mechanism according to event priorities.
 
 
 requirements
