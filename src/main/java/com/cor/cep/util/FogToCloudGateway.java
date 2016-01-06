@@ -387,7 +387,7 @@ public final class FogToCloudGateway {
              return scheduletoCloud(priority,eventID);
 
              */
-            if (eventID.equals("LUMI")) {
+            if (eventID.equals("ALUM") ) {
 
                 if(eventID.equals("ACCE"))
                 {
@@ -478,7 +478,7 @@ public final class FogToCloudGateway {
 
 
                 EventsThroughput.cloudevent++;
-                return false;
+                return true;
 
             }
             else

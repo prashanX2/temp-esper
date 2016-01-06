@@ -118,7 +118,7 @@ public class GravityEventHandler implements InitializingBean {
         }
         else
         {
-           //tempLOG.debug(event.toString());
+           tempLOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
             if(!FogToCloudGateway.isCloud)

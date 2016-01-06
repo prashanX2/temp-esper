@@ -131,7 +131,7 @@ public class LuminousEventHandler {
         }
         else
         {
-            //LOG.debug(event.toString());
+            LOG.debug(event.toString());
             epService.epService.getEPRuntime().sendEvent(event);
             //EventPriorities.eventCountadd();
             if(!FogToCloudGateway.isCloud){

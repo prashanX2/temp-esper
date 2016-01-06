@@ -103,9 +103,9 @@ public class StartDemo {
 
         EventTree.eventtreeinit();
 
-       IPCServer generator = new IPCServer();
+        IPCServer generator = new IPCServer();
 
-        //IPCServerSimu generator = new IPCServerSimu();
+       // IPCServerSimu generator = new IPCServerSimu();
        generator.startSendingTemperatureReadings(noOfTemperatureEvents);
 
         EventsThroughput eventmonitor = new EventsThroughput();

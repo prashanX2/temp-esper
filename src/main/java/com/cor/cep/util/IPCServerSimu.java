@@ -86,7 +86,7 @@ public class IPCServerSimu {
 
                     try  {
 
-                        FileInputStream fstream = new FileInputStream("bench.txt");
+                        FileInputStream fstream = new FileInputStream("datalog1.txt");
                         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
 
@@ -173,7 +173,7 @@ public class IPCServerSimu {
                                 try {
                                    // System.out.println("-----------------------------------SIMULATOR THREAD SLEEP TIME: "+timeinterval);
 
-                                    Thread.sleep(0);
+                                    Thread.sleep(timeinterval);
                                 } catch (InterruptedException e) {
                                     LOG.error("Thread Interrupted", e);
                                 }
